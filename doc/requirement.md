@@ -44,3 +44,21 @@ cage的名称是固定的吗？有多少的不同？如果多，我们可以给c
 
 ## Design a Daily action DB
 [design of DB table for daily action](actions.xlsx)
+
+
+
+mouse_id is actually unique and serves the same purpose as id
+
+geno is irrelevant
+
+ear is which ear my parents punched a hole into to identify the living mice against each other since there are 5 mice in a cage and they look identical
+
+mom and dad use Ms_id
+
+cage is cage
+
+user/usage is what the mice is being used for
+
+date means when this mouse should or has died
+
+add navigation bar :) [navigationbarexample](../../myreact/src/App9.js)
