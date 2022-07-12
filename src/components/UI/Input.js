@@ -1,14 +1,12 @@
-import React, {forwardRef} from "react";
-import classes from './Input.module.css';
+import React from "react";
+import { TextField } from '@mui/material';
 
-const Input = (props, ref) => {
-    return (
-        <div className={classes.control}>
-            <label htmlFor={props.id}>{props.label}</label>
-            <input {...props} ref={ref} />
-        </div>
-    );
-}
+// const Input = (props) => {
+//     return (
+//         <TextField id="outlined-basic" {...props} variant="outlined" />
+//     );
+// }
 
+const Input = props => <TextField id="outlined-basic" variant="outlined" {...props} />
 
-export default forwardRef(Input);
+export default Input;

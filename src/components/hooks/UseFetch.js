@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from "react";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
-  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState(null)
 
   const fetchHandler = useCallback(async () => {
-    // console.log("fetching data...")
+    console.log("fetching data...")
     try {
       const response = await fetch(url);
       if (!response.ok) {

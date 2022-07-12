@@ -100,4 +100,4 @@ def update_user(mouse_id):
     return jsonify(response_object)
 
 if __name__ == '__main__':
-    app.run(host="192.168.1.104", port=5000)
+    app.run(host="192.168.3.19", port=5000)

@@ -62,3 +62,10 @@ user/usage is what the mice is being used for
 date means when this mouse should or has died
 
 add navigation bar :) [navigationbarexample](../../myreact/src/App9.js)
+
+the actions.xlsx should be a *small* summary of the actions
+
+design a report for all of the possible actions
+
+create breeding system to add mice in large quantities.
+

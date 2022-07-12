@@ -1,20 +1,20 @@
-.addMouse {
+
+.addUser {
     max-width: 50rem;
     width: auto;
-    padding:5px;
 }
 
-.addMouse div {
+.addUser div {
     border: unset;
 }
 
-.addMouse label {
+.addUser label {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.addMouse input {
-    padding: 10px;
-    /* width: 100%; */
+.addUser input {
+    padding: 5px;
+    width: 100%;
 }
 
 .action{
