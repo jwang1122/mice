@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import Action from './components/Action.js';
 import AddMouse from './components/AddMouse.js';
+import AddBreeding from './components/AddBreeding.js'
 import useFetch from './components/hooks/UseFetch.js';
 import MiceList from './components/Micelist.js';
 import MouseDetails from './components/MouseDetails.js';
@@ -12,9 +13,10 @@ import ResponsiveAppBar from './components/Nav'
 function App() {
     const [mice, setMice] = useState([])
     const [addNewMouse, setAddNewMouse] = useState(false)
+    const [addBreeding, setAddBreeding] = useState(false)
     const [isDetails, setIsDetails] = useState(false)
     const [mouse, setMouse] = useState(null)
-    const [filteredGenome, setFilteredGenome] = useState("ASM")
+    const [filteredGenome, setFilteredGenome] = useState("All")
 
     const [data, loadError, load] = useFetch('http://192.168.3.19:5000')
 
@@ -50,6 +52,11 @@ function App() {
         addItem('http://192.168.3.19:5000/mice', mouse, load)
     }
 
+    const addBreedingHandler = breeding => {
+        addItem('http://192.168.3.19:5000/breeding', breeding, ()=>{})
+        console.log(breeding)
+    }
+
     const filterMice = filteredGenome === "All" ? mice : mice.filter(mouse => mouse.type === filteredGenome)
 
     return (
@@ -57,8 +64,9 @@ function App() {
             <ResponsiveAppBar/>
             <header className="App-header">
                 <h1>Mice Management Website</h1>
-                <Action items={filterMice} onAddNewMouse={() => setAddNewMouse(true)} onChangeFilter={changeFilterHandler} />
+                <Action items={filterMice} onAddNewMouse={() => setAddNewMouse(true)}onAddBreeding={() => setAddBreeding(true)} onChangeFilter={changeFilterHandler} />
                 {addNewMouse && <AddMouse onAddMouse={addMouseHandler} onCancel={() => setAddNewMouse(false)} />}
+                {addBreeding && <AddBreeding onAddBreeding={addBreedingHandler} onCancel={() => setAddBreeding(false)} />}
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
                 <MiceList items={filterMice} onSelectChange={selectChangeHandler} />
             </header>

@@ -38,6 +38,20 @@ class MiceDB:
         db.execute('INSERT INTO mice VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', value)
         self.conn.commit()
         return mouse.get('id')
+    
+    # Create Breeding
+    def create_breeding(self, mouse):
+        """
+        Create a breeding in database
+        """
+        print(mouse)
+        db = self.getMiceDB()
+        value = self.getValueFromBreeding(mouse)
+        db.execute('INSERT INTO breeding VALUES (?,?,?,?,?,?,?,?,?,?)', value)
+        count = value['males'] + value['females']
+        
+        self.conn.commit()
+        return mouse.get('id')
 
     # Retrieve one
     def getMouse(self, id):
@@ -111,6 +125,20 @@ class MiceDB:
         value.append(mouse['user'])
         value.append(mouse['date'])
         value.append(mouse['type'])
+        return value
+
+    def getValueFromBreeding(self, mouse):
+        value = []
+        value.append(uuid.uuid4().hex)
+        value.append(mouse['dob'])
+        value.append(mouse['cage'])
+        value.append(mouse['mom'])
+        value.append(mouse['dad'])
+        value.append(mouse['males'])
+        value.append(mouse['females'])
+        value.append(mouse['deaths'])
+        value.append(mouse['startid'])
+        value.append(mouse['notes'])
         return value
 
     @classmethod

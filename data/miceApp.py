@@ -64,6 +64,27 @@ def create_mouse():
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
 
+@app.route('/breeding', methods=['POST'])
+def create_breeding():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    mouse = {
+        'id': uuid.uuid4().hex,
+        'dob': post_data.get('DOB'),
+        'cage': post_data.get('cage'),
+        'mom': post_data.get('mom'),
+        'dad': post_data.get('dad'),
+        'males': post_data.get('males'),
+        'females': post_data.get('females'),
+        'deaths': post_data.get('deaths'),
+        'startid': post_data.get('startid'),
+        'notes': post_data.get('notes'),
+    }
+    print(mouse)
+    id = db.create_breeding(mouse)
+    response_object['message'] = 'mouse added!'
+    return jsonify(response_object)
+
 @app.route('/mice/<mouse_id>', methods=['GET'])
 def retrieve_mouse(mouse_id):
     response_object = {'status': 'success'}
