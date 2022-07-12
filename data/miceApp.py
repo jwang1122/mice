@@ -74,6 +74,7 @@ def create_breeding():
         'cage': post_data.get('cage'),
         'mom': post_data.get('mom'),
         'dad': post_data.get('dad'),
+        'born': post_data.get('born'),
         'males': post_data.get('males'),
         'females': post_data.get('females'),
         'deaths': post_data.get('deaths'),

@@ -49,9 +49,9 @@ class MiceDB:
         print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromBreeding(mouse)
-        db.execute('INSERT INTO breeding VALUES (?,?,?,?,?,?,?,?,?,?)', value)
-        count = value['males'] + value['females']
-        h, n = value['startid']
+        db.execute('INSERT INTO breeding VALUES (?,?,?,?,?,?,?,?,?,?,?)', value)
+        # count = value['males'] + value['females']
+        # h, n = value['startid']
         self.conn.commit()
         return mouse.get('id')
 
@@ -131,10 +131,12 @@ class MiceDB:
 
     def getValueFromBreeding(self, mouse):
         value = [uuid.uuid4().hex]
+        breedingFields = 'dob', 'cage', 'mom', 'dad', 'males', 'females'
         value.append(mouse['dob'])
         value.append(mouse['cage'])
         value.append(mouse['mom'])
         value.append(mouse['dad'])
+        value.append(mouse['born'])
         value.append(mouse['males'])
         value.append(mouse['females'])
         value.append(mouse['deaths'])

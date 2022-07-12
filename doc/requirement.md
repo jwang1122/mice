@@ -69,3 +69,15 @@ design a report for all of the possible actions
 
 create breeding system to add mice in large quantities.
 
+| Field   | How to fill    |
+| ------- | -------------- |
+| id      | uuid           |
+| dob     | onAdding       |
+| cage    | onAdding       |
+| mom     | autofill(cage) |
+| dad     | autofill(cage) |
+| born    | after          |
+| males   | after          |
+| females | after          |
+| deaths  | after          |
+| notes   | after          |

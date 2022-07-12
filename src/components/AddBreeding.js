@@ -10,11 +10,6 @@ function AddMouse(props) {
     const cageRef = useRef()
     const momRef = useRef()
     const dadRef = useRef()
-    const malesRef = useRef()
-    const femalesRef = useRef()
-    const deathsRef = useRef()
-    const startidRef = useRef()
-    const notesRef = useRef()
     const handleSubmit = (event) => {
         event.preventDefault()
         const mouse = {
@@ -22,11 +17,12 @@ function AddMouse(props) {
             cage: cageRef.current.value,
             mom: momRef.current.value,
             dad: dadRef.current.value,
-            males: malesRef.current.value,
-            females: femalesRef.current.value,
-            deaths: deathsRef.current.value,
-            startid: startidRef.current.value,
-            notes: notesRef.current.value,
+            born: 0,
+            males: 0,
+            females: 0,
+            deaths: 0,
+            startid: null,
+            notes: "None",
         }
         props.onAddBreeding(mouse)
     }
@@ -34,19 +30,14 @@ function AddMouse(props) {
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>{[
-                <Input label="Date of Birth" type="date"inputRef={dobRef} />,
-                <Input label="Cage" inputRef={cageRef} />,
-                <Input label="Mom" inputRef={momRef} />,
-                <Input label="Dad" inputRef={dadRef} />,
-                <Input label="Males" type="number" inputRef={malesRef} />,
-                <Input label="Females" type="number" inputRef={femalesRef} />,
-                <Input label="Deaths" type="number" inputRef={deathsRef} />,
-                <Input label="Start ID" inputRef={startidRef} />,
-                <Input label="Notes" inputRef={notesRef} />,
+                <Input label="Date of Birth" type="date" inputRef={dobRef} style={{ width: 200 }} />,
+                <Input label="Cage" inputRef={cageRef} style={{ width: 200 }} />,
+                <Input label="Mom" inputRef={momRef} style={{ width: 200 }} />,
+                <Input label="Dad" inputRef={dadRef} style={{ width: 200 }} />,
                 <Button color="primary" variant="contained" onClick={handleSubmit}>Add Breeding</Button>,
                 <Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button>
-            ].map(item => <Grid item>{item}</Grid>)}</Grid></form>
-        </Card>
+            ].map(item => <Grid item>{item}</Grid>)}</Grid>
+        </form></Card>
     )
 }
 

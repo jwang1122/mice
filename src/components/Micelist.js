@@ -12,18 +12,11 @@ const columns = [
     { field: 'user', headerName: 'Usage' },
     { field: 'date', headerName: 'Death date' },
 ];
-
 const MiceList = (props) => {
-
     const selectChangeHandler = id => {
         props.onSelectChange(id[0])
     }
-
     return (
-        // <>
-        //     1MICE LIST TEST
-        //     {props.items.map((data)=><MouseItem key={data.id} data={data}/>)}
-        // </>
         <div style={{width:'auto'}}>
             <DataGrid
                 rows={props.items}
@@ -31,7 +24,6 @@ const MiceList = (props) => {
                 rowsPerPageOptions={[10, 25, 50, 100, 500]}
                 checkboxSelection
                 onSelectionModelChange={selectChangeHandler}
-                
                 autoHeight={true}
                 sx={{
                     boxShadow: 2
