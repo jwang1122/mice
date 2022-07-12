@@ -1,9 +1,8 @@
 import { Button, Grid } from '@mui/material';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import './AddMouse.css';
 import Card from './UI/Card.js';
 import Input from './UI/Input.js';
-import Select from './UI/Select.js'
 
 function AddMouse(props) {
     const dobRef = useRef()

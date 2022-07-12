@@ -4,9 +4,19 @@ from pprint import pprint
 import uuid
 from datetime import datetime
 
+
 class MiceDB:
-    miceFields = 'msid', 'gender', 'geno', 'dob.', 'ear', 'mom', 'dad', 'cage', 'user', 'date'
-    breedingFields = ''
+    miceFields = (
+        'msid', 'gender', 'geno', 'dob',
+        'ear', 'mom', 'dad', 'cage',
+        'usage', 'date', 'type'
+    )
+    breedingFields = (
+        'dob', 'cage', 'mom',
+        'born',  'dad', 'males',
+        'females', 'deaths', 'notes'
+    )
+
     def __init__(self, dbname, url=None):
         self.dbname = dbname
         self.url = url
@@ -37,10 +47,11 @@ class MiceDB:
         print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromMouse(mouse)
-        db.execute('INSERT INTO mice VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', value)
+        db.execute(
+            f"INSERT INTO mice VALUES (?{',?'*len(MiceDB.miceFields)})", value)
         self.conn.commit()
         return mouse.get('id')
-    
+
     # Create Breeding
     def create_breeding(self, mouse):
         """
@@ -49,7 +60,8 @@ class MiceDB:
         print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromBreeding(mouse)
-        db.execute('INSERT INTO breeding VALUES (?,?,?,?,?,?,?,?,?,?,?)', value)
+        db.execute(
+            f"INSERT INTO breeding VALUES (?{',?'*len(MiceDB.breedingFields)})", value)
         # count = value['males'] + value['females']
         # h, n = value['startid']
         self.conn.commit()
@@ -61,10 +73,10 @@ class MiceDB:
         Retrieve a mouse from database by id
         """
         db = self.getMiceDB()
-        mouse=None
+        mouse = None
         try:
             value = (id,)
-            db.execute('select * from mice where id=?',value)
+            db.execute('SELECT * FROM mice WHERE id=?', value)
             mouse = self.getMouseFromList(db.fetchone())
         except Exception as e:
             print(e)
@@ -72,14 +84,15 @@ class MiceDB:
 
     # Update
     def update(self, id, mouse):
-        print(mouse)
         """
         Update one record in database
         """
-        sql = "UPDATE mice SET cage='" + mouse['cage']+"',user='"+mouse['user']+"',date='"+mouse['date']+"',type='"+mouse['type']+"' where id='"+id+"'"
-        db = self.getMiceDB()
-        db.execute(sql)
-        self.conn.commit()
+        # sql = "UPDATE mice SET cage='" + mouse['cage']+"',user='"+mouse['user'] + \
+        #     "',date='"+mouse['date']+"',type='" + \
+        #     mouse['type']+"' where id='"+id+"'"
+        # db = self.getMiceDB()
+        # db.execute(sql)
+        # self.conn.commit()
         self.delete(id)
         self.create(mouse)
         return id
@@ -91,57 +104,26 @@ class MiceDB:
         """
         mouse = self.getMouse(mouse_id)
         db = self.getMiceDB()
-        t = (mouse_id,)
-        db.execute('delete from mice where id=?',t)
+        db.execute('DELETE FROM mice WHERE id=?', (mouse_id,))
         self.conn.commit()
         return mouse
-        
+
     def getMouseFromList(self, row):
-        mouse = {
-            "id": row[0],
-            "msid": row[1],
-            "gender": row[2],
-            "geno": row[3],
-            "dob": row[4],
-            "ear": row[5],
-            "mom": row[6],
-            "dad": row[7],
-            "cage": row[8],
-            "user": row[9],
-            "date": row[10],
-            "type": row[11],
-        }
+        mouse = {"id": row[0]}
+        for i, field in enumerate(MiceDB.miceFields, 1):
+            mouse[field] = row[i]
         return mouse
 
     def getValueFromMouse(self, mouse):
-        value = []
-        value.append(uuid.uuid4().hex)
-        value.append(mouse['msid'])
-        value.append(mouse['gender'])
-        value.append(mouse['geno'])
-        value.append(mouse['dob'])
-        value.append(mouse['ear'])
-        value.append(mouse['mom'])
-        value.append(mouse['dad'])
-        value.append(mouse['cage'])
-        value.append(mouse['user'])
-        value.append(mouse['date'])
-        value.append(mouse['type'])
+        value = [uuid.uuid4().hex]
+        for field in MiceDB.miceFields:
+            value.append(mouse[field])
         return value
 
     def getValueFromBreeding(self, mouse):
         value = [uuid.uuid4().hex]
-        breedingFields = 'dob', 'cage', 'mom', 'dad', 'males', 'females'
-        value.append(mouse['dob'])
-        value.append(mouse['cage'])
-        value.append(mouse['mom'])
-        value.append(mouse['dad'])
-        value.append(mouse['born'])
-        value.append(mouse['males'])
-        value.append(mouse['females'])
-        value.append(mouse['deaths'])
-        value.append(mouse['startid'])
-        value.append(mouse['notes'])
+        for field in MiceDB.breedingFields:
+            value.append(mouse[field])
         return value
 
     @classmethod

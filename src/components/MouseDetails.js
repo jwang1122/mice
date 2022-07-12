@@ -15,7 +15,7 @@ const MouseDetails = props => {
     const momRef = useRef()
     const dadRef = useRef()
     const cageRef = useRef()
-    const userRef = useRef()
+    const usageRef = useRef()
     const dateRef = useRef()
     const typeRef = useRef()
     const handleSubmit = (event) => {
@@ -30,7 +30,7 @@ const MouseDetails = props => {
             mom: momRef.current.value,
             dad: dadRef.current.value,
             cage: cageRef.current.value,
-            user: userRef.current.value,
+            usage: usageRef.current.value,
             date: dateRef.current.value,
             type: typeRef.current.value,
         }
@@ -51,7 +51,7 @@ const MouseDetails = props => {
                 <Input label="Mom" defaultValue={d.mom} inputRef={momRef} />,
                 <Input label="Dad" defaultValue={d.dad} inputRef={dadRef} />,
                 <Input label="Cage" defaultValue={d.cage} inputRef={cageRef} />,
-                <Input label="User" defaultValue={d.user} inputRef={userRef} />,
+                <Input label="Usage" defaultValue={d.usage} inputRef={usageRef} />,
                 <Input label="Date" defaultValue={d.date} inputRef={dateRef} />,
                 <Input label="Type" defaultValue={d.type} inputRef={typeRef} />,
                 <Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button>,

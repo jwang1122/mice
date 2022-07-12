@@ -9,7 +9,7 @@ const columns = [
     { field: 'mom', headerName: 'Mom', },
     { field: 'dad', headerName: 'Dad' },
     { field: 'cage', headerName: 'Cage', },
-    { field: 'user', headerName: 'Usage' },
+    { field: 'usage', headerName: 'Usage' },
     { field: 'date', headerName: 'Death date' },
 ];
 const MiceList = (props) => {
