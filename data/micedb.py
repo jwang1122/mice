@@ -5,6 +5,8 @@ import uuid
 from datetime import datetime
 
 class MiceDB:
+    miceFields = 'msid', 'gender', 'geno', 'dob.', 'ear', 'mom', 'dad', 'cage', 'user', 'date'
+    breedingFields = ''
     def __init__(self, dbname, url=None):
         self.dbname = dbname
         self.url = url
@@ -49,7 +51,7 @@ class MiceDB:
         value = self.getValueFromBreeding(mouse)
         db.execute('INSERT INTO breeding VALUES (?,?,?,?,?,?,?,?,?,?)', value)
         count = value['males'] + value['females']
-        
+        h, n = value['startid']
         self.conn.commit()
         return mouse.get('id')
 
@@ -74,12 +76,12 @@ class MiceDB:
         """
         Update one record in database
         """
-        sql = "update mice set cage='" + mouse['cage']+"',user='"+mouse['user']+"',date='"+mouse['date']+"',type='"+mouse['type']+"' where id='"+id+"'"
+        sql = "UPDATE mice SET cage='" + mouse['cage']+"',user='"+mouse['user']+"',date='"+mouse['date']+"',type='"+mouse['type']+"' where id='"+id+"'"
         db = self.getMiceDB()
         db.execute(sql)
         self.conn.commit()
-        # self.delete(id)
-        # self.create(mouse)
+        self.delete(id)
+        self.create(mouse)
         return id
 
     # Delete
@@ -128,8 +130,7 @@ class MiceDB:
         return value
 
     def getValueFromBreeding(self, mouse):
-        value = []
-        value.append(uuid.uuid4().hex)
+        value = [uuid.uuid4().hex]
         value.append(mouse['dob'])
         value.append(mouse['cage'])
         value.append(mouse['mom'])

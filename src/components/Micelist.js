@@ -1,16 +1,16 @@
 import { DataGrid } from '@mui/x-data-grid';
 
 const columns = [
-    { field: 'Ms_ID', headerName: 'Mouse ID', width: 100 },
-    { field: 'gender', headerName: 'Gender', width: 30 },
-    { field: 'geno', headerName: 'Geno', width: 30 },
-    { field: 'DOB', headerName: 'D.O.B.', width: 120 },
-    { field: 'ear', headerName: 'Ear', width: 40 },
-    { field: 'mom', headerName: 'Mom', width: 100 },
-    { field: 'dad', headerName: 'Dad', width: 100 },
-    { field: 'cage', headerName: 'Cage', width: 40 },
-    { field: 'user', headerName: 'Usage', width: 100 },
-    { field: 'date', headerName: 'Death date', width: 120 },
+    { field: 'msid', headerName: 'Mouse ID' },
+    { field: 'gender', headerName: 'Gender' },
+    { field: 'geno', headerName: 'Geno' },
+    { field: 'dob', headerName: 'D.O.B.' },
+    { field: 'ear', headerName: 'Ear', },
+    { field: 'mom', headerName: 'Mom', },
+    { field: 'dad', headerName: 'Dad' },
+    { field: 'cage', headerName: 'Cage', },
+    { field: 'user', headerName: 'Usage' },
+    { field: 'date', headerName: 'Death date' },
 ];
 
 const MiceList = (props) => {
@@ -24,14 +24,15 @@ const MiceList = (props) => {
         //     1MICE LIST TEST
         //     {props.items.map((data)=><MouseItem key={data.id} data={data}/>)}
         // </>
-        <div style={{ height: 700, width: '100%' }}>
+        <div style={{width:'auto'}}>
             <DataGrid
                 rows={props.items}
                 columns={columns}
-                pageSize={50}
-                rowsPerPageOptions={[50]}
+                rowsPerPageOptions={[10, 25, 50, 100, 500]}
                 checkboxSelection
                 onSelectionModelChange={selectChangeHandler}
+                
+                autoHeight={true}
                 sx={{
                     boxShadow: 2
                 }}

@@ -7,7 +7,7 @@ import Select from './UI/Select'
 
 const MouseDetails = props => {
     const d = props.mouse
-    const msidRef = useRef(d.Ms_ID)
+    const msidRef = useRef(d.msid)
     const [gender, setGender] = useState(d.gender)
     const genoRef = useRef()
     const dobRef = useRef()
@@ -22,10 +22,10 @@ const MouseDetails = props => {
         event.preventDefault()
         const mouse = {
             id: d.id,
-            Ms_ID: msidRef.current.value,
+            msid: msidRef.current.value,
             gender: gender,
             geno: genoRef.current.value,
-            DOB: dobRef.current.value,
+            dob: dobRef.current.value,
             ear: earRef.current.value,
             mom: momRef.current.value,
             dad: dadRef.current.value,
@@ -39,13 +39,14 @@ const MouseDetails = props => {
     const handleGender = event => {
         setGender(event.target.value)
     }
+    let key = 0
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>{[
-                <Input label="Mouse ID" defaultValue={d.Ms_ID} inputRef={msidRef} />,
+                <Input label="Mouse ID" defaultValue={d.msid} inputRef={msidRef} />,
                 <Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F', 'N/A']} />,
                 <Input label="Geno" defaultValue={d.geno} inputRef={genoRef} />,
-                <Input label="Date of Birth" defaultValue={d.DOB} inputRef={dobRef} />,
+                <Input label="Date of Birth" defaultValue={d.dob} inputRef={dobRef} />,
                 <Input label="Ear" defaultValue={d.ear} inputRef={earRef} />,
                 <Input label="Mom" defaultValue={d.mom} inputRef={momRef} />,
                 <Input label="Dad" defaultValue={d.dad} inputRef={dadRef} />,
@@ -55,7 +56,7 @@ const MouseDetails = props => {
                 <Input label="Type" defaultValue={d.type} inputRef={typeRef} />,
                 <Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button>,
                 <Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button>
-            ].map(item => <Grid item>{item}</Grid>)}</Grid></form>
+            ].map(item => {key++; return <Grid item key={key}>{item}</Grid>})}</Grid></form>
         </Card>
     )
 }

@@ -18,7 +18,7 @@ function AddMouse(props) {
     const handleSubmit = (event) => {
         event.preventDefault()
         const mouse = {
-            DOB: dobRef.current.value,
+            dob: dobRef.current.value,
             cage: cageRef.current.value,
             mom: momRef.current.value,
             dad: dadRef.current.value,

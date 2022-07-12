@@ -70,7 +70,7 @@ def create_breeding():
     post_data = request.get_json()
     mouse = {
         'id': uuid.uuid4().hex,
-        'dob': post_data.get('DOB'),
+        'dob': post_data.get('dob'),
         'cage': post_data.get('cage'),
         'mom': post_data.get('mom'),
         'dad': post_data.get('dad'),

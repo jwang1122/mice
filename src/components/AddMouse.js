@@ -24,7 +24,7 @@ function AddMouse(props) {
             Ms_ID: msidRef.current.value,
             gender: gender,
             geno: genoRef.current.value,
-            DOB: dobRef.current.value,
+            dob: dobRef.current.value,
             ear: earRef.current.value,
             mom: momRef.current.value,
             dad: dadRef.current.value,
