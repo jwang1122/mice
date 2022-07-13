@@ -62,8 +62,8 @@ class MiceDB:
         value = self.getValueFromBreeding(mouse)
         db.execute(
             f"INSERT INTO breeding VALUES (?{',?'*len(MiceDB.breedingFields)})", value)
-        # count = value['males'] + value['females']
-        # h, n = value['startid']
+        count = mouse['males'] + mouse['females']
+        print(count)
         self.conn.commit()
         return mouse.get('id')
 
