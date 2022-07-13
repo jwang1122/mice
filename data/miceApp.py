@@ -6,7 +6,7 @@ Supported Micro-Services (CRUD):
     * /mice/<id> (PUT) + user body: modify existing user
     * /mice/<id> (DELETE) : remove a user by given id
 """
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, send_file
 import json
 from flask_cors import CORS
 from micedb import *
@@ -45,6 +45,9 @@ def all_mice():
     response_object['mice'] = mice
     return jsonify(response_object)
 
+@app.route('/createpdf', methods=['GET', 'POST'])
+def get_pdf():
+    return send_file('matplotlib.pdf', as_attachment=True)
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():

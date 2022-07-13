@@ -82,6 +82,17 @@ create breeding system to add mice in large quantities.
 | deaths  | after          |
 | notes   | after          |
 
-startid is inferred (the largest msid + 1)
+startid is inferred (the largest msid + 1) in the db , ❓ create maxid table in data, is it right?❓
 
-in the db
+👎😢 **Problem:** using largest msid may cause issues. 
+1. the field must be an integer, not like "A1234";
+2. if more than one user try to grab the max number, will cause duplication.
+3. that's why noadays, people use uuid which will never get duplicated.
+
+❓ What is the begining letter before the number of msid? how many different letters combination?
+
+❓ to generate breeding table with out number of mice borned, how can we add those mice into mice table? which number corresponding to which mouse?
+
+## Generate pdf report
+
+
