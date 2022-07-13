@@ -16,7 +16,7 @@ const Logo = props => <Typography
     href="/"
     sx={{
         mr: 2,
-        display: { xs: 'none', md: 'flex' },
+        display: props.display,
         flexGrow: 1,
         fontFamily: 'monospace',
         fontWeight: 700,

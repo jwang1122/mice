@@ -61,8 +61,8 @@ def create_mouse():
 @app.route('/breeding', methods=['POST'])
 def create_breeding():
     response_object = {'status': 'success'}
-    print(post_data)
     post_data = request.get_json()
+    print(post_data)
     mouse = {
         'id': uuid.uuid4().hex,
         'dob': post_data.get('dob'),
