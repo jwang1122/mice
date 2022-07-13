@@ -4,8 +4,9 @@ import { Box, Container } from '@mui/system';
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 
-const pages = ['Mice', 'Breeding', 'Experimental'];
+const pages = ['home', 'addmouse', 'addbreeding'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Logo = props => <Typography
@@ -78,7 +79,7 @@ const ResponsiveAppBar = props => {
                     {pages.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center"
-                                // component={Link}
+                                component={Link}
                                 to={`/${page}`}>
                                 {page}
                             </Typography>
@@ -94,7 +95,7 @@ const ResponsiveAppBar = props => {
                         key={page}
                         onClick={handleCloseNavMenu}
                         sx={{ my: 2, color: 'white', display: 'block' }}
-                        // component={Link}
+                        component={Link}
                         to={`/${page}`}
                     >
                         {page}
