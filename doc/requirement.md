@@ -81,3 +81,7 @@ create breeding system to add mice in large quantities.
 | females | after          |
 | deaths  | after          |
 | notes   | after          |
+
+startid is inferred (the largest msid + 1)
+
+in the db
