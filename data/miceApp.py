@@ -6,7 +6,7 @@ Supported Micro-Services (CRUD):
     * /mice/<id> (PUT) + user body: modify existing user
     * /mice/<id> (DELETE) : remove a user by given id
 """
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, send_file
 import json
 from flask_cors import CORS
 from micedb import *
@@ -46,12 +46,17 @@ def all_mice():
     return jsonify(response_object)
 
 
+@app.route('/createpdf', methods=['GET', 'POST'])
+def get_pdf():
+    return send_file('matplotlib.pdf', as_attachment=True)
+
+
 @app.route('/mice', methods=['POST'])
 def create_mouse():
     response_object = {'status': 'success'}
-    post_data = request.get_json()
+    post_data: dict = request.get_json()
     mouse = {'id': uuid.uuid4().hex}
-    for field in MiceDB.miceFields:
+    for field in miceFields:
         mouse[field] = post_data.get(field)
     id = db.create(mouse)
     response_object['message'] = 'mouse added!'
@@ -62,7 +67,7 @@ def create_mouse():
 def create_breeding():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    print(post_data)
+    print(type(post_data))
     mouse = {
         'id': uuid.uuid4().hex,
         'dob': post_data.get('dob'),
@@ -100,7 +105,7 @@ def delete_user(mouse_id):
 @app.route('/mice/<mouse_id>', methods=['PUT'])
 def update_user(mouse_id):
     response_object = {'status': 'success'}
-    post_data = request.get_json()
+    post_data: dict = request.get_json()
     mouse = {
         'msid': post_data.get('msid'),
         'gender': post_data.get('gender'),

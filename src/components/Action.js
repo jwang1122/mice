@@ -7,11 +7,10 @@ import Card from "./UI/Card";
 const Action = (props) => {
     return (
         <Card>
-            <Button color="primary" variant="contained" onClick={props.onAddNewMouse}>Add New Mouse</Button>&nbsp;&nbsp;&nbsp;
-            <Button color="primary" variant="contained" onClick={props.onAddBreeding}>Add Breeding</Button>&nbsp;&nbsp;&nbsp;
+            {/* <Button color="primary" variant="contained" onClick={props.onAddNewMouse}>Add New Mouse</Button>&nbsp;&nbsp;&nbsp; */}
+            {/* <Button color="primary" variant="contained" onClick={props.onAddBreeding}>Add Breeding</Button>&nbsp;&nbsp;&nbsp; */}
             {/* <Button color="secondary" variant="contained" onClick={props.onAddNewMouse}>Show Experimental</Button> */}
             <br/><br/>
-            <Filter onChangeFilter={props.onChangeFilter} />
             {/* <Search items={props.items} /> */}
         </Card>
     )

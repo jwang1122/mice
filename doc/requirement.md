@@ -85,3 +85,9 @@ create breeding system to add mice in large quantities.
 startid is inferred (the largest msid + 1)
 
 in the db
+
+she told me that the letter in front of the msid was the type
+
+since we have the type, the letter is useless
+
+also my mom told me that only one person should be able to edit the data and everyone else is a reader

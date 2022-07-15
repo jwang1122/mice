@@ -2,21 +2,19 @@ import sqlite3
 from sqlite3 import Error
 from pprint import pprint
 import uuid
-from datetime import datetime
+
+miceFields = (
+    'msid', 'gender', 'geno', 'dob',
+    'ear', 'mom', 'dad', 'cage',
+    'usage', 'date', 'type'
+)
+breedingFields = (
+    'dob', 'cage', 'born',
+    'mom', 'dad'
+)
 
 
 class MiceDB:
-    miceFields = (
-        'msid', 'gender', 'geno', 'dob',
-        'ear', 'mom', 'dad', 'cage',
-        'usage', 'date', 'type'
-    )
-    breedingFields = (
-        'dob', 'cage', 'mom',
-        'born',  'dad', 'males',
-        'females', 'deaths', 'notes'
-    )
-
     def __init__(self, dbname, url=None):
         self.dbname = dbname
         self.url = url
@@ -48,7 +46,7 @@ class MiceDB:
         db = self.getMiceDB()
         value = self.getValueFromMouse(mouse)
         db.execute(
-            f"INSERT INTO mice VALUES (?{',?'*len(MiceDB.miceFields)})", value)
+            f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})", value)
         self.conn.commit()
         return mouse.get('id')
 
@@ -57,15 +55,41 @@ class MiceDB:
         """
         Create a breeding in database
         """
-        print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromBreeding(mouse)
         db.execute(
-            f"INSERT INTO breeding VALUES (?{',?'*len(MiceDB.breedingFields)})", value)
-        count = mouse['males'] + mouse['females']
-        print(count)
+            f"INSERT INTO breeding {('id',)+breedingFields} VALUES (?{',?'*len(breedingFields)})", value)
         self.conn.commit()
+        self.insertToMiceTable(mouse)
         return mouse.get('id')
+
+    # get max mouseid
+    def get_max_msid(self) -> int:
+        db = self.getMiceDB()
+        db.execute('SELECT max_A FROM maxid')
+        max = db.fetchone()[0]
+        db.execute(f'UPDATE maxid SET max_A={max+1}')
+        self.conn.commit()
+        return max
+
+    # Create Multiple
+
+    def insertToMiceTable(self, mouse):
+        """
+        Create a mouse in database
+        """
+        db = self.getMiceDB()
+        born = mouse.get('born')
+        for _ in range(int(born)):
+            mouse['id'] = uuid.uuid4().hex
+            mouse['msid'] = self.get_max_msid()
+            mouse['gender'] = ''
+            mouse['geno'] = ''
+            mouse['ear'] = ''
+            mouse['usage'] = ''
+            mouse['date'] = ''
+            mouse['type'] = ''
+            self.create(mouse)
 
     # Retrieve one
     def getMouse(self, id):
@@ -87,14 +111,20 @@ class MiceDB:
         """
         Update one record in database
         """
-        # sql = "UPDATE mice SET cage='" + mouse['cage']+"',user='"+mouse['user'] + \
-        #     "',date='"+mouse['date']+"',type='" + \
-        #     mouse['type']+"' where id='"+id+"'"
-        # db = self.getMiceDB()
-        # db.execute(sql)
-        # self.conn.commit()
-        self.delete(id)
-        self.create(mouse)
+        sql = f"""
+        UPDATE mice SET
+        gender='{mouse['gender']}',
+        geno='{mouse['geno']}',
+        ear='{mouse['ear']}',
+        cage='{mouse['cage']}',
+        usage='{mouse['usage']}',
+        date='{mouse['date']}',
+        type='{mouse['type']}'
+        where id='{id}'
+        """
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
         return id
 
     # Delete
@@ -110,19 +140,19 @@ class MiceDB:
 
     def getMouseFromList(self, row):
         mouse = {"id": row[0]}
-        for i, field in enumerate(MiceDB.miceFields, 1):
+        for i, field in enumerate(miceFields, 1):
             mouse[field] = row[i]
         return mouse
 
     def getValueFromMouse(self, mouse):
         value = [uuid.uuid4().hex]
-        for field in MiceDB.miceFields:
+        for field in miceFields:
             value.append(mouse[field])
         return value
 
     def getValueFromBreeding(self, mouse):
         value = [uuid.uuid4().hex]
-        for field in MiceDB.breedingFields:
+        for field in breedingFields:
             value.append(mouse[field])
         return value
 

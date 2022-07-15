@@ -39,24 +39,23 @@ const MouseDetails = props => {
     const handleGender = event => {
         setGender(event.target.value)
     }
-    let key = 0
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
-            <Grid container direction={"row"} spacing={2}>{[
-                <Input label="Mouse ID" defaultValue={d.msid} inputRef={msidRef} />,
-                <Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F', 'N/A']} />,
-                <Input label="Geno" defaultValue={d.geno} inputRef={genoRef} />,
-                <Input label="Date of Birth" defaultValue={d.dob} inputRef={dobRef} />,
-                <Input label="Ear" defaultValue={d.ear} inputRef={earRef} />,
-                <Input label="Mom" defaultValue={d.mom} inputRef={momRef} />,
-                <Input label="Dad" defaultValue={d.dad} inputRef={dadRef} />,
-                <Input label="Cage" defaultValue={d.cage} inputRef={cageRef} />,
-                <Input label="Usage" defaultValue={d.usage} inputRef={usageRef} />,
-                <Input label="Date" defaultValue={d.date} inputRef={dateRef} />,
-                <Input label="Type" defaultValue={d.type} inputRef={typeRef} />,
-                <Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button>,
-                <Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button>
-            ].map(item => {key++; return <Grid item key={key}>{item}</Grid>})}</Grid></form>
+            <Grid container direction={"row"} spacing={2}>
+                <Grid item><Input label="Mouse ID" defaultValue={d.msid} inputRef={msidRef} disabled={true} /></Grid>
+                <Grid item><Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F', 'N/A']} /></Grid>
+                <Grid item><Input label="Geno" defaultValue={d.geno} inputRef={genoRef} /></Grid>
+                <Grid item><Input label="Date of Birth" defaultValue={d.dob} inputRef={dobRef} disabled={true} /></Grid>
+                <Grid item><Input label="Ear" defaultValue={d.ear} inputRef={earRef} /></Grid>
+                <Grid item><Input label="Mom" defaultValue={d.mom} inputRef={momRef} disabled={true} /></Grid>
+                <Grid item><Input label="Dad" defaultValue={d.dad} inputRef={dadRef} disabled={true} /></Grid>
+                <Grid item><Input label="Cage" defaultValue={d.cage} inputRef={cageRef} /></Grid>
+                <Grid item><Input label="Usage" defaultValue={d.usage} inputRef={usageRef} /></Grid>
+                <Grid item><Input label="Date" defaultValue={d.date} inputRef={dateRef} /></Grid>
+                <Grid item><Input label="Type" defaultValue={d.type} inputRef={typeRef} /></Grid>
+                <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
+                <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>
+            </Grid></form>
         </Card>
     )
 }
