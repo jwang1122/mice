@@ -9,7 +9,7 @@ miceFields = (
     'usage', 'date', 'type'
 )
 breedingFields = (
-    'dob', 'cage', 'born',
+    'type', 'dob', 'cage', 'born',
     'mom', 'dad'
 )
 
@@ -88,7 +88,6 @@ class MiceDB:
             mouse['ear'] = ''
             mouse['usage'] = ''
             mouse['date'] = ''
-            mouse['type'] = ''
             self.create(mouse)
 
     # Retrieve one
