@@ -49,11 +49,6 @@ def all_mice():
 def get_pdf():
     return send_file('matplotlib.pdf', as_attachment=True)
 
-@app.route('/createpdf', methods=['GET', 'POST'])
-def get_pdf():
-    return send_file('matplotlib.pdf', as_attachment=True)
-
-
 @app.route('/mice', methods=['POST'])
 def create_mouse():
     response_object = {'status': 'success'}
@@ -128,4 +123,4 @@ def update_user(mouse_id):
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5000)
+    app.run(host="192.168.3.19", port=5000)

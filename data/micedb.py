@@ -9,7 +9,7 @@ miceFields = (
     'usage', 'date', 'type'
 )
 breedingFields = (
-    'dob', 'cage', 'born',
+    'type', 'dob', 'cage', 'born',
     'mom', 'dad'
 )
 
