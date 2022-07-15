@@ -6,6 +6,7 @@ import Input from './UI/Input.js';
 import addItem from './lib/create.js'
 
 function AddBreeding(props) {
+    const typeRef = useRef()
     const dobRef = useRef()
     const cageRef = useRef()
     const momRef = useRef()
@@ -14,6 +15,7 @@ function AddBreeding(props) {
     const handleSubmit = (event) => {
         event.preventDefault()
         const mouse = {
+            type: typeRef.current.value,
             dob: dobRef.current.value,
             cage: cageRef.current.value,
             mom: momRef.current.value,
@@ -30,6 +32,9 @@ function AddBreeding(props) {
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>
+                <Grid item>
+                    <Input label="Type" inputRef={typeRef} style={{ width: 200 }} />
+                </Grid>
                 <Grid item>
                     <Input label="Date of Birth" type="date" inputRef={dobRef} style={{ width: 200 }} />
                 </Grid>

@@ -65,9 +65,9 @@ def create_mouse():
 def create_breeding():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    print(type(post_data))
     mouse = {
         'id': uuid.uuid4().hex,
+        'type': post_data.get('type'),
         'dob': post_data.get('dob'),
         'cage': post_data.get('cage'),
         'mom': post_data.get('mom'),
@@ -78,7 +78,6 @@ def create_breeding():
         'deaths': post_data.get('deaths'),
         'notes': post_data.get('notes'),
     }
-    print(mouse)
     id = db.create_breeding(mouse)
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
