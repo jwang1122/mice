@@ -49,7 +49,7 @@ def all_mice():
 def get_pdf():
     post_data: dict = request.get_json()
     print(post_data)
-    return send_file('matplotlib.pdf', as_attachment=True)
+    return send_file('geno.pdf', as_attachment=True)
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():

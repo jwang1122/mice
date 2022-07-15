@@ -2,11 +2,12 @@ import Button from "./UI/Button";
 import Card from "./UI/Card";
 import classes from './AddMouse2.module.css'
 import {useState} from 'react'
-import { Document} from "react-pdf/dist/esm/entry.webpack";
+import { Document, Page} from "react-pdf/dist/esm/entry.webpack";
 
 const PdfReport = () => {
     const [blobContent, setBlobContent] = useState(null)
     const [isLoading, setLoading] = useState(true)
+    const [pageNumber, setPageNumber] = useState(1)
 
   const downloadReport = (idx) => {
     console.log(idx);
@@ -39,7 +40,10 @@ const PdfReport = () => {
       <form onSubmit={submitHandler}>
         <Button name="Load PDF" type="submit" />
       </form>
-      {!isLoading && <Document file={window.URL.createObjectURL(blobContent)}/>}
+      {!isLoading && <Document file={window.URL.createObjectURL(blobContent)}>
+        <Page pageNumber={pageNumber}/>
+        </Document>
+      }
     </Card>
   );
 };
