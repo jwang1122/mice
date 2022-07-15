@@ -49,7 +49,6 @@ def all_mice():
 def get_pdf():
     return send_file('matplotlib.pdf', as_attachment=True)
 
-
 @app.route('/mice', methods=['POST'])
 def create_mouse():
     response_object = {'status': 'success'}
@@ -66,9 +65,9 @@ def create_mouse():
 def create_breeding():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    print(type(post_data))
     mouse = {
         'id': uuid.uuid4().hex,
+        'type': post_data.get('type'),
         'dob': post_data.get('dob'),
         'cage': post_data.get('cage'),
         'mom': post_data.get('mom'),
@@ -79,7 +78,6 @@ def create_breeding():
         'deaths': post_data.get('deaths'),
         'notes': post_data.get('notes'),
     }
-    print(mouse)
     id = db.create_breeding(mouse)
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
@@ -124,4 +122,4 @@ def update_user(mouse_id):
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5000)
+    app.run(host="192.168.3.19", port=5000)
