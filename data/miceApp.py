@@ -49,10 +49,6 @@ def all_mice():
 def get_pdf():
     return send_file('matplotlib.pdf', as_attachment=True)
 
-@app.route('/createpdf', methods=['GET', 'POST'])
-def get_pdf():
-    return send_file('matplotlib.pdf', as_attachment=True)
-
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():

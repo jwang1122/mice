@@ -48,9 +48,6 @@ function AddBreeding(props) {
                 <Grid item>
                     <Button color="primary" variant="contained" onClick={handleSubmit}>Add Breeding</Button>
                 </Grid>
-                <Grid item>
-                    <Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button>
-                </Grid>
             </Grid>
         </form></Card>
     )

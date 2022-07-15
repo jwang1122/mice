@@ -11,6 +11,7 @@ const columns = [
     { field: 'cage', headerName: 'Cage', },
     { field: 'usage', headerName: 'Usage' },
     { field: 'date', headerName: 'Death date' },
+    { field: 'type', headerName: 'Type' },
 ];
 const MiceList = (props) => {
     const selectChangeHandler = id => {
