@@ -23,6 +23,7 @@ const PdfReport = () => {
         console.error("Error:", error);
       })
       .then((blob) => {
+        console.log(blob)
         setBlobContent(blob)
         setLoading(false)
       });
