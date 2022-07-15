@@ -45,6 +45,9 @@ def all_mice():
     response_object['mice'] = mice
     return jsonify(response_object)
 
+@app.route('/createpdf', methods=['GET', 'POST'])
+def get_pdf():
+    return send_file('matplotlib.pdf', as_attachment=True)
 
 @app.route('/createpdf', methods=['GET', 'POST'])
 def get_pdf():
