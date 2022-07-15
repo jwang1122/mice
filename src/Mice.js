@@ -1,10 +1,10 @@
 // import './App.css';
-import { useEffect, useState } from 'react';
-import useFetch from './components/hooks/UseFetch.js';
-import MiceList from './components/Micelist.js';
-import MouseDetails from './components/MouseDetails.js';
+import { useEffect, useState } from 'react'
+import useFetch from './components/hooks/UseFetch.js'
+import MiceList from './components/Micelist.js'
+import MouseDetails from './components/MouseDetails.js'
 import updateItem from './components/lib/update.js'
-import Filter from './components/Filter.js';
+import Filter from './components/Filter.js'
 
 function Home(props) {
     const [mice, setMice] = useState([])

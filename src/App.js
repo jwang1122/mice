@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AddMouse from './components/AddMouse'
 import AddBreeding from './components/AddBreeding'
 import Mice from './Mice'
+import PdfReport from './components/PdfReport'
 
 const App = props => {
   const url = props.url
@@ -15,6 +16,7 @@ const App = props => {
         <Route path="/home" element={<Mice url={url} />} />
         <Route path="/addmouse" element={<AddMouse url={url} />} />
         <Route path="/addbreeding" element={<AddBreeding url={url} />} />
+        <Route path="/report" element={<PdfReport url={url} />} />
       </Routes>
     </BrowserRouter>
   );

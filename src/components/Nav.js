@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-const pages = ['home', 'addmouse', 'addbreeding'];
+const pages = ['home', 'addmouse', 'addbreeding', 'report'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Logo = props => <Typography
