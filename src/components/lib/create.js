@@ -5,6 +5,7 @@ const addItem = async (url, item) => {
         headers: { 'Content-Type': 'application/json' }
     });
     const data = await response.json();
+    return data
 };
 
 
