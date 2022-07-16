@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-const pages = ['home', 'cages', 'addmouse', 'addbreeding', 'report'];
+const pages = ['home', 'cages', 'addmouse', 'addcage', 'addbreeding', 'report'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Logo = props => <Typography
@@ -47,7 +47,7 @@ const ResponsiveAppBar = props => {
     return (
         <AppBar position='static'> <Container maxWidth="xl"><Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-            <Logo variant="h6" href="/"  display={{ xs: 'none', md: 'flex' }}/>
+            <Logo variant="h6" href="/" display={{ xs: 'none', md: 'flex' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
                     size="large"

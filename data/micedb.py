@@ -8,6 +8,11 @@ miceFields = (
     'ear', 'mom', 'dad', 'cage',
     'usage', 'date', 'type'
 )
+cageFields = (
+    'cageid', 'type', 'mouse0', 'mouse1',
+    'mouse2', 'mouse3', 'mouse4', 'amount',
+    'usage', 'flags', 'notes'
+)
 breedingFields = (
     'type', 'dob', 'cage', 'born',
     'mom', 'dad'
@@ -27,15 +32,28 @@ class MiceDB:
     # Retrieve All
     def getMice(self):
         db = self.getMiceDB()
-        MiceList = []
+        miceList = []
         try:
-            for row in db.execute('select * from mice'):
-                Mouse = self.getMouseFromList(row)
-                MiceList.append(Mouse)
+            for row in db.execute('SELECT * FROM mice'):
+                mouse = self.getMouseFromList(row)
+                miceList.append(mouse)
         except Exception as e:
             print("micedb-26:", e)
 
-        return MiceList
+        return miceList
+
+    # Retrieve All
+    def getCages(self):
+        db = self.getMiceDB()
+        cageList = []
+        try:
+            for row in db.execute('SELECT * FROM cages'):
+                cage = self.getCageFromList(row)
+                cageList.append(cage)
+        except Exception as e:
+            print("micedb-26:", e)
+
+        return cageList
 
     # Create One
     def create(self, mouse):
@@ -47,6 +65,19 @@ class MiceDB:
         value = self.getValueFromMouse(mouse)
         db.execute(
             f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})", value)
+        self.conn.commit()
+        return mouse.get('id')
+
+    # Create One
+    def create_cage(self, mouse):
+        """
+        Create a mouse in database
+        """
+        print(mouse)
+        db = self.getMiceDB()
+        value = self.getValueFromCage(mouse)
+        db.execute(
+            f"INSERT INTO cages VALUES (?{',?'*len(cageFields)})", value)
         self.conn.commit()
         return mouse.get('id')
 
@@ -143,10 +174,22 @@ class MiceDB:
             mouse[field] = row[i]
         return mouse
 
+    def getCageFromList(self, row):
+        cage = {"id": row[0]}
+        for i, field in enumerate(cageFields, 1):
+            cage[field] = row[i]
+        return cage
+
     def getValueFromMouse(self, mouse):
         value = [uuid.uuid4().hex]
         for field in miceFields:
             value.append(mouse[field])
+        return value
+
+    def getValueFromCage(self, cage):
+        value = [uuid.uuid4().hex]
+        for field in cageFields:
+            value.append(cage[field])
         return value
 
     def getValueFromBreeding(self, mouse):
