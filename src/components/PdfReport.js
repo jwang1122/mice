@@ -4,14 +4,14 @@ import classes from './AddMouse2.module.css'
 import {useState} from 'react'
 import { Document, Page} from "react-pdf/dist/esm/entry.webpack";
 
-const PdfReport = () => {
+const PdfReport = (props) => {
     const [blobContent, setBlobContent] = useState(null)
     const [isLoading, setLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
 
   const downloadReport = (idx) => {
     console.log(idx);
-    fetch("http://localhost:5000/getreport", {
+    fetch(props.url + "/getreport", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -34,6 +34,7 @@ const PdfReport = () => {
     event.preventDefault()
     const index = 1234
     downloadReport(index)
+    setPageNumber(1)
   }
   return (
     <Card className={classes.AddMouse}>
