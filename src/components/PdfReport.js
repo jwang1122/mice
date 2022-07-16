@@ -41,13 +41,8 @@ const PdfReport = () => {
         <Button name="Load PDF" type="submit" />
       </form>
       {!isLoading && <Document file={window.URL.createObjectURL(blobContent)}>
-<<<<<<< HEAD
         <Page pageNumber={pageNumber}/>
         </Document>
-=======
-        <Page pageNumber={pageNumber} />
-      </Document>
->>>>>>> 829c2503f89fbd584bf5f03285bbada14e431696
       }
     </Card>
   );
