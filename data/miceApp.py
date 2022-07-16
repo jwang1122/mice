@@ -45,11 +45,21 @@ def all_mice():
     response_object['mice'] = mice
     return jsonify(response_object)
 
+
+@app.route('/cages', methods=['GET'])
+def all_cages():
+    response_object = {'status': 'success'}
+    cages = db.getCages()
+    response_object['cages'] = cages
+    return jsonify(response_object)
+
+
 @app.route('/getreport', methods=['GET', 'POST'])
 def get_pdf():
     post_data: dict = request.get_json()
     print(post_data)
     return send_file('geno.pdf', as_attachment=True)
+
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():
@@ -59,6 +69,18 @@ def create_mouse():
     for field in miceFields:
         mouse[field] = post_data.get(field)
     id = db.create(mouse)
+    response_object['message'] = 'mouse added!'
+    return jsonify(response_object)
+
+
+@app.route('/cages', methods=['POST'])
+def create_cage():
+    response_object = {'status': 'success'}
+    post_data: dict = request.get_json()
+    mouse = {'id': uuid.uuid4().hex}
+    for field in cageFields:
+        mouse[field] = post_data.get(field)
+    id = db.create_cage(mouse)
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
 
