@@ -11,6 +11,15 @@ pdf = FPDF()
 pdf.add_page()
 pdf.set_font("helvetica")
 
-pdf.cell(0, 20, 'Hello the world!')
+pdf.cell(60, 10, 'Hello the world!',border=1, align="C")
+pdf.cell(60, 10, 'How are you doing today', border=1)
+pdf.cell(60, 10, 'How are you doing today', border=1)
+pdf.ln()
+pdf.set_text_color(255,0,0)
+pdf.set_fill_color(255,255,0)
+pdf.cell(60, 10, 'How are you doing today', border=1)
+pdf.cell(60, 10, 'How are you doing today', border=1, fill=True)
+pdf.cell(60, 10, 'How are you doing today', border=1)
+
 
 pdf.output('cell.pdf')
