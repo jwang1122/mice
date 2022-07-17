@@ -109,7 +109,7 @@ const ResponsiveAppBar = props => {
                     </IconButton>
                 </Tooltip>
                 <Menu
-                    sx={{ mt: '45px' }}
+                    sx={{ mt: '10px' }}
                     id="menu-appbar"
                     anchorEl={anchorElUser}
                     anchorOrigin={{
