@@ -52,4 +52,3 @@ pdf.write_html("""
 """)
 
 pdf.output('write_html.pdf')
-
