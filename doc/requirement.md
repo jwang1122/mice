@@ -95,7 +95,8 @@ startid is inferred (the largest msid + 1) in the db , ❓ create maxid table in
 
 ## Generate pdf report
 
-
+* [Generate pdf by python]()
+  
 in the db
 
 she told me that the letter in front of the msid was the type
@@ -103,3 +104,5 @@ she told me that the letter in front of the msid was the type
 since we have the type, the letter is useless
 
 also my mom told me that only one person should be able to edit the data and everyone else is a reader
+
+![](images/Cages.svg)
