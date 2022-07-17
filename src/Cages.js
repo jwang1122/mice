@@ -5,7 +5,6 @@ import CageList from './components/CageList.js'
 import CageDetails from './components/CageDetails.js'
 import updateItem from './components/lib/update.js'
 import Filter from './components/Filter.js'
-import { Button } from '@mui/material'
 
 function Home(props) {
     // const dummy_cages = [
@@ -17,7 +16,7 @@ function Home(props) {
     const [mouse, setMouse] = useState(null)
     const [filteredGenome, setFilteredGenome] = useState("All")
 
-    const [data, loadError, load] = useFetch(props.url + '/cages')
+    const [data, loadError] = useFetch(props.url + '/cages')
 
     useEffect(() => {
         if (!loadError && data && data.cages.length > 0) {
@@ -46,15 +45,6 @@ function Home(props) {
     const cancelHandler = () => {
         setIsDetails(false)
     }
-
-    // const addMouseHandler = mouse => {
-    //     addItem(url + '/mice', mouse, load)
-    // }
-
-    // const addBreedingHandler = breeding => {
-    //     addItem(url + '/breeding', breeding, () => { })
-    //     console.log(breeding)
-    // }
 
     const filterMice = filteredGenome === "All" ? cages : cages.filter(mouse => mouse.type === filteredGenome)
 

@@ -1,9 +1,3 @@
-from fpdf import FPDF
-
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font('helvetica')
-
 from fpdf import FPDF, HTMLMixin
 
 class PDF(FPDF, HTMLMixin):
@@ -11,6 +5,8 @@ class PDF(FPDF, HTMLMixin):
 
 pdf = PDF()
 pdf.add_page()
+pdf.set_font("helvetica")
+
 pdf.write_html("""
   <h1>Big title</h1>
   <section>
