@@ -208,3 +208,54 @@ P RBP2 flox
 ❓ when move the mouse, what are possible concerns?
 >✔️
 老鼠move的时候，我需要考虑很多事情，比如老鼠的genotype，我需要按照实验需要配对，这个我觉得你们可能没法给我提示，所以我只希望能给我一个地方标识一下，我准备把哪个老鼠move到哪个笼子里面，然后到了动物房照做就行了
+
+## Cage
+id
+cageid
+type(pair, male, female)
+mouse1id
+mouse2id
+mouse3id
+mouse4id
+mouse5id
+count
+movein1
+movein2
+movein3
+movein4
+movein5
+geno_type
+
+### sample cage pair data
+3134f349f0abcd
+A04
+pair
+A2357(M)
+A3412(F)
+null
+null
+null
+2
+2022-01-15
+2022-01-13
+null
+null
+null
+ASM
+
+### sample Male data
+3134f349f0abcd
+A06
+male
+A2357
+A3412
+A2342
+A3413
+null
+4
+2022-01-15
+2022-01-13
+2022-01-15
+2022-01-15
+null
+ASM
