@@ -173,3 +173,6 @@ cageid, mouse1id, mouse2id, mouse3id, mouse4id, mouse5id, date1, date2, date3, d
 
 7. create 21 days reminder action.
  
+
+![](images/pairCage.png)
+![](images/separationGUI.png)
