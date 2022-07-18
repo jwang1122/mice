@@ -176,3 +176,35 @@ cageid, mouse1id, mouse2id, mouse3id, mouse4id, mouse5id, date1, date2, date3, d
 
 ![](images/pairCage.png)
 ![](images/separationGUI.png)
+
+## Cage ID
+我的几个字母是固定的，包括老鼠号前面的字母，breeding cage 除了最后的B，以及笼子号前面的字母都是一样的，表示gene型
+A   ASM
+J   Nlrp3
+W  WT (B6.129, C57 BL/6J and C57 BL/6NJ)
+N Nlrp3 flox
+L Alb Cre
+S SRB1
+Y EYFP
+F Ezh2 flox
+M Myh11 constitutive Cre
+R Myh11 inducible Cre
+T Tie2 Cre
+U UTX flox 
+P RBP2 flox
+
+1. 不太明白这个pk什么意思
+
+2. breeding一共需要三种时间记录，公母放到一起的时间（pair），pups出生的时间（born），pups分笼的时间（wean）。pair以后不是一定21天born，只是可能，如果超过一段时间没有born，大概45-60天，就要提醒换pair或者处死了。born之后14天最好能提醒一下要剪尾巴做genotype，21天最好提醒一下要分笼。这里说一句，你们准备怎么处理这个时间提示啊？如果APP可以每天自动提醒我什么时间到了，我会方便很多。然后我有没有地方能够记录一下，我预估某一对pair可能快要生孩子了，需要常常检查，然后每天提醒我去看看他们生了没有
+
+3. 一笼可以有0-5只老鼠，少于5只的，在我分笼的时候，请给我提示可以放老鼠进去，最好能同时告诉我里面已经有几只了
+
+4. 我不一定能够这个时候assign老鼠的genotype结果，因为这个不是天天做的，得等我积累到一定数量才一起做。这里问一下，我做完了以后，做数据总结的时候是用Excel的，然后我可以一次性把Excel的一列结果贴过来吗？
+
+5. 不光是这里，我没看到你提老鼠耳洞的事情，这个是非常重要的，一笼五只老鼠，基本上只能靠耳洞来区别他们，当然有时候我也会用毛色或者尾巴来区别，但是主要是耳洞。这个地方顺便说一句，万一某次分笼的时候，比如说，两种不同gene型的老鼠正好公的最后剩下的几只凑一块不多于五只，我也是可能把它们凑到一笼的，毕竟要等genotype的结果出来了再重新分笼
+
+![](images/CageResponse.png)
+
+❓ when move the mouse, what are possible concerns?
+>✔️
+老鼠move的时候，我需要考虑很多事情，比如老鼠的genotype，我需要按照实验需要配对，这个我觉得你们可能没法给我提示，所以我只希望能给我一个地方标识一下，我准备把哪个老鼠move到哪个笼子里面，然后到了动物房照做就行了
