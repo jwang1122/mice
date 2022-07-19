@@ -225,8 +225,9 @@ movein3
 movein4
 movein5
 geno_type
+notes
 
-### sample cage pair data
+### sample cage pair data (breeding)
 3134f349f0abcd
 A04
 pair

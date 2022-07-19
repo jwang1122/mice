@@ -3,7 +3,7 @@ import uuid
 import pandas as pd
 
 # miceDF = pd.read_csv('asm.csv')
-miceDF = pd.read_csv('nlrp3.csv')
+miceDF = pd.read_csv('nlrp3list1.csv')
 
 # print(miceDF)
 
@@ -12,7 +12,7 @@ miceDF = pd.read_csv('nlrp3.csv')
 conn = sqlite3.connect('mice.db')
 c = conn.cursor()
 
-vals = 'msid', 'gender', 'geno', 'dob.', 'ear', 'mom', 'dad', 'cage', 'usage', 'date'
+vals = 'msid', 'gender', 'geno', 'dob', 'ear', 'mom', 'dad', 'cage', 'usage', 'date'
 
 sql = f"INSERT INTO mice VALUES (?{',?' * len(vals)}, ?)"
 
