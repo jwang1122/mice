@@ -146,4 +146,4 @@ def update_user(mouse_id):
 
 
 if __name__ == '__main__':
-    app.run(host="10.66.1.99", port=5000)
+    app.run(host="localhost", port=5000)

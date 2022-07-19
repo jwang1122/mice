@@ -104,10 +104,16 @@ class APP,LIST,ADD,Mouse js
 
 * in order to use @Material Table, install the following modules
 
-```
-npm install @mui/material @emotion/react @emotion/styled --legacy-peer-deps
-npm install @mui/icons-material --legacy-peer-deps
-(env) C:\Users\12818\workspace\students\hongkai\react\mice>npm install @mui/x-data-grid 
+✔️😄 Good for "react": "^17.0.2",
+
+```dos
+✔️😄 npm install @mui/material 
+✔️😄 npm install @emotion/react 
+✔️😄 npm install @emotion/styled
+✔️😄 npm install @mui/icons-material
+✔️😄 npm install @mui/x-data-grid
+✔️😄 npm install datatables
+--legacy-peer-deps
 ```
 
 * [Main entry](../src/App.js) 👉[modiry](index.js)

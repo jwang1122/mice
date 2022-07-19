@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AddMouse from './components/AddMouse'
 import AddCage from './components/AddCage'
 import AddBreeding from './components/AddBreeding'
-import Mice from './Mice'
+import Mice from './components/Mice'
 import Cages from './Cages.js'
 import PdfReport from './components/PdfReport'
 
