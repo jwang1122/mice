@@ -103,7 +103,9 @@ she told me that the letter in front of the msid was the type
 
 since we have the type, the letter is useless
 
-also my mom told me that only one person should be able to edit the data and everyone else is a reader
+only one person should be able to edit the data and everyone else is a reader
+
+size of columns in micelist and cagelist should be adjustable
 
 王老师，我刚刚看了一下，我上个礼拜提出来的要求基本上还差很多啊。
 1. 我没有看到我的breeding pair的list，无论是在mice list里面单独标注，让我可以提出来，还是单独给我一个list，我需要能够看到。因为我需要随时调整这个配对的，不能单独列出来，我很不方便
