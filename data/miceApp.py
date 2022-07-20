@@ -77,11 +77,9 @@ def create_mouse():
 def create_cage():
     response_object = {'status': 'success'}
     post_data: dict = request.get_json()
-    mouse = {'id': uuid.uuid4().hex}
-    for field in cageFields:
-        mouse[field] = post_data.get(field)
-    id = db.create_cage(mouse)
-    response_object['message'] = 'mouse added!'
+    cage = {'id': uuid.uuid4().hex, 'cageid':post_data.get('cageid')}
+    id = db.create_cage(cage)
+    response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 
 

@@ -1,8 +1,9 @@
 import ResponsiveAppBar from './components/Nav'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import AddMouse from './components/AddMouse'
+import Pair from './components/Pair'
 import AddCage from './components/AddCage'
-import AddBreeding from './components/AddBreeding'
+import Wean from './components/Wean'
+import ActionList from './components/ActionList'
 import Mice from './components/Mice'
 import Cages from './Cages.js'
 import PdfReport from './components/PdfReport'
@@ -15,11 +16,12 @@ const App = props => {
       <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<Mice url={url} />} />
-        <Route path="/home" element={<Mice url={url} />} />
+        <Route path="/mice" element={<Mice url={url} />} />
         <Route path="/cages" element={<Cages url={url} />} />
-        <Route path="/addmouse" element={<AddMouse url={url} />} />
         <Route path="/addcage" element={<AddCage url={url} />} />
-        <Route path="/addbreeding" element={<AddBreeding url={url} />} />
+        <Route path="/pair" element={<Pair url={url} />} />
+        <Route path="/wean" element={<Wean url={url} />} />
+        <Route path="/action" element={<ActionList url={url} />} />
         <Route path="/report" element={<PdfReport url={url} />} />
       </Routes>
     </BrowserRouter>

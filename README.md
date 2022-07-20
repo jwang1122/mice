@@ -38,6 +38,7 @@
 ✔️😄 npm install @mui/icons-material
 ✔️😄 npm install @mui/x-data-grid
 ✔️😄 npm install react-router-dom
+✔️😄 npm install mui-datatables
 ```
 ✔️😢 npm install react-scripts (<span style="color:red">6 high</span> severity vulnerabilities)
 

@@ -117,5 +117,8 @@ class APP,LIST,ADD,Mouse js
 ```
 
 * [Main entry](../src/App.js) 👉[modiry](index.js)
-* [MouseList](../src/components/mice/MiceList.js)
-* [AddMouse](../src/components/mice/AddMouse.js)
+* [Load data from DB, return MiceList](../src/components/Mice.js)
+* [use MUIDataTable display mice list with filter, search, print, ...](../src/components/MiceList.js)
+[Document about MUIDataTable](https://www.npmjs.com/package/mui-datatables)
+
+* [We may not need this function AddMouse, instead using pair](../src/components/mice/AddMouse.js)

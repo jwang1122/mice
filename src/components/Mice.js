@@ -1,16 +1,14 @@
 // import './App.css';
 import { useEffect, useState } from 'react'
 import useFetch from './hooks/UseFetch.js'
-import MiceList from './Micelist.js'
+import MiceList from './MiceList.js'
 import MouseDetails from './MouseDetails.js'
 import updateItem from './lib/update.js'
-import Filter from './Filter.js'
 
 function Home(props) {
     const [mice, setMice] = useState([])
     const [isDetails, setIsDetails] = useState(false)
     const [mouse, setMouse] = useState(null)
-    const [filteredGenome, setFilteredGenome] = useState("All")
 
     const url = props.url
     const [data, loadError, load] = useFetch(url)
@@ -20,10 +18,6 @@ function Home(props) {
             setMice(data.mice)
         }
     }, [data, loadError])
-
-    const changeFilterHandler = selectedGenome => {
-        setFilteredGenome(selectedGenome)
-    }
 
     const selectChangeHandler = id => {
         if (id === undefined)
@@ -43,25 +37,12 @@ function Home(props) {
         setIsDetails(false)
     }
 
-    // const addMouseHandler = mouse => {
-    //     addItem(url + '/mice', mouse, load)
-    // }
-
-    // const addBreedingHandler = breeding => {
-    //     addItem(url + '/breeding', breeding, () => { })
-    //     console.log(breeding)
-    // }
-
-    const filterMice = filteredGenome === "All" ? mice : mice.filter(mouse => mouse.type === filteredGenome)
-
     return (
         <div className="App">
             <header className="App-header">
                 <h1>Mice Management Website</h1>
-                <Filter onChangeFilter={changeFilterHandler} />
-                {/* <Action items={filterMice} onAddNewMouse={() => setAddNewMouse(true)}onAddBreeding={() => setAddBreeding(true)} onChangeFilter={changeFilterHandler} /> */}
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <MiceList items={filterMice} onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

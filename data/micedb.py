@@ -9,9 +9,9 @@ miceFields = (
     'usage', 'date', 'type'
 )
 cageFields = (
-    'cageid', 'type', 'mouse0', 'mouse1',
-    'mouse2', 'mouse3', 'mouse4', 'amount',
-    'usage', 'flags', 'notes'
+    'cageid', 'type', 'mouse1id', 'mouse2id',
+    'mouse3id', 'mouse4id', 'mouse5id', 'count','geno_type',
+    'movein1', 'movein2', 'movein3','movein4','movein5','notes','birthdate'
 )
 breedingFields = (
     'type', 'dob', 'cage', 'born',
@@ -69,17 +69,18 @@ class MiceDB:
         return mouse.get('id')
 
     # Create One
-    def create_cage(self, mouse):
+    def create_cage(self, cage):
         """
         Create a mouse in database
         """
-        print(mouse)
+        print(cage)
         db = self.getMiceDB()
-        value = self.getValueFromCage(mouse)
+        id = uuid.uuid4().hex
+        cageid = cage['cageid']
         db.execute(
-            f"INSERT INTO cages VALUES (?{',?'*len(cageFields)})", value)
+            f"INSERT INTO cages (id, cageid) VALUES (?, ?)", (id, cageid))
         self.conn.commit()
-        return mouse.get('id')
+        return cage.get('id')
 
     # Create Breeding
     def create_breeding(self, mouse):
@@ -136,8 +137,8 @@ class MiceDB:
             print(e)
         return mouse
 
-    # Update
-    def update(self, id, mouse):
+    # Update mice
+    def update (self, id, mouse):
         """
         Update one record in database
         """
@@ -150,6 +151,35 @@ class MiceDB:
         usage='{mouse['usage']}',
         date='{mouse['date']}',
         type='{mouse['type']}'
+        where id='{id}'
+        """
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
+        return id
+
+    # Update cages
+    def update_cages (self, id, cage):
+        """
+        Update one record in database
+        """
+        sql = f"""
+        UPDATE cages SET
+        type='{cage['gender']}',
+        mouse1id='{cage['mouse1id']}',
+        mouse2id='{cage['mouse2id']}',
+        mouse3id='{cage['mouse3id']}',
+        mouse4id='{cage['mouse4id']}',
+        mouse5id='{cage['mouse5id']}',
+        count='{cage['count']}',
+        geno_type='{cage['genotype']}',
+        movein1='{cage['movein1']}',
+        movein2='{cage['movein2']}',
+        movein3='{cage['movein3']}',
+        movein4='{cage['movein4']}',
+        movein5='{cage['movein5']}',
+        notes='{cage['notes']}',
+        birthdate='{cage['birthdate']}'
         where id='{id}'
         """
         db = self.getMiceDB()

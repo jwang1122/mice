@@ -4,7 +4,6 @@ import useFetch from './components/hooks/UseFetch.js'
 import CageList from './components/CageList.js'
 import CageDetails from './components/CageDetails.js'
 import updateItem from './components/lib/update.js'
-import Filter from './components/Filter.js'
 
 function Home(props) {
     // const dummy_cages = [
@@ -13,8 +12,7 @@ function Home(props) {
     // ]
     const [cages, setCages] = useState([])
     const [isDetails, setIsDetails] = useState(false)
-    const [mouse, setMouse] = useState(null)
-    const [filteredGenome, setFilteredGenome] = useState("All")
+    const [cage, setCage] = useState(null)
 
     const [data, loadError] = useFetch(props.url + '/cages')
 
@@ -24,21 +22,18 @@ function Home(props) {
         }
     }, [data, loadError])
 
-    const changeFilterHandler = selectedGenome => {
-        setFilteredGenome(selectedGenome)
-    }
 
     const selectChangeHandler = id => {
         if (id === undefined)
             return
-        const mouse = cages.find(mouse => mouse.id === id)
+        const cage = cages.find(cage => cage.id === id)
         setIsDetails(true)
-        setMouse(mouse)
+        setCage(cage)
     }
 
-    const updateHandler = mouse => {
-        console.log(mouse)
-        updateItem(props.url + '/mice/' + mouse.id, mouse, null)
+    const updateHandler = cage => {
+        console.log(cage)
+        updateItem(props.url + '/mice/' + cage.id, cage, null)
         setIsDetails(false)
     }
 
@@ -46,16 +41,12 @@ function Home(props) {
         setIsDetails(false)
     }
 
-    const filterMice = filteredGenome === "All" ? cages : cages.filter(mouse => mouse.type === filteredGenome)
-
     return (
         <div className="App">
             <header className="App-header">
                 <h1>Mice Management Website</h1>
-                <Filter onChangeFilter={changeFilterHandler} />
-                {/* <Action items={filterMice} onAddNewMouse={() => setAddNewMouse(true)}onAddBreeding={() => setAddBreeding(true)} onChangeFilter={changeFilterHandler} /> */}
-                {isDetails && <CageDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <CageList items={filterMice} onSelectChange={selectChangeHandler} />
+                {isDetails && <CageDetails cage={cage} onUpdate={updateHandler} onCancel={cancelHandler} />}
+                <CageList items={cages} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );
