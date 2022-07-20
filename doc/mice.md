@@ -2,6 +2,8 @@
 
 [Markdown Utilities](../../doc/utilities.md)
 
+[Build a react firebase application](https://www.youtube.com/watch?v=VqgTr-nd7Cg)
+
 ## Getting Started
 
 ### create a react project mice
