@@ -1,0 +1,15 @@
+/* form {    
+} */
+
+.addMouse {
+    max-width: 50rem;
+    width: auto;
+}
+
+.addMouse div {
+    border: unset;
+}
+
+.addMouse label {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

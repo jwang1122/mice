@@ -18,6 +18,7 @@ breedingFields = (
     'mom', 'dad'
 )
 
+actionFields = ('date','msid','from_cage','to_cage','ear','tail','reason','notes','executed_by')
 
 class MiceDB:
     def __init__(self, dbname, url=None):
@@ -29,7 +30,7 @@ class MiceDB:
         c = self.conn.cursor()
         return c
 
-    # Retrieve All
+    # Retrieve All mice
     def getMice(self):
         db = self.getMiceDB()
         miceList = []
@@ -38,11 +39,11 @@ class MiceDB:
                 mouse = self.getMouseFromList(row)
                 miceList.append(mouse)
         except Exception as e:
-            print("micedb-26:", e)
+            print("micedb-42:", e)
 
         return miceList
 
-    # Retrieve All
+    # Retrieve All cages
     def getCages(self):
         db = self.getMiceDB()
         cageList = []
@@ -51,9 +52,22 @@ class MiceDB:
                 cage = self.getCageFromList(row)
                 cageList.append(cage)
         except Exception as e:
-            print("micedb-26:", e)
+            print("micedb-55:", e)
 
         return cageList
+
+    # Retrieve All actions
+    def getActions(self):
+        db = self.getMiceDB()
+        actionList = []
+        try:
+            for row in db.execute('SELECT * FROM actions'):
+                action = self.getActionFromList(row)
+                actionList.append(action)
+        except Exception as e:
+            print("micedb-68:", e)
+
+        return actionList
 
     # Create One
     def create(self, mouse):
@@ -209,6 +223,12 @@ class MiceDB:
         for i, field in enumerate(cageFields, 1):
             cage[field] = row[i]
         return cage
+
+    def getActionFromList(self, row):
+        action = {"id": row[0]}
+        for i, field in enumerate(actionFields, 1):
+            action[field] = row[i]
+        return action
 
     def getValueFromMouse(self, mouse):
         value = [uuid.uuid4().hex]

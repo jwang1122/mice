@@ -1,11 +1,12 @@
 // import './App.css';
 import { useEffect, useState } from 'react'
-import useFetch from './components/hooks/UseFetch.js'
-import CageList from './components/CageList.js'
-import CageDetails from './components/CageDetails.js'
-import updateItem from './components/lib/update.js'
+import useFetch from '../hooks/UseFetch.js'
+import CageList from './CageList.js'
+import CageDetails from './CageDetails.js'
+import updateItem from '../lib/update.js'
+import AddCage from './AddCage.js'
 
-function Home(props) {
+function Cages(props) {
     // const dummy_cages = [
     //     { id: 'A', cageid: '69', type: 'ASM', mouse0: '1234', mouse1: '5678', mouse2: null, mouse3: null, mouse4: null, amount: 2, usage: 'breeding', flags: null, notes: 'THEY NO PRODUCE BABIES' },
     //     { id: 'B', cageid: '42', type: 'Nlrp3', mouse0: '1111', mouse1: '2222', mouse2: '3333', mouse3: '4444', mouse4: null, amount: 4, usage: 'nothing', flags: 'fought', notes: 'yee' }
@@ -44,13 +45,13 @@ function Home(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Mice Management Website</h1>
                 {isDetails && <CageDetails cage={cage} onUpdate={updateHandler} onCancel={cancelHandler} />}
                 <CageList items={cages} onSelectChange={selectChangeHandler} />
+                <AddCage url={props.url}/>
             </header>
         </div>
     );
 }
 
 
-export default Home;
+export default Cages;

@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import { useRef, useState } from "react"
-import Input from "./UI/Input"
+import Input from "../UI/Input"
 import MouseDetails from './MouseDetails'
 
 const Search = (props) => {

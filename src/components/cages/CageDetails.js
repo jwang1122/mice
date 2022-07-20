@@ -1,8 +1,8 @@
 import { Button, Grid } from "@mui/material"
 import { useRef} from 'react'
-import './MouseDetails.css'
-import Card from './UI/Card'
-import Input from './UI/Input'
+import './CageDetails.css'
+import Card from '../UI/Card'
+import Input from '../UI/Input'
 
 const MouseDetails = props => {
     const d = props.cage

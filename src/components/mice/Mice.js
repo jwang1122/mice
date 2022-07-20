@@ -1,9 +1,9 @@
 // import './App.css';
 import { useEffect, useState } from 'react'
-import useFetch from './hooks/UseFetch.js'
+import useFetch from '../hooks/UseFetch.js'
 import MiceList from './MiceList.js'
 import MouseDetails from './MouseDetails.js'
-import updateItem from './lib/update.js'
+import updateItem from '../lib/update.js'
 
 function Home(props) {
     const [mice, setMice] = useState([])
@@ -40,7 +40,6 @@ function Home(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <h1>Mice Management Website</h1>
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
                 <MiceList items={mice} onSelectChange={selectChangeHandler} />
             </header>
