@@ -26,22 +26,6 @@ db = MiceDB('mice.db')
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        return "you are trying sign up with email:" + email
-    return """<form action="/signup" method="post">
-        <input type="text" name="email" placeholder="Enter email"></input>
-        <input type="submit" value="Signup"></input>
-    </form>"""
-
-
 @app.route('/', methods=['GET'])
 def all_mice():
     response_object = {'status': 'success'}
@@ -49,12 +33,18 @@ def all_mice():
     response_object['mice'] = mice
     return jsonify(response_object)
 
-
 @app.route('/cages', methods=['GET'])
 def all_cages():
     response_object = {'status': 'success'}
     cages = db.getCages()
     response_object['cages'] = cages
+    return jsonify(response_object)
+
+@app.route('/actions', methods=['GET'])
+def all_actions():
+    response_object = {'status': 'success'}
+    actions = db.getActions()
+    response_object['actions'] = actions
     return jsonify(response_object)
 
 
