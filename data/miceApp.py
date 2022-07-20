@@ -7,10 +7,11 @@ Supported Micro-Services (CRUD):
     * /mice/<id> (DELETE) : remove a user by given id
 """
 from flask import Flask, jsonify, redirect, request, send_file
-import json
 from flask_cors import CORS
 from micedb import *
 import uuid
+import os 
+from flask import send_from_directory     
 
 # configuration
 DEBUG = True
@@ -21,6 +22,9 @@ CORS(app)
 app.config.from_object(__name__)
 db = MiceDB('mice.db')
 
+@app.route('/favicon.ico') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/ping', methods=['GET'])
 def ping_pong():

@@ -1,9 +1,9 @@
 import { Button, Grid } from '@mui/material';
 import { useRef } from 'react';
-import './AddMouse.css';
-import addItem from './lib/create.js';
-import Card from './UI/Card.js';
-import Input from './UI/Input.js';
+import './AddCage.css';
+import addItem from '../lib/create.js';
+import Card from '../UI/Card.js';
+import Input from '../UI/Input.js';
 
 function AddCage(props) {
     const url = props.url

@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-const pages = ['mice', 'cages', 'addcage', 'pair', 'wean', 'action','report'];
+const pages = ['cages', 'mice', 'pair', 'wean', 'action','report'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Logo = props => <Typography
@@ -24,7 +24,7 @@ const Logo = props => <Typography
         color: 'inherit',
         textDecoration: 'none',
     }}
-    children="LOGO"
+    children="Mice Control"
 />
 
 const ResponsiveAppBar = props => {

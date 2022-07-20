@@ -1,6 +1,6 @@
-import Button from "./UI/Button";
-import Card from "./UI/Card";
-import classes from './AddMouse.module.css'
+import Button from "../UI/Button";
+import Card from "../UI/Card";
+import classes from './PdfReport.module.css'
 import {useState} from 'react'
 import { Document, Page} from "react-pdf/dist/esm/entry.webpack";
 
