@@ -22,7 +22,9 @@ const MiceList = (props) => {
     }
     const options = {
         // filterType: "checkbox",
-        onRowClick: rowData => selectChangeHandler(rowData)
+        onRowClick: rowData => selectChangeHandler(rowData),
+        rowsPerPageOptions:[5,10,20],
+        rowsPerPage:5
     };
 
     return (

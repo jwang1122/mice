@@ -1,6 +1,16 @@
-const Pair = () => {
+import MiceMale from './MiceMale'
+import MiceFemale from './MiceFemale'
+import PairList from './PairList'
+
+const Pair = (props) => {
+    const male = 'A0185'
+    const female = 'A0188'
     return (
-        <h1>The Pair operation will be coming soon!</h1>
+        <>
+        <PairList male={male} female={female}/>
+        <MiceMale url={props.url}/>
+        <MiceFemale url={props.url}/>
+        </>
     )
 }
 
