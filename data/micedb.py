@@ -75,7 +75,7 @@ class MiceDB:
         """
         Create a mouse in database
         """
-        print(mouse)
+        # print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromMouse(mouse)
         db.execute(
@@ -88,7 +88,7 @@ class MiceDB:
         """
         Create a mouse in database
         """
-        print(cage)
+        # print(cage)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         cageid = cage['cageid']
@@ -109,15 +109,28 @@ class MiceDB:
         msid = action['msid']
         from_cage = action['from_cage']
         to_cage = action['to_cage']
+        gender = action['gender']
         reason = action['reason']
+
         db.execute(
-            f"INSERT INTO actions (id, date, msid, from_cage, to_cage, reason) VALUES (?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage,reason))
+            f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage, gender, reason))
         self.conn.commit()
-        self.update_cage(action)
+        self.update_mice_cage(action)
         return id
 
-    def update_cage(self, action):
+    def update_mice_cage(self, action):
         print("micedb:line-120",action)
+        db = self.getMiceDB()
+        sql = f"UPDATE mice set cage={action['to_cage']} where id={action['id']}"
+        db.execute(sql)
+        self.conn.commit()
+        if(action['gender']=='M'):
+            sql = f"UPDATE cages set type='pair', mouse1id={action['msid']} where cageid={action['to_cage']}"
+        if(action['gender']=='F'):
+            sql = f"UPDATE cages set type='pair', mouse2id={action['msid']} where cageid={action['to_cage']}"
+        db.execute(sql)
+        self.conn.commit()
+    
 
     # Create Breeding
     def create_breeding(self, mouse):
