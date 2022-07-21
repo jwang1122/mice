@@ -102,7 +102,6 @@ class MiceDB:
         """
         Create a action in database
         """
-        # print(action)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         date = datetime.today().strftime('%Y-%m-%d')
@@ -119,15 +118,16 @@ class MiceDB:
         return id
 
     def update_mice_cage(self, action):
-        print("micedb:line-120",action)
+        # print("micedb:line-120",action)
         db = self.getMiceDB()
-        sql = f"UPDATE mice set cage={action['to_cage']} where id={action['id']}"
+        sql = f"UPDATE mice set cage='{action['to_cage']}' where id='{action['id']}'"
+        # print("line-125:",sql)
         db.execute(sql)
         self.conn.commit()
         if(action['gender']=='M'):
-            sql = f"UPDATE cages set type='pair', mouse1id={action['msid']} where cageid={action['to_cage']}"
+            sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2 where cageid='{action['to_cage']}'"
         if(action['gender']=='F'):
-            sql = f"UPDATE cages set type='pair', mouse2id={action['msid']} where cageid={action['to_cage']}"
+            sql = f"UPDATE cages set type='pair', mouse2id='{action['msid']}', count=2 where cageid='{action['to_cage']}'"
         db.execute(sql)
         self.conn.commit()
     

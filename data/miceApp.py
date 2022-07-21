@@ -147,14 +147,13 @@ def update_user(mouse_id):
 def create_action():
     response_object = {'status': 'success'}
     post_data: dict = request.get_json()
-    print(post_data)
     action = {
         'id':post_data.get('id'),
         'msid': post_data.get('msid'),
         'from_cage': post_data.get('from_cage'),
         'to_cage': post_data.get('to_cage'),
+        'gender': post_data.get('gender'),
         'reason': post_data.get('reason'),
-        'notes': post_data.get('notes'),
     }
     db.create_action(action)
     response_object['message'] = 'mouse updated!'
