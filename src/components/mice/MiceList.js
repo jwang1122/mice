@@ -17,7 +17,6 @@ const columns = [
 
 const MiceList = (props) => {
     const selectChangeHandler = id => {
-        console.log(id)
         props.onSelectChange(id[0])
     }
     const options = {

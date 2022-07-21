@@ -124,3 +124,19 @@ class APP,LIST,ADD,Mouse js
 [Document about MUIDataTable](https://www.npmjs.com/package/mui-datatables)
 
 * [We may not need this function AddMouse, instead using pair](../src/components/mice/AddMouse.js)
+
+🔔⚡️ **Issue:**
+
+```dos
+SelectInput.js:444 
+        
+       MUI: You have provided an out-of-range value `undefined` for the select (name="cageID") component.
+Consider providing a value that matches one of the available options or ''.
+The available values are `A06`, `A08`, `A11`, `A03`, `A12`, `WB4`.
+```
+
+✔️😄 **Solution:** assign a default value.
+
+```js Select.js
+<Dropdown name="cageID" label="Cage ID" value={availableCages[0]} options={availableCages} />&nbsp;
+```

@@ -13,8 +13,10 @@ function AddCage(props) {
         event.preventDefault()
         const cage = {
             cageid: cageidRef.current.value,
+            count:0,
         }
         addItem(url + '/cages', cage)
+        cageidRef.current.value = ''
     }
 
     return (

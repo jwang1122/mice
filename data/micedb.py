@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 from pprint import pprint
 import uuid
+from datetime import datetime
 
 miceFields = (
     'msid', 'gender', 'geno', 'dob',
@@ -92,9 +93,31 @@ class MiceDB:
         id = uuid.uuid4().hex
         cageid = cage['cageid']
         db.execute(
-            f"INSERT INTO cages (id, cageid) VALUES (?, ?)", (id, cageid))
+            f"INSERT INTO cages (id, cageid, count) VALUES (?, ?, 0)", (id, cageid))
         self.conn.commit()
         return cage.get('id')
+
+    # Create action
+    def create_action(self, action):
+        """
+        Create a action in database
+        """
+        # print(action)
+        db = self.getMiceDB()
+        id = uuid.uuid4().hex
+        date = datetime.today().strftime('%Y-%m-%d')
+        msid = action['msid']
+        from_cage = action['from_cage']
+        to_cage = action['to_cage']
+        reason = action['reason']
+        db.execute(
+            f"INSERT INTO actions (id, date, msid, from_cage, to_cage, reason) VALUES (?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage,reason))
+        self.conn.commit()
+        self.update_cage(action)
+        return id
+
+    def update_cage(self, action):
+        print("micedb:line-120",action)
 
     # Create Breeding
     def create_breeding(self, mouse):
@@ -117,6 +140,18 @@ class MiceDB:
         db.execute(f'UPDATE maxid SET max_A={max+1}')
         self.conn.commit()
         return max
+
+    def getAvailableCages(self, count=0):
+        db = self.getMiceDB()
+        cageList = []
+        try:
+            for row in db.execute(f'SELECT cageid FROM cages where count<={count}'):
+                cageid = row[0]
+                cageList.append(cageid)
+        except Exception as e:
+            print("micedb-152:", e)
+
+        return cageList
 
     # Create Multiple
 
@@ -284,8 +319,9 @@ if __name__ == '__main__':
     # print(db.create(mouse))
 
     # test retrieve many
-    mice = db.getMice()
-
-    pprint(mice)
+    # mice = db.getMice()
+    # pprint(mice)
+    cageids = db.getAvailableCages(0)
+    print(cageids)
 
     print("Done.")

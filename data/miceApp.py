@@ -40,6 +40,13 @@ def all_cages():
     response_object['cages'] = cages
     return jsonify(response_object)
 
+@app.route('/availableCageIds/<count>', methods=['GET'])
+def available_cageids(count):
+    response_object = {'status': 'success'}
+    cages = db.getAvailableCages(count)
+    response_object['cages'] = cages
+    return jsonify(response_object)
+
 @app.route('/actions', methods=['GET'])
 def all_actions():
     response_object = {'status': 'success'}
@@ -133,6 +140,23 @@ def update_user(mouse_id):
         'type': post_data.get('type'),
     }
     db.update(mouse_id, mouse)
+    response_object['message'] = 'mouse updated!'
+    return jsonify(response_object)
+
+@app.route('/actions', methods=['POST'])
+def create_action():
+    response_object = {'status': 'success'}
+    post_data: dict = request.get_json()
+    print(post_data)
+    action = {
+        'id':post_data.get('id'),
+        'msid': post_data.get('msid'),
+        'from_cage': post_data.get('from_cage'),
+        'to_cage': post_data.get('to_cage'),
+        'reason': post_data.get('reason'),
+        'notes': post_data.get('notes'),
+    }
+    db.create_action(action)
     response_object['message'] = 'mouse updated!'
     return jsonify(response_object)
 
