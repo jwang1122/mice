@@ -9,11 +9,19 @@ miceFields = (
     'ear', 'mom', 'dad', 'cage',
     'usage', 'date', 'type'
 )
+
+usedFields = (
+    'msid', 'gender', 'geno', 'birthdate',
+    'ear', 'mom', 'dad', 'cage',
+    'notes', 'termination', 'type'
+)
+
 cageFields = (
     'cageid', 'type', 'mouse1id', 'mouse2id',
     'mouse3id', 'mouse4id', 'mouse5id', 'count','geno_type',
     'movein1', 'movein2', 'movein3','movein4','movein5','notes','birthdate'
 )
+
 breedingFields = (
     'type', 'dob', 'cage', 'born',
     'mom', 'dad'
@@ -38,6 +46,19 @@ class MiceDB:
         try:
             for row in db.execute('SELECT * FROM mice'):
                 mouse = self.getMouseFromList(row)
+                miceList.append(mouse)
+        except Exception as e:
+            print("micedb-42:", e)
+
+        return miceList
+
+    # Retrieve All used mice
+    def getUsedMice(self):
+        db = self.getMiceDB()
+        miceList = []
+        try:
+            for row in db.execute('SELECT * FROM used'):
+                mouse = self.getUsedFromList(row)
                 miceList.append(mouse)
         except Exception as e:
             print("micedb-42:", e)
@@ -265,6 +286,13 @@ class MiceDB:
         for i, field in enumerate(miceFields, 1):
             mouse[field] = row[i]
         return mouse
+
+    def getUsedFromList(self, row):
+        mouse = {"id": row[0]}
+        for i, field in enumerate(usedFields, 1):
+            mouse[field] = row[i]
+        return mouse
+
 
     def getCageFromList(self, row):
         cage = {"id": row[0]}

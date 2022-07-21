@@ -42,7 +42,7 @@ const PairList = (props) => {
             }
         ]
         props.onPair(data)
-        setCageids(cageids.filter(data=>data!=cageid))
+        setCageids(cageids.filter(data=>data!==cageid))
         setCageid('')
     }
 

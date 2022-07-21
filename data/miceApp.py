@@ -40,6 +40,13 @@ def all_cages():
     response_object['cages'] = cages
     return jsonify(response_object)
 
+@app.route('/used', methods=['GET'])
+def all_used():
+    response_object = {'status': 'success'}
+    used = db.getUsedMice()
+    response_object['mice'] = used
+    return jsonify(response_object)
+
 @app.route('/availableCageIds/<count>', methods=['GET'])
 def available_cageids(count):
     response_object = {'status': 'success'}

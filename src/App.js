@@ -6,6 +6,7 @@ import Actions from './components/actions/Actions'
 import Mice from './components/mice/Mice'
 import Cages from './components/cages/Cages.js'
 import PdfReport from './components/reports/PdfReport'
+import UsedMice from './components/used/UsedMice'
 
 const App = props => {
   const url = props.url
@@ -21,6 +22,7 @@ const App = props => {
         <Route path="/wean" element={<Wean url={url} />} />
         <Route path="/action" element={<Actions url={url} />} />
         <Route path="/report" element={<PdfReport url={url} />} />
+        <Route path="/used" element={<UsedMice url={url} />} />
       </Routes>
     </BrowserRouter>
   );
