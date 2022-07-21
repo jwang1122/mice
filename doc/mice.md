@@ -227,7 +227,24 @@ the Cage.birthdate only for breeding cage.
 ## pair operation
 
 ```mermaid
-graph TB
+graph LR
+Male[("Male Mice")]
+Female[("Female Mice")]
+Pair[Pair<br>Move couple<br>to new Cage]
+Cage[(New Cage<br>breeding<br>21 days reminder<br>New Born)]
+WEAN[Wean]
 
+Male --> Pair
+Female-->Pair
+Pair-->Cage
+Cage--21 days-->WEAN
+WEAN-->Male_new
+WEAN-->Female_new
+
+classDef db fill:#aaafb0,stroke:#1a404a,stroke-width:2px;
+classDef js fill:#73dbf7,stroke:#194652,stroke-width:2px;
+
+class WEAN,Pair js
+class Male,Female,Born,Cage db
 
 ```
