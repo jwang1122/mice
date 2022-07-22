@@ -2,30 +2,23 @@ import sqlite3
 import uuid
 import pandas as pd
 
-# miceDF = pd.read_csv('asm.csv')
-miceDF = pd.read_csv('nlrp3list1.csv')
-
-# print(miceDF)
-
-# print(miceDF.columns)
+miceDF = pd.read_csv('asmUsed.csv')
 
 conn = sqlite3.connect('mice.db')
 c = conn.cursor()
 
-vals = 'msid', 'gender', 'geno', 'dob', 'ear', 'mom', 'dad', 'cage', 'usage', 'date'
+vals = 'msid', 'gender', 'geno', 'birthdate', 'ear', 'mom', 'dad', 'cage', 'notes', 'termination'
 
-sql = f"INSERT INTO mice VALUES (?{',?' * len(vals)}, ?)"
+sql = f"INSERT INTO used VALUES (?{',?' * len(vals)}, ?)"
 
-# loop
 for i, data in enumerate(miceDF.iloc):
-    # print(i, data['Ms ID'], data['Gender'])
     param = [uuid.uuid4().hex]
     for s in vals:
         if data[s] is None:
             param.append(None)
             continue
         param.append(f"{data[s]}")
-    param.append('Nlrp3')
+    param.append('asm')
     c.execute(sql, param)
     conn.commit()
 

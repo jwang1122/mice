@@ -7,10 +7,11 @@ Supported Micro-Services (CRUD):
     * /mice/<id> (DELETE) : remove a user by given id
 """
 from flask import Flask, jsonify, redirect, request, send_file
-import json
 from flask_cors import CORS
 from micedb import *
 import uuid
+import os 
+from flask import send_from_directory     
 
 # configuration
 DEBUG = True
@@ -21,22 +22,9 @@ CORS(app)
 app.config.from_object(__name__)
 db = MiceDB('mice.db')
 
-
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        return "you are trying sign up with email:" + email
-    return """<form action="/signup" method="post">
-        <input type="text" name="email" placeholder="Enter email"></input>
-        <input type="submit" value="Signup"></input>
-    </form>"""
-
+@app.route('/favicon.ico') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/', methods=['GET'])
 def all_mice():
@@ -45,12 +33,32 @@ def all_mice():
     response_object['mice'] = mice
     return jsonify(response_object)
 
-
 @app.route('/cages', methods=['GET'])
 def all_cages():
     response_object = {'status': 'success'}
     cages = db.getCages()
     response_object['cages'] = cages
+    return jsonify(response_object)
+
+@app.route('/used', methods=['GET'])
+def all_used():
+    response_object = {'status': 'success'}
+    used = db.getUsedMice()
+    response_object['mice'] = used
+    return jsonify(response_object)
+
+@app.route('/availableCageIds/<count>', methods=['GET'])
+def available_cageids(count):
+    response_object = {'status': 'success'}
+    cages = db.getAvailableCages(count)
+    response_object['cages'] = cages
+    return jsonify(response_object)
+
+@app.route('/actions', methods=['GET'])
+def all_actions():
+    response_object = {'status': 'success'}
+    actions = db.getActions()
+    response_object['actions'] = actions
     return jsonify(response_object)
 
 
@@ -77,11 +85,9 @@ def create_mouse():
 def create_cage():
     response_object = {'status': 'success'}
     post_data: dict = request.get_json()
-    mouse = {'id': uuid.uuid4().hex}
-    for field in cageFields:
-        mouse[field] = post_data.get(field)
-    id = db.create_cage(mouse)
-    response_object['message'] = 'mouse added!'
+    cage = {'id': uuid.uuid4().hex, 'cageid':post_data.get('cageid')}
+    id = db.create_cage(cage)
+    response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 
 
@@ -144,6 +150,22 @@ def update_user(mouse_id):
     response_object['message'] = 'mouse updated!'
     return jsonify(response_object)
 
+@app.route('/actions', methods=['POST'])
+def create_action():
+    response_object = {'status': 'success'}
+    post_data: dict = request.get_json()
+    action = {
+        'id':post_data.get('id'),
+        'msid': post_data.get('msid'),
+        'from_cage': post_data.get('from_cage'),
+        'to_cage': post_data.get('to_cage'),
+        'gender': post_data.get('gender'),
+        'reason': post_data.get('reason'),
+    }
+    db.create_action(action)
+    response_object['message'] = 'mouse updated!'
+    return jsonify(response_object)
+
 
 if __name__ == '__main__':
-    app.run(host="10.66.1.99", port=5000)
+    app.run(host="localhost", port=5000)

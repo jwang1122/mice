@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Select from './UI/Select'
+import Select from '../UI/Select'
 
 const Filter = props => {
     const options = [

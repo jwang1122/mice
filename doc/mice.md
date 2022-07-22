@@ -2,6 +2,8 @@
 
 [Markdown Utilities](../../doc/utilities.md)
 
+[Build a react firebase application](https://www.youtube.com/watch?v=VqgTr-nd7Cg)
+
 ## Getting Started
 
 ### create a react project mice
@@ -104,12 +106,145 @@ class APP,LIST,ADD,Mouse js
 
 * in order to use @Material Table, install the following modules
 
-```
-npm install @mui/material @emotion/react @emotion/styled --legacy-peer-deps
-npm install @mui/icons-material --legacy-peer-deps
-(env) C:\Users\12818\workspace\students\hongkai\react\mice>npm install @mui/x-data-grid 
+✔️😄 Good for "react": "^17.0.2",
+
+```dos
+✔️😄 npm install @mui/material 
+✔️😄 npm install @emotion/react 
+✔️😄 npm install @emotion/styled
+✔️😄 npm install @mui/icons-material
+✔️😄 npm install @mui/x-data-grid
+✔️😄 npm install datatables
+--legacy-peer-deps
 ```
 
 * [Main entry](../src/App.js) 👉[modiry](index.js)
-* [MouseList](../src/components/mice/MiceList.js)
-* [AddMouse](../src/components/mice/AddMouse.js)
+* [Load data from DB, return MiceList](../src/components/Mice.js)
+* [use MUIDataTable display mice list with filter, search, print, ...](../src/components/MiceList.js)
+[Document about MUIDataTable](https://www.npmjs.com/package/mui-datatables)
+
+* [We may not need this function AddMouse, instead using pair](../src/components/mice/AddMouse.js)
+
+🔔⚡️ **Issue:**
+
+```dos
+SelectInput.js:444 
+        
+       MUI: You have provided an out-of-range value `undefined` for the select (name="cageID") component.
+Consider providing a value that matches one of the available options or ''.
+The available values are `A06`, `A08`, `A11`, `A03`, `A12`, `WB4`.
+```
+
+✔️😄 **Solution:** assign a default value.
+
+```js Select.js
+<Dropdown name="cageID" label="Cage ID" value={availableCages[0]} options={availableCages} />&nbsp;
+```
+
+## Mice
+```mermaid
+erDiagram
+MICE{
+text-PK id
+text msid
+text gender
+text geno
+date birthdate
+text ear
+text mom
+text dad
+text cage
+text usage
+text date
+}
+```
+
+## Actions
+
+```mermaid
+erDiagram
+ACTION{
+text id
+date action_date
+text from_cage
+text to_cage
+text msid
+text reason
+text notes
+text executed_by
+text ear
+text tail
+}
+```
+
+The action table will be used to record action on daily bases.
+
+## Cage
+
+```mermaid
+ erDiagram
+    CAGE ||--o{ MOUSE : contains
+    CAGE {
+        text id
+        text cageid
+        text type
+        text mouse1id
+        text mouse2id
+        text mouse3id
+        text mouse4id
+        text mouse5id
+        int count
+        date movein1
+        date movein2
+        date movein3
+        date movein4
+        date movein5
+        text geno_type
+        date birthdate
+    }
+    MOUSE {
+        text id
+        text msid
+        text gender
+        text geno
+        text ear
+        text mom
+        text dad
+        date birthdate
+        text cageid
+        text usage
+        text date
+    }
+```
+
+Where the possible values of Cage.type are
+1. pair(breeding)
+2. male
+3. female 
+
+the Cage.birthdate only for breeding cage.
+
+## pair operation
+
+```mermaid
+graph LR
+Male[("Male Mice")]
+Female[("Female Mice")]
+Pair[Pair<br>Move couple<br>to new Cage]
+Cage[(New Cage<br>breeding<br>21 days reminder<br>New Born)]
+WEAN[Wean]
+
+Male --> Pair
+Female-->Pair
+Pair-->Cage
+Cage--21 days-->WEAN
+WEAN-->Male_new
+WEAN-->Female_new
+
+classDef db fill:#aaafb0,stroke:#1a404a,stroke-width:2px;
+classDef js fill:#73dbf7,stroke:#194652,stroke-width:2px;
+
+class WEAN,Pair js
+class Male,Female,Born,Cage db
+
+```
