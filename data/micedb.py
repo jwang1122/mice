@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Error
 from pprint import pprint
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 import logging
 
 log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
@@ -160,9 +160,9 @@ class MiceDB:
         to_cage = action['to_cage']
         gender = action['gender']
         reason = action['reason']
-        sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage, gender, reason)
+        sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)"
         logger.info(sql)
-        db.execute(sql)
+        db.execute(sql,(id, date, msid, from_cage,to_cage, gender, reason))
         self.conn.commit()
         self.update_mice_cage(action)
         return id
@@ -184,8 +184,23 @@ class MiceDB:
             self.create_wean_action(wean, mouse)
 
     def create_wean_action(self, wean, mouse):
-        print(wean)
-        print(mouse)
+        action = {
+            'id':uuid.uuid4().hex,
+            'date':datetime.today().strftime('%Y-%m-%d'),
+            'msid':mouse['msid'],
+            'from_cage':wean['from_cage'],
+            'to_cage':wean['to_cage'],
+            'gender':'',
+            'tail':'',
+            'reason':wean['reason'],
+            'notes':'',
+            'executed_by':'',
+        }
+        self.create_action(action)
+        self.update_wean_cage(action)
+
+    def update_wean_cage(self, action):
+        print("micedb-203:", action)
 
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
