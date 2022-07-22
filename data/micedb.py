@@ -168,7 +168,7 @@ class MiceDB:
         return id
 
     def create_wean(self, wean):
-        print('micedb-171', wean)
+        # print('micedb-171', wean)
         # create mice based on count
         count = int(wean.get('count'))
         for i in range(count):
@@ -181,6 +181,11 @@ class MiceDB:
             'dob':wean['birthdate'],
             'type':'asm'}
             self.insertToMiceTable(mouse)
+            self.create_wean_action(wean, mouse)
+
+    def create_wean_action(self, wean, mouse):
+        print(wean)
+        print(mouse)
 
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
