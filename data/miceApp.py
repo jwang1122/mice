@@ -87,6 +87,14 @@ def create_mouse():
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
 
+@app.route('/wean', methods=['POST'])
+def create_wean():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    db.create_wean(post_data)
+    response_object['message'] = 'mouse added!'
+    return jsonify(response_object)
+
 
 @app.route('/cages', methods=['POST'])
 def create_cage():

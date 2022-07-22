@@ -8,6 +8,7 @@ import useFetch from '../hooks/UseFetch'
 
 const WeanForm = (props) => {
     const fromCage = props.fromCage
+    const birthdate = props.birthdate
     const [cageid, setCageid] = useState()
     const countRef = useRef()
     const reasonRef = useRef()
@@ -23,15 +24,15 @@ const WeanForm = (props) => {
 
     const submitHandler = (event) =>{
         event.preventDefault()
-        const data = [
+        const data = 
             {
-                
                 from_cage:fromCage,
                 to_cage:cageid,
                 count:countRef.current.value,
+                birthdate:birthdate,
                 reason:reasonRef.current.value,
-            },
-        ]
+            }
+        
         props.onWean(data)
         setCageids(cageids.filter(data=>data!==cageid))
         setCageid('')
@@ -40,14 +41,17 @@ const WeanForm = (props) => {
     const selectChangeHandler = (event) =>{
         setCageid(event.target.value)
     }
+
+    
     return (
         <Card>
 
             <form onSubmit={submitHandler}>
                 <Input name="from_cage" label="From Cage" className={classes.input} value={fromCage?fromCage:''} />&nbsp;
-                <Dropdown className={classes.select} name="cageID" label="To Cage" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
+                <Input name="birthdate" label="Birthdate" className={classes.input} value={birthdate?birthdate:''} />&nbsp;
+                <Dropdown className={classes.dropdown} name="cageID" label="To Cage" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
                 <Input name="count" label="Mice Count" className={classes.input} inputRef={countRef}/>&nbsp;
-                <Input name="reason" label="Reason" className={classes.input2} inputRef={reasonRef}/>
+                <Input name="reason" label="Reason" className={classes.input} inputRef={reasonRef}/>
                 <Button type="submit" className={classes.input} name='Transfer' />
             </form>
         </Card>

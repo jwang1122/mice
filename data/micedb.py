@@ -151,6 +151,9 @@ class MiceDB:
         self.update_mice_cage(action)
         return id
 
+    def create_wean(self, wean):
+        print('micedb-155', wean)
+
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
         db = self.getMiceDB()
@@ -193,9 +196,8 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            for row in db.execute(f'SELECT cageid FROM cages where count<={count}'):
-                cageid = row[0]
-                cageList.append(cageid)
+            for row in db.execute(f'SELECT cageid, "-", count FROM cages where count<={count}'):
+                cageList.append(row)
         except Exception as e:
             print("micedb-152:", e)
 
