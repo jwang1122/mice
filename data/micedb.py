@@ -6,7 +6,7 @@ from datetime import datetime
 import logging
 
 log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
-logging.basicConfig(filename='mylogs.log', filemode='w', level=logging.DEBUG, format=log_format)
+logging.basicConfig(filename='mylogs.log', filemode='w', level=logging.INFO, format=log_format)
 logger = logging.getLogger('MICEDB')
 
 miceFields = (
