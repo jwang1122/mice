@@ -9,8 +9,7 @@ import addItem from '../lib/create'
 
 function Wean(props) {
     const [cages, setCages] = useState([])
-    const [fromCage, setFromCage] = useState('')
-    const [birthdate, setBirthdate] = useState('')
+    const [selectedCage, setSelectedCage] = useState()
     const [data, loadError] = useFetch(props.url + '/greeding')
 
     useEffect(() => {
@@ -21,8 +20,7 @@ function Wean(props) {
 
 
     const selectChangeHandler = cage => {
-        setFromCage(cage[1])
-        setBirthdate(cage[9])
+        setSelectedCage(cage)
     }
 
     const weanHandler = wean => {
@@ -32,7 +30,7 @@ function Wean(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <WeanForm url={props.url} fromCage={fromCage} birthdate={birthdate} onWean={weanHandler}/>
+                <WeanForm url={props.url} selectedCage={selectedCage} onWean={weanHandler}/>
                 <CageList items={cages} onSelectChange={selectChangeHandler} />
                 <AddCage url={props.url}/>
             </header>

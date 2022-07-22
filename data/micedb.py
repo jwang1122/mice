@@ -126,9 +126,9 @@ class MiceDB:
         # print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromMouse(mouse)
-        sql = f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})", value
+        sql = f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})"
         logger.info(sql)
-        db.execute(sql)
+        db.execute(sql, value)
         self.conn.commit()
         return mouse.get('id')
 
@@ -168,7 +168,19 @@ class MiceDB:
         return id
 
     def create_wean(self, wean):
-        print('micedb-155', wean)
+        print('micedb-171', wean)
+        # create mice based on count
+        count = int(wean.get('count'))
+        for i in range(count):
+            msid = db.get_max_msid()
+            mouse = {
+            'msid':f'{msid}', 
+            'dad':wean['dad'],
+            'mom':wean['mom'],
+            'cage':wean['to_cage'], 
+            'dob':wean['birthdate'],
+            'type':'asm'}
+            self.insertToMiceTable(mouse)
 
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
@@ -230,16 +242,12 @@ class MiceDB:
         Create a mouse in database
         """
         db = self.getMiceDB()
-        born = mouse.get('born')
-        for _ in range(int(born)):
-            mouse['id'] = uuid.uuid4().hex
-            mouse['msid'] = self.get_max_msid()
-            mouse['gender'] = ''
-            mouse['geno'] = ''
-            mouse['ear'] = ''
-            mouse['usage'] = ''
-            mouse['date'] = ''
-            self.create(mouse)
+        mouse['gender'] = ''
+        mouse['geno'] = ''
+        mouse['ear'] = ''
+        mouse['usage'] = ''
+        mouse['date'] = ''
+        self.create(mouse)
 
     # Retrieve one
     def getMouse(self, id):
@@ -391,7 +399,9 @@ if __name__ == '__main__':
     # test retrieve many
     # mice = db.getMice()
     # pprint(mice)
-    cageids = db.getAvailableCages(0)
-    print(cageids)
-
+    # cageids = db.getAvailableCages(0)
+    # print(cageids)
+    wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}    
+    db.create_wean(wean)
+    
     print("Done.")

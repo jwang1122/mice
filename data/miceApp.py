@@ -63,7 +63,6 @@ def all_actions():
 
 @app.route('/greeding', methods=['GET'])
 def all_greedings():
-    print("all_greedings()...")
     response_object = {'status': 'success'}
     cages = db.getGreedings()
     response_object['cages'] = cages
@@ -91,6 +90,7 @@ def create_mouse():
 def create_wean():
     response_object = {'status': 'success'}
     post_data = request.get_json()
+    # print("miceApp-94:", post_data)
     db.create_wean(post_data)
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
