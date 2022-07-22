@@ -61,6 +61,13 @@ def all_actions():
     response_object['actions'] = actions
     return jsonify(response_object)
 
+@app.route('/greeding', methods=['GET'])
+def all_greedings():
+    print("all_greedings()...")
+    response_object = {'status': 'success'}
+    cages = db.getGreedings()
+    response_object['cages'] = cages
+    return jsonify(response_object)
 
 @app.route('/getreport', methods=['GET', 'POST'])
 def get_pdf():
@@ -87,6 +94,23 @@ def create_cage():
     post_data: dict = request.get_json()
     cage = {'id': uuid.uuid4().hex, 'cageid':post_data.get('cageid')}
     id = db.create_cage(cage)
+    response_object['message'] = 'new cage added!'
+    return jsonify(response_object)
+
+@app.route('/cages/<id>', methods=['PUT'])
+def update_cage(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    cage = {
+        'movein1':post_data.get('movein1'),
+        'movein2':post_data.get('movein2'),
+        'movein3':post_data.get('movein3'),
+        'movein4':post_data.get('movein4'),
+        'movein5':post_data.get('movein5'),
+        'birthdate':post_data.get('birthdate'),
+        'notes':post_data.get('notes'),
+    }
+    db.update_cages(id, cage)
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 

@@ -10,19 +10,18 @@ const columns = [
     { name: 'mouse4id', label: 'Mouse #4', options: { filter: false, sort:false } },
     { name: 'mouse5id', label: 'Mouse #5', options: { filter: false, sort:false }},
     { name: 'count', label: 'Amount', options: { filter: false, sort:true } },
-    { name: 'geno_type', label: 'Geno Type', options: { filter: true, sort:false } },
+    { name: 'birthdate', label: 'Birthdate', options: { filter: false, sort:false } },
+    { name: 'notes', label: 'Notes', options: { filter: false, sort:false } },
     { name: 'movein1', label: '#1 Move in', options: { filter: false, sort:false } },
     { name: 'movein2', label: '#2 Move in', options: { filter: false, sort:false } },
     { name: 'movein3', label: '#3 Move in', options: { filter: false, sort:false } },
     { name: 'movein4', label: '#4 Move in', options: { filter: false, sort:false } },
     { name: 'movein5', label: '#5 Move in', options: { filter: false, sort:false } },
-    { name: 'notes', label: 'Notes', options: { filter: false, sort:false } },
-    { name: 'birthdate', label: 'Birthdate', options: { filter: false, sort:false } },
+    { name: 'geno_type', label: 'Geno Type', options: { filter: true, sort:false } },
 ];
 const CageList = (props) => {
     const selectChangeHandler = rowData => {
-        console.log(rowData)
-        props.onSelectChange(rowData[0])
+        props.onSelectChange(rowData)
     }
     const options = {
         onRowClick: rowData => selectChangeHandler(rowData)

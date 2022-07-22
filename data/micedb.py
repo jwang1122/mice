@@ -61,7 +61,7 @@ class MiceDB:
                 mouse = self.getUsedFromList(row)
                 miceList.append(mouse)
         except Exception as e:
-            print("micedb-42:", e)
+            print("micedb-64:", e)
 
         return miceList
 
@@ -74,7 +74,7 @@ class MiceDB:
                 cage = self.getCageFromList(row)
                 cageList.append(cage)
         except Exception as e:
-            print("micedb-55:", e)
+            print("micedb-77:", e)
 
         return cageList
 
@@ -87,9 +87,22 @@ class MiceDB:
                 action = self.getActionFromList(row)
                 actionList.append(action)
         except Exception as e:
-            print("micedb-68:", e)
+            print("micedb-90:", e)
 
         return actionList
+
+    # Retrieve All actions
+    def getGreedings(self):
+        db = self.getMiceDB()
+        cageList = []
+        try:
+            for row in db.execute("SELECT * FROM cages where type='pair'"):
+                cage = self.getCageFromList(row)
+                cageList.append(cage)
+        except Exception as e:
+            print("micedb-103:", e)
+
+        return cageList
 
     # Create One
     def create(self, mouse):
@@ -145,10 +158,11 @@ class MiceDB:
         # print("line-125:",sql)
         db.execute(sql)
         self.conn.commit()
+        today = datetime.today().strftime('%Y-%m-%d')
         if(action['gender']=='M'):
-            sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2 where cageid='{action['to_cage']}'"
+            sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2, movein1='{today}' where cageid='{action['to_cage']}'"
         if(action['gender']=='F'):
-            sql = f"UPDATE cages set type='pair', mouse2id='{action['msid']}', count=2 where cageid='{action['to_cage']}'"
+            sql = f"UPDATE cages set type='pair', mouse2id='{action['msid']}', count=2, movein2='{today}' where cageid='{action['to_cage']}'"
         db.execute(sql)
         self.conn.commit()
     
@@ -248,14 +262,6 @@ class MiceDB:
         """
         sql = f"""
         UPDATE cages SET
-        type='{cage['gender']}',
-        mouse1id='{cage['mouse1id']}',
-        mouse2id='{cage['mouse2id']}',
-        mouse3id='{cage['mouse3id']}',
-        mouse4id='{cage['mouse4id']}',
-        mouse5id='{cage['mouse5id']}',
-        count='{cage['count']}',
-        geno_type='{cage['genotype']}',
         movein1='{cage['movein1']}',
         movein2='{cage['movein2']}',
         movein3='{cage['movein3']}',
