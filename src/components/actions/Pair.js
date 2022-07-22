@@ -26,8 +26,6 @@ const Pair = (props) => {
     }, [female])
 
     const pairHandler = (data) => {
-        console.log(data[0])
-        console.log(data[1])
         addItem(props.url+'/actions', data[0])
         addItem(props.url+'/actions', data[1])
     }

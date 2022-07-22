@@ -27,7 +27,7 @@ breedingFields = (
     'mom', 'dad'
 )
 
-actionFields = ('date','msid','from_cage','to_cage','ear','tail','reason','notes','executed_by')
+actionFields = ('date','msid','from_cage','to_cage','gender','tail','reason','notes','executed_by')
 
 class MiceDB:
     def __init__(self, dbname, url=None):
