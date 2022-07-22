@@ -238,8 +238,8 @@ Male --> Pair
 Female-->Pair
 Pair-->Cage
 Cage--21 days-->WEAN
-WEAN-->Male_new
-WEAN-->Female_new
+WEAN-->Male_new[(Male)]
+WEAN-->Female_new[(Female)]
 
 classDef db fill:#aaafb0,stroke:#1a404a,stroke-width:2px;
 classDef js fill:#73dbf7,stroke:#194652,stroke-width:2px;
@@ -248,3 +248,5 @@ class WEAN,Pair js
 class Male,Female,Born,Cage db
 
 ```
+
+![](images/cageManage.jpg)

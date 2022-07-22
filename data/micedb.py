@@ -3,31 +3,39 @@ from sqlite3 import Error
 from pprint import pprint
 import uuid
 from datetime import datetime
+import logging
+
+log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
+logging.basicConfig(filename='mylogs.log', filemode='w', level=logging.DEBUG, format=log_format)
+logger = logging.getLogger('MICEDB')
 
 miceFields = (
     'msid', 'gender', 'geno', 'dob',
     'ear', 'mom', 'dad', 'cage',
     'usage', 'date', 'type'
-)
+    )
 
 usedFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
     'notes', 'termination', 'type'
-)
+    )
 
 cageFields = (
     'cageid', 'type', 'mouse1id', 'mouse2id',
     'mouse3id', 'mouse4id', 'mouse5id', 'count','geno_type',
     'movein1', 'movein2', 'movein3','movein4','movein5','notes','birthdate'
-)
+    )
 
 breedingFields = (
     'type', 'dob', 'cage', 'born',
     'mom', 'dad'
-)
+    )
 
-actionFields = ('date','msid','from_cage','to_cage','gender','tail','reason','notes','executed_by')
+actionFields = (
+    'date','msid','from_cage','to_cage','gender',
+    'tail','reason','notes','executed_by'
+    )
 
 class MiceDB:
     def __init__(self, dbname, url=None):
@@ -48,7 +56,7 @@ class MiceDB:
                 mouse = self.getMouseFromList(row)
                 miceList.append(mouse)
         except Exception as e:
-            print("micedb-42:", e)
+            logger.critical(e)
 
         return miceList
 
@@ -61,7 +69,7 @@ class MiceDB:
                 mouse = self.getUsedFromList(row)
                 miceList.append(mouse)
         except Exception as e:
-            print("micedb-64:", e)
+            logger.critical(e)
 
         return miceList
 
@@ -70,11 +78,13 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            for row in db.execute('SELECT * FROM cages'):
+            sql= 'SELECT * FROM cages'
+            logger.info(sql)
+            for row in db.execute(sql):
                 cage = self.getCageFromList(row)
                 cageList.append(cage)
         except Exception as e:
-            print("micedb-77:", e)
+            logger.critical(e)
 
         return cageList
 
@@ -83,11 +93,13 @@ class MiceDB:
         db = self.getMiceDB()
         actionList = []
         try:
-            for row in db.execute('SELECT * FROM actions'):
+            sql = 'SELECT * FROM actions'
+            logger.info(sql)
+            for row in db.execute(sql):
                 action = self.getActionFromList(row)
                 actionList.append(action)
         except Exception as e:
-            print("micedb-90:", e)
+            logger.critical(e)
 
         return actionList
 
@@ -96,11 +108,13 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            for row in db.execute("SELECT * FROM cages where type='pair'"):
+            sql = "SELECT * FROM cages where type='pair'"
+            logger.info(sql)
+            for row in db.execute(sql):
                 cage = self.getCageFromList(row)
                 cageList.append(cage)
         except Exception as e:
-            print("micedb-103:", e)
+            logger.critical(e)
 
         return cageList
 
@@ -112,8 +126,9 @@ class MiceDB:
         # print(mouse)
         db = self.getMiceDB()
         value = self.getValueFromMouse(mouse)
-        db.execute(
-            f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})", value)
+        sql = f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})", value
+        logger.info(sql)
+        db.execute(sql)
         self.conn.commit()
         return mouse.get('id')
 
@@ -126,8 +141,9 @@ class MiceDB:
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         cageid = cage['cageid']
-        db.execute(
-            f"INSERT INTO cages (id, cageid, count) VALUES (?, ?, 0)", (id, cageid))
+        sql = f"INSERT INTO cages (id, cageid, count) VALUES (?, ?, 0)", (id, cageid)
+        logger.info(sql)
+        db.execute(sql)
         self.conn.commit()
         return cage.get('id')
 
@@ -144,9 +160,9 @@ class MiceDB:
         to_cage = action['to_cage']
         gender = action['gender']
         reason = action['reason']
-
-        db.execute(
-            f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage, gender, reason))
+        sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)", (id, date, msid, from_cage,to_cage, gender, reason)
+        logger.info(sql)
+        db.execute(sql)
         self.conn.commit()
         self.update_mice_cage(action)
         return id
@@ -158,7 +174,7 @@ class MiceDB:
         # print("micedb:line-120",action)
         db = self.getMiceDB()
         sql = f"UPDATE mice set cage='{action['to_cage']}' where id='{action['id']}'"
-        # print("line-125:",sql)
+        logger.info(sql)
         db.execute(sql)
         self.conn.commit()
         today = datetime.today().strftime('%Y-%m-%d')
@@ -186,9 +202,13 @@ class MiceDB:
     # get max mouseid
     def get_max_msid(self) -> int:
         db = self.getMiceDB()
-        db.execute('SELECT max_A FROM maxid')
+        sql = 'SELECT max_A FROM maxid'
+        logger.info(sql)
+        db.execute(sql)
         max = db.fetchone()[0]
-        db.execute(f'UPDATE maxid SET max_A={max+1}')
+        sql = f'UPDATE maxid SET max_A={max+1}'
+        logger.info(sql)
+        db.execute(sql)
         self.conn.commit()
         return max
 
@@ -196,14 +216,14 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            for row in db.execute(f'SELECT cageid, "-", count FROM cages where count<={count}'):
+            sql = f'SELECT cageid, "-", count FROM cages where count<={count}'
+            logger.info(sql)
+            for row in db.execute(sql):
                 cageList.append(row)
         except Exception as e:
-            print("micedb-152:", e)
+            logger.critical(e)
 
         return cageList
-
-    # Create Multiple
 
     def insertToMiceTable(self, mouse):
         """
