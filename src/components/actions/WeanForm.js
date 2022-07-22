@@ -27,7 +27,7 @@ const WeanForm = (props) => {
         const data = 
             {
                 from_cage:fromCage,
-                to_cage:cageid,
+                to_cage:cageid[0],
                 count:countRef.current.value,
                 birthdate:birthdate,
                 reason:reasonRef.current.value,

@@ -28,7 +28,7 @@ const PairList = (props) => {
                 id:male.id,
                 msid:male.msid,
                 from_cage:male.cage,
-                to_cage:cageid,
+                to_cage:cageid[0],
                 gender:male.gender,
                 reason:reasonRef.current.value,
             },
@@ -36,7 +36,7 @@ const PairList = (props) => {
                 id:female.id,
                 msid:female.msid,
                 from_cage:female.cage,
-                to_cage:cageid,
+                to_cage:cageid[0],
                 gender:female.gender,
                 reason:reasonRef.current.value,
             }
