@@ -122,6 +122,15 @@ def update_cage(id):
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 
+@app.route('/transfer/<id>', methods=['PUT'])
+def update_transfer(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    print(post_data)
+    # db.update_cages(id, cage)
+    response_object['message'] = 'new cage added!'
+    return jsonify(response_object)
+
 
 @app.route('/breeding', methods=['POST'])
 def create_breeding():

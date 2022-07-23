@@ -16,8 +16,8 @@ const columns = [
 
 
 const MiceList = (props) => {
-    const selectChangeHandler = id => {
-        props.onSelectChange(id[0])
+    const selectChangeHandler = mouse => {
+        props.onSelectChange(mouse)
     }
     const options = {
         // filterType: "checkbox",

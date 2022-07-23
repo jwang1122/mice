@@ -19,10 +19,7 @@ function Home(props) {
         }
     }, [data, loadError])
 
-    const selectChangeHandler = id => {
-        if (id === undefined)
-            return
-        const mouse = mice.find(mouse => mouse.id === id)
+    const selectChangeHandler = mouse => {
         setIsDetails(true)
         setMouse(mouse)
     }

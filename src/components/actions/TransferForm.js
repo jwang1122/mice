@@ -6,14 +6,14 @@ import Dropdown from '../UI/Select'
 import classes from './PairList.module.css'
 import useFetch from '../hooks/UseFetch'
 
-const WeanForm = (props) => {
-    const selectedCage = props.selectedCage
-    let fromCage = ''
-    if(selectedCage){
-        fromCage = selectedCage[1]
+const TransferForm = (props) => {
+    const mouse = props.mouse
+    let msid = ''
+    if(mouse){
+        msid = mouse[1]
     }
     const [cageid, setCageid] = useState()
-    const countRef = useRef()
+    const notesRef = useRef()
     const reasonRef = useRef()
     const [cageids, setCageids] = useState([])
     const url = props.url
@@ -22,7 +22,6 @@ const WeanForm = (props) => {
     useEffect(() => {
         if (!loadError && data && data.cages.length > 0) {
             setCageids(data.cages) // set available cages
-            console.log(data.cages)
         }
     }, [data, loadError])
 
@@ -30,17 +29,14 @@ const WeanForm = (props) => {
         event.preventDefault()
         const data = 
             {
-                dad:selectedCage[3],
-                mom:selectedCage[4],
-                birthdate:selectedCage[9],
-                from_cage:selectedCage[1],
+                id:mouse[0],
+                from_cage:mouse[1],
                 to_cage:cageid[0],
-                count:countRef.current.value,
+                notes:notesRef.current.value,
                 reason:reasonRef.current.value,
             }
         
-        props.onWean(data)
-        setCageids(cageids.filter(data=>data!==cageid))
+        props.onTransfer(data)
         setCageid('')
     }
 
@@ -53,9 +49,9 @@ const WeanForm = (props) => {
         <Card>
 
             <form onSubmit={submitHandler}>
-                <Input name="from_cage" label="From Cage" className={classes.input} value={fromCage} />&nbsp;
+                <Input name="msid" label="Mouse ID" className={classes.input} value={msid} />&nbsp;
                 <Dropdown className={classes.dropdown} name="cageID" label="To Cage" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
-                <Input name="count" label="Mice Count" className={classes.input} inputRef={countRef}/>&nbsp;
+                <Input name="notes" label="Notes" className={classes.input} inputRef={notesRef}/>&nbsp;
                 <Input name="reason" label="Reason" className={classes.input} inputRef={reasonRef}/>
                 <Button type="submit" className={classes.input} name='Transfer' />
             </form>
@@ -63,4 +59,4 @@ const WeanForm = (props) => {
     )
 }
 
-export default WeanForm
+export default TransferForm
