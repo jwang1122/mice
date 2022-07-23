@@ -12,18 +12,27 @@ const columns = [
     { name: 'cage', label: 'Cage', options: { filter: true, sort: true } },
     { name: 'usage', label: 'Usage', options: { filter: false, sort: false } },
     { name: 'date', label: 'Date', options: { filter: false, sort: false } },
-    { name: 'type', label: 'Type', options: { filter: true, sort: true } }];
+    { name: 'type', label: 'Type', options: { filter: true, sort: true } },
+    { name: 'group', label: 'Group', options: { filter: true, sort: false } }];
 
 
 const MiceList = (props) => {
     const selectChangeHandler = mouse => {
         props.onSelectChange(mouse)
     }
+
+    const rowSelectHandler = (current,allRows,rows)=>{
+        console.log(current)
+        console.log(allRows)
+        console.log(rows) // could be used for mouse group
+    }
+
     const options = {
         // filterType: "checkbox",
         onRowClick: rowData => selectChangeHandler(rowData),
         rowsPerPageOptions:[5,10,20],
         rowsPerPage:5,
+        onRowSelectionChange:(current,allRows,rows) => rowSelectHandler(current, allRows, rows),
     };
 
     return (

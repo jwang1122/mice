@@ -18,6 +18,8 @@ const MouseDetails = props => {
     const usageRef = useRef()
     const dateRef = useRef()
     const typeRef = useRef()
+    const groupRef = useRef()
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const updatedMouse = {
@@ -33,6 +35,7 @@ const MouseDetails = props => {
             usage: usageRef.current.value,
             date: dateRef.current.value,
             type: typeRef.current.value,
+            group: groupRef.current.value,
         }
         props.onUpdate(updatedMouse)
     }
@@ -55,6 +58,7 @@ const MouseDetails = props => {
                 <Grid item><Input label="Usage" defaultValue={mouse[9]} inputRef={usageRef} /></Grid>
                 <Grid item><Input label="Date" defaultValue={mouse[10]} inputRef={dateRef} /></Grid>
                 <Grid item><Input label="Type" defaultValue={mouse[11]} inputRef={typeRef} /></Grid>
+                <Grid item><Input label="Group" defaultValue={mouse[12]} inputRef={groupRef} /></Grid>
                 <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
                 <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>
             </Grid></form>
