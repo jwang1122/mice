@@ -1,4 +1,7 @@
 import MUIDataTable from 'mui-datatables';
+import Input from '../UI/Input'
+import Button from '../UI/Button'
+import Card from '../UI/Card'
 
 const columns = [
     { name: 'id', options: { display: false, filter: false } },
@@ -33,15 +36,19 @@ const MiceList = (props) => {
         rowsPerPageOptions:[5,10,20],
         rowsPerPage:5,
         onRowSelectionChange:(current,allRows,rows) => rowSelectHandler(current, allRows, rows),
+        customToolbarSelect:rows => {}, // get rid of trash can 
     };
 
     return (
+        <>
+        <Card><Input label="Group Name"/><Button name="Group"/></Card>
         <MUIDataTable
             title={"Mice List"}
             data={props.items}
             columns={columns}
             options={options}
         />
+        </>
     )
 }
 
