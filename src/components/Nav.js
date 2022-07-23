@@ -5,9 +5,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import classes from './Nav.module.css'
 
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder'], ['Logout', 'Logout']];
 
 const Logo = props => <Typography
     {...props}
@@ -126,7 +127,11 @@ const ResponsiveAppBar = props => {
                 >
                     {settings.map((setting) => (
                         <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center">{setting}</Typography>
+                            <Typography textAlign="center"
+                                component={Link}
+                                to={`/${setting[0]}`} className={classes.a}>
+
+                                {setting[1]}</Typography>
                         </MenuItem>
                     ))}
                 </Menu>
