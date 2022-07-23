@@ -341,6 +341,86 @@ class MiceDB:
         db.execute(sql)
         self.conn.commit()
         return id
+    
+    def update_transfer(self, transfer):
+        db = self.getMiceDB()
+        sql = f"""UPDATE mice SET cage='{transfer["to_cage"]}' where id='{transfer["id"]}'"""
+        logger.info(sql)
+        db.execute(sql)
+        self.conn.commit()
+        self.update_from_cage(transfer)
+
+    def update_from_cage(self, transfer):
+        # print("micedb-354:",transfer)
+        msid = transfer['msid']
+        cage = self.getCageById(transfer['from_cage'])
+        count = int(cage['count'])
+        # print("micedb-358:", cage)
+        if cage['mouse1id']==msid:
+            count -= 1
+            cage['mouse1id']=''
+        elif cage['mouse2id']==msid:
+            count -= 1
+            cage['mouse2id']=''
+        elif cage['mouse3id']==msid:
+            count -= 1
+            cage['mouse3id']=''
+        elif cage['mouse4id']==msid:
+            count -= 1
+            cage['mouse4id']=''
+        elif cage['mouse5id']==msid:
+            count -= 1
+            cage['mouse5id']=''
+        sql = f"""UPDATE cages SET mouse1id='{cage['mouse1id']}',mouse2id='{cage['mouse2id']}',mouse3id='{cage['mouse3id']}',mouse4id='{cage['mouse4id']}',mouse5id='{cage['mouse5id']}',count={count} where id='{cage["id"]}'"""
+        sql = sql.replace("None",'',-1)
+        # print(sql)
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
+        self.update_to_cage(transfer)
+
+    def update_to_cage(self, transfer):
+        msid = transfer['msid']
+        cage = self.getCageById(transfer['to_cage'])
+        # print("micedb-385:", cage)
+        count = int(cage['count'])
+        if not cage['mouse1id'] or len(cage['mouse1id'].strip())==0:
+            count += 1
+            cage['mouse1id']=msid
+        elif not cage['mouse2id'] or len(cage['mouse2id'].strip())==0:
+            count += 1
+            cage['mouse2id']=msid
+        elif not cage['mouse3id'] or len(cage['mouse3id'].strip())==0:
+            count += 1
+            cage['mouse3id']=msid
+        elif not cage['mouse4id'] or len(cage['mouse4id'].strip())==0:
+            count += 1
+            cage['mouse4id']=msid
+        elif not cage['mouse5id'] or len(cage['mouse5id'].strip())==0:
+            count += 1
+            cage['mouse5id']=msid
+        sql = f"""UPDATE cages SET mouse1id='{cage['mouse1id']}',mouse2id='{cage['mouse2id']}',mouse3id='{cage['mouse3id']}',mouse4id='{cage['mouse4id']}',mouse5id='{cage['mouse5id']}',count={count} where id='{cage["id"]}'"""
+        sql = sql.replace("None",'',-1)
+        # print(sql)
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
+        self.create_transfer_action(transfer)
+
+
+    def create_transfer_action(self, transfer):
+        db = self.getMiceDB()
+        id = uuid.uuid4().hex
+        date = datetime.today().strftime('%Y-%m-%d')
+        msid = transfer['msid']
+        from_cage = transfer['from_cage']
+        to_cage = transfer['to_cage']
+        gender = ''
+        reason = transfer['reason']
+        sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        logger.info(sql)
+        db.execute(sql,(id, date, msid, from_cage,to_cage, gender, reason))
+        self.conn.commit()
 
     # Delete
     def delete(self, mouse_id):
@@ -439,7 +519,8 @@ if __name__ == '__main__':
     # wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}    
     # db.create_wean(wean)
     
-    action = {'id': '5340acf3983a4520bb8fc16bc464cd41', 'date': '2022-07-23', 'msid': '1193', 'from_cage': 'J16', 'to_cage': 'A01', 'gender': '', 'tail': '', 'reason': 'wean', 'notes': '', 'executed_by': ''}
-    db.update_wean_cage(action)
-
+    # action = {'id': '5340acf3983a4520bb8fc16bc464cd41', 'date': '2022-07-23', 'msid': '1193', 'from_cage': 'J16', 'to_cage': 'A01', 'gender': '', 'tail': '', 'reason': 'wean', 'notes': '', 'executed_by': ''}
+    # db.update_wean_cage(action)
+    transfer = {'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'A01', 'to_cage': 'EA11', 'notes': 'fight', 'reason': 'fight'}
+    db.update_transfer(transfer)
     print("Done.")

@@ -30,7 +30,8 @@ const TransferForm = (props) => {
         const data = 
             {
                 id:mouse[0],
-                from_cage:mouse[1],
+                msid:mouse[1],
+                from_cage:mouse[8],
                 to_cage:cageid[0],
                 notes:notesRef.current.value,
                 reason:reasonRef.current.value,
