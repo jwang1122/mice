@@ -261,7 +261,29 @@ class MiceDB:
     def update_wean_cage(self, action):
         print("micedb-203:", action)
         cage = self.getCageById(action['to_cage'])
-        print("mice-264:", cage)
+        today = datetime.today().strftime('%Y-%m-%d')
+        flag = False
+        if cage['mouse1id']==None:
+            flag = True
+            sql = f"""UPDATE cages set mouse1id=?, movein1=?, count=? where id=?"""
+        elif cage['mouse2id']==None:
+            flag = True
+            sql = f"""UPDATE cages set mouse2id=?,  movein2=?, count=? where id=?"""
+        elif cage['mouse3id']==None:
+            flag = True
+            sql = f"""UPDATE cages set mouse3id=?,  movein3=?, count=? where id=?"""
+        elif cage['mouse4id']==None:
+            flag = True
+            sql = f"""UPDATE cages set mouse4id=?,  movein4=?, count=? where id=?"""
+        elif cage['mouse5id']==None:
+            flag = True
+            sql = f"""UPDATE cages set mouse5id=?,  movein5=?, count=? where id=?"""
+        count = int(cage['count'])
+        if flag:
+            count += 1
+            db = self.getMiceDB()
+            db.execute(sql, (action['msid'], today, count, cage['id']))
+            self.conn.commit()
 
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
