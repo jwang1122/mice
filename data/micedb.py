@@ -135,7 +135,7 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            sql = f'SELECT cageid, "-", count FROM cages where count<={count}'
+            sql = f'SELECT cageid, "-", 5-count, "-", type FROM cages where count<={count}'
             logger.info(sql)
             for row in db.execute(sql):
                 cageList.append(row)
