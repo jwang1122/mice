@@ -1,11 +1,11 @@
 import React from 'react'
-
+import classes from './BreedingReminder.module.css'
 const PairingReminder = () => {
     return (
         <>
         <h1>Pairing Reminder will be coming soon.</h1>
         <table border="1" cellPadding="15">
-            <tr>
+            <tr className={classes.tr}>
                 <th>Cage</th><th>21 days Count Down</th>
             </tr>
             <tr>

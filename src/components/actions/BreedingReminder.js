@@ -5,7 +5,7 @@ const BreedingReminder = (props) => {
         <>
         <h1>Breeding to Wean Reminder </h1>
         <table border="1" cellPadding="15">
-            <tr>
+            <tr className={classes.tr}>
                 <th>Cage</th><th>21 days Count Down</th>
             </tr>
             <tr>
