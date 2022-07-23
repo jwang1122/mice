@@ -3,7 +3,7 @@ import classes from './BreedingReminder.module.css'
 const BreedingReminder = (props) => {
     return (
         <>
-        <h1>Breeding Reminder will be coming soon.</h1>
+        <h1>Breeding to Wean Reminder </h1>
         <table border="1" cellPadding="15">
             <tr>
                 <th>Cage</th><th>21 days Count Down</th>
