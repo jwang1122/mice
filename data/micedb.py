@@ -103,6 +103,47 @@ class MiceDB:
 
         return actionList
 
+    # Retrieve one
+    def getMouse(self, id):
+        """
+        Retrieve a mouse from database by id
+        """
+        db = self.getMiceDB()
+        mouse = None
+        try:
+            value = (id,)
+            db.execute('SELECT * FROM mice WHERE id=?', value)
+            mouse = self.getMouseFromList(db.fetchone())
+        except Exception as e:
+            print(e)
+        return mouse
+
+    # get max mouseid
+    def get_max_msid(self) -> int:
+        db = self.getMiceDB()
+        sql = 'SELECT max_A FROM maxid'
+        logger.info(sql)
+        db.execute(sql)
+        max = db.fetchone()[0]
+        sql = f'UPDATE maxid SET max_A={max+1}'
+        logger.info(sql)
+        db.execute(sql)
+        self.conn.commit()
+        return max
+
+    def getAvailableCages(self, count=0):
+        db = self.getMiceDB()
+        cageList = []
+        try:
+            sql = f'SELECT cageid, "-", count FROM cages where count<={count}'
+            logger.info(sql)
+            for row in db.execute(sql):
+                cageList.append(row)
+        except Exception as e:
+            logger.critical(e)
+
+        return cageList
+
     # Retrieve All actions
     def getGreedings(self):
         db = self.getMiceDB()
@@ -117,6 +158,15 @@ class MiceDB:
             logger.critical(e)
 
         return cageList
+
+    def getCageById(self, cageid):
+        db = self.getMiceDB()
+        sql = f"SELECT * from cages where cageid='{cageid}'"
+        logger.info(sql)
+        db.execute(sql)
+        cage = self.getCageFromList(db.fetchone())
+        # print("micedb-168:", cage)
+        return cage
 
     # Create One
     def create(self, mouse):
@@ -167,22 +217,6 @@ class MiceDB:
         self.update_mice_cage(action)
         return id
 
-    def create_wean(self, wean):
-        # print('micedb-171', wean)
-        # create mice based on count
-        count = int(wean.get('count'))
-        for i in range(count):
-            msid = db.get_max_msid()
-            mouse = {
-            'msid':f'{msid}', 
-            'dad':wean['dad'],
-            'mom':wean['mom'],
-            'cage':wean['to_cage'], 
-            'dob':wean['birthdate'],
-            'type':'asm'}
-            self.insertToMiceTable(mouse)
-            self.create_wean_action(wean, mouse)
-
     def create_wean_action(self, wean, mouse):
         action = {
             'id':uuid.uuid4().hex,
@@ -199,8 +233,35 @@ class MiceDB:
         self.create_action(action)
         self.update_wean_cage(action)
 
+    # Create Breeding
+    def create_breeding(self, mouse):
+        """
+        Create a breeding in database
+        """
+        db = self.getMiceDB()
+        value = self.getValueFromBreeding(mouse)
+        db.execute(
+            f"INSERT INTO breeding {('id',)+breedingFields} VALUES (?{',?'*len(breedingFields)})", value)
+        self.conn.commit()
+        self.insertToMiceTable(mouse)
+        return mouse.get('id')
+
+    def insertToMiceTable(self, mouse):
+        """
+        Create a mouse in database
+        """
+        db = self.getMiceDB()
+        mouse['gender'] = ''
+        mouse['geno'] = ''
+        mouse['ear'] = ''
+        mouse['usage'] = ''
+        mouse['date'] = ''
+        self.create(mouse)
+
     def update_wean_cage(self, action):
         print("micedb-203:", action)
+        cage = self.getCageById(action['to_cage'])
+        print("mice-264:", cage)
 
     def update_mice_cage(self, action):
         # print("micedb:line-120",action)
@@ -217,73 +278,6 @@ class MiceDB:
         db.execute(sql)
         self.conn.commit()
     
-
-    # Create Breeding
-    def create_breeding(self, mouse):
-        """
-        Create a breeding in database
-        """
-        db = self.getMiceDB()
-        value = self.getValueFromBreeding(mouse)
-        db.execute(
-            f"INSERT INTO breeding {('id',)+breedingFields} VALUES (?{',?'*len(breedingFields)})", value)
-        self.conn.commit()
-        self.insertToMiceTable(mouse)
-        return mouse.get('id')
-
-    # get max mouseid
-    def get_max_msid(self) -> int:
-        db = self.getMiceDB()
-        sql = 'SELECT max_A FROM maxid'
-        logger.info(sql)
-        db.execute(sql)
-        max = db.fetchone()[0]
-        sql = f'UPDATE maxid SET max_A={max+1}'
-        logger.info(sql)
-        db.execute(sql)
-        self.conn.commit()
-        return max
-
-    def getAvailableCages(self, count=0):
-        db = self.getMiceDB()
-        cageList = []
-        try:
-            sql = f'SELECT cageid, "-", count FROM cages where count<={count}'
-            logger.info(sql)
-            for row in db.execute(sql):
-                cageList.append(row)
-        except Exception as e:
-            logger.critical(e)
-
-        return cageList
-
-    def insertToMiceTable(self, mouse):
-        """
-        Create a mouse in database
-        """
-        db = self.getMiceDB()
-        mouse['gender'] = ''
-        mouse['geno'] = ''
-        mouse['ear'] = ''
-        mouse['usage'] = ''
-        mouse['date'] = ''
-        self.create(mouse)
-
-    # Retrieve one
-    def getMouse(self, id):
-        """
-        Retrieve a mouse from database by id
-        """
-        db = self.getMiceDB()
-        mouse = None
-        try:
-            value = (id,)
-            db.execute('SELECT * FROM mice WHERE id=?', value)
-            mouse = self.getMouseFromList(db.fetchone())
-        except Exception as e:
-            print(e)
-        return mouse
-
     # Update mice
     def update (self, id, mouse):
         """
@@ -348,7 +342,6 @@ class MiceDB:
         for i, field in enumerate(usedFields, 1):
             mouse[field] = row[i]
         return mouse
-
 
     def getCageFromList(self, row):
         cage = {"id": row[0]}
@@ -421,7 +414,10 @@ if __name__ == '__main__':
     # pprint(mice)
     # cageids = db.getAvailableCages(0)
     # print(cageids)
-    wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}    
-    db.create_wean(wean)
+    # wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}    
+    # db.create_wean(wean)
     
+    action = {'id': '5340acf3983a4520bb8fc16bc464cd41', 'date': '2022-07-23', 'msid': '1193', 'from_cage': 'J16', 'to_cage': 'A01', 'gender': '', 'tail': '', 'reason': 'wean', 'notes': '', 'executed_by': ''}
+    db.update_wean_cage(action)
+
     print("Done.")
