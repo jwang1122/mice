@@ -290,3 +290,5 @@ EXIST--True-->UPDATE --> LOOP
 EXIST--False-->END
 
 ```
+
+[selected rows on material table](https://www.youtube.com/watch?v=FXaSQOU1PlM)
