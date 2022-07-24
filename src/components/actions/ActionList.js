@@ -6,7 +6,7 @@ const columns = [
     { name: 'msid', label: 'Mouse ID', options: { filter: false, sort:true }},
     { name: 'from_cage', label: 'From', options: { filter: true, sort:true } },
     { name: 'to_cage', label: 'To', options: { filter: true, sort:true } },
-    { name: 'ear', label: 'Ear', options: { filter: false, sort:false } },
+    { name: 'gender', label: 'Gender', options: { filter: false, sort:false } },
     { name: 'tail', label: 'tail', options: { filter: false, sort:false } },
     { name: 'reason', label: 'Reason', options: { filter: true, sort:false }},
     { name: 'notes', label: 'Notes', options: { filter: false, sort:false } },

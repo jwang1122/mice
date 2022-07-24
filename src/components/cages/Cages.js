@@ -24,17 +24,17 @@ function Cages(props) {
     }, [data, loadError])
 
 
-    const selectChangeHandler = id => {
-        if (id === undefined)
+    const selectChangeHandler = selectedCage => {
+        if (selectedCage === undefined)
             return
-        const cage = cages.find(cage => cage.id === id)
+        const cage = cages.find(cage => cage.id === selectedCage[0])
         setIsDetails(true)
         setCage(cage)
     }
 
     const updateHandler = cage => {
         console.log(cage)
-        updateItem(props.url + '/mice/' + cage.id, cage, null)
+        updateItem(props.url + '/cages/' + cage.id, cage, null)
         setIsDetails(false)
     }
 

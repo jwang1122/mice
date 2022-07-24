@@ -8,7 +8,15 @@ import useFetch from '../hooks/UseFetch'
 
 const PairList = (props) => {
     const male = props.male
+    let maleid = ''
+    if(male){
+        maleid=male[1]
+    }
     const female  = props.female
+    let femaleid = ''
+    if(female){
+        femaleid = female[1]
+    }
     const [cageid, setCageid] = useState()
     const reasonRef = useRef()
     const [cageids, setCageids] = useState([])
@@ -25,22 +33,23 @@ const PairList = (props) => {
         event.preventDefault()
         const data = [
             {
-                id:male.id,
-                msid:male.msid,
-                from_cage:male.cage,
-                to_cage:cageid,
-                gender:male.gender,
+                id:male[0],
+                msid:male[1],
+                from_cage:male[8],
+                to_cage:cageid[0],
+                gender:male[2],
                 reason:reasonRef.current.value,
             },
             {
-                id:female.id,
-                msid:female.msid,
-                from_cage:female.cage,
-                to_cage:cageid,
-                gender:female.gender,
+                id:female[0],
+                msid:female[1],
+                from_cage:female[8],
+                to_cage:cageid[0],
+                gender:female[2],
                 reason:reasonRef.current.value,
             }
         ]
+        console.log(data)
         props.onPair(data)
         setCageids(cageids.filter(data=>data!==cageid))
         setCageid('')
@@ -53,8 +62,8 @@ const PairList = (props) => {
         <Card>
 
             <form onSubmit={submitHandler}>
-                <Input name="maleID" label="Male Mouse ID" className={classes.input} value={male?male.msid:''}  />&nbsp;
-                <Input name="femaleID" label="Female Mouse ID"  className={classes.input} value={female?female.msid:''} />&nbsp;
+                <Input name="maleID" label="Male Mouse ID" className={classes.input} value={maleid}  />&nbsp;
+                <Input name="femaleID" label="Female Mouse ID"  className={classes.input} value={femaleid} />&nbsp;
                 <Dropdown className={classes.select} name="cageID" label="Cage ID" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
                 <Input name="reason" label="Reason" className={classes.input2} inputRef={reasonRef}/>
                 <Button type="submit" className={classes.input} name='OK' />

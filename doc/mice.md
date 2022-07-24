@@ -238,8 +238,8 @@ Male --> Pair
 Female-->Pair
 Pair-->Cage
 Cage--21 days-->WEAN
-WEAN-->Male_new
-WEAN-->Female_new
+WEAN-->Male_new[(Male)]
+WEAN-->Female_new[(Female)]
 
 classDef db fill:#aaafb0,stroke:#1a404a,stroke-width:2px;
 classDef js fill:#73dbf7,stroke:#194652,stroke-width:2px;
@@ -248,3 +248,47 @@ class WEAN,Pair js
 class Male,Female,Born,Cage db
 
 ```
+
+![](images/cageManage.jpg)
+
+## Update cages on action
+
+It is possible that there already some mice in the same cage.
+
+```mermaid
+graph LR
+ACTION(Action)
+BREEDING[Breeding]
+WEAN[Wean]
+TRANS[Transfer]
+
+ACTION --> BREEDING & WEAN & TRANS
+```
+
+```mermaid
+graph LR
+
+FROM[From cage]
+TO[To cage]
+MOUSE[Mouse]
+
+FROM --> MOUSE --> TO
+```
+
+```mermaid
+graph TB
+
+LOOP(loop)
+GET[Get mouse<br>from source Cage]
+EXIST{empty space?}
+UPDATE[Update mouse id<br>in distination cage<br>update msid & move in date]
+END[Terminated]
+
+LOOP --> GET
+GET --> EXIST
+EXIST--True-->UPDATE --> LOOP
+EXIST--False-->END
+
+```
+
+[selected rows on material table](https://www.youtube.com/watch?v=FXaSQOU1PlM)

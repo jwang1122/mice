@@ -1,10 +1,16 @@
 .input {
     position: relative;
     top:8px;
+    background-color: rgb(159, 240, 240);
+    border-radius: 12px;
 }
 
 .input2 {
     position: relative;
     top:8px;
     width:40%;
+}
+
+.dropdown{
+   background-color: rgb(159, 240, 240);
 }

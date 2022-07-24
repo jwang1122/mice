@@ -61,6 +61,12 @@ def all_actions():
     response_object['actions'] = actions
     return jsonify(response_object)
 
+@app.route('/greeding', methods=['GET'])
+def all_greedings():
+    response_object = {'status': 'success'}
+    cages = db.getGreedings()
+    response_object['cages'] = cages
+    return jsonify(response_object)
 
 @app.route('/getreport', methods=['GET', 'POST'])
 def get_pdf():
@@ -80,6 +86,15 @@ def create_mouse():
     response_object['message'] = 'mouse added!'
     return jsonify(response_object)
 
+@app.route('/wean', methods=['POST'])
+def create_wean():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    # print("miceApp-94:", post_data)
+    db.create_wean(post_data)
+    response_object['message'] = 'mouse added!'
+    return jsonify(response_object)
+
 
 @app.route('/cages', methods=['POST'])
 def create_cage():
@@ -88,6 +103,42 @@ def create_cage():
     cage = {'id': uuid.uuid4().hex, 'cageid':post_data.get('cageid')}
     id = db.create_cage(cage)
     response_object['message'] = 'new cage added!'
+<<<<<<< HEAD
+=======
+    return jsonify(response_object)
+
+@app.route('/cages/<id>', methods=['PUT'])
+def update_cage(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    cage = {
+        'movein1':post_data.get('movein1'),
+        'movein2':post_data.get('movein2'),
+        'movein3':post_data.get('movein3'),
+        'movein4':post_data.get('movein4'),
+        'movein5':post_data.get('movein5'),
+        'birthdate':post_data.get('birthdate'),
+        'notes':post_data.get('notes'),
+    }
+    db.update_cages(id, cage)
+    response_object['message'] = 'new cage added!'
+    return jsonify(response_object)
+
+@app.route('/transfer/<id>', methods=['PUT'])
+def update_transfer(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    db.update_transfer(id, post_data)
+    response_object['message'] = 'new transfer is updated!'
+    return jsonify(response_object)
+
+@app.route('/group', methods=['PUT'])
+def update_groups():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    db.update_groups(post_data)
+    response_object['message'] = 'new cage added!'
+>>>>>>> dc61a90c648f6d51ed5c51cf240b588e332b37e8
     return jsonify(response_object)
 
 

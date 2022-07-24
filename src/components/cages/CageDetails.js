@@ -52,21 +52,21 @@ const MouseDetails = props => {
         <Card className='addMouse'><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>
                 <Grid item><Input label="Cage ID" defaultValue={d.cageid} inputRef={cageidRef} disabled={true} /></Grid>
-                <Grid item><Input label="Type" defaultValue={d.type} inputRef={typeRef} /></Grid>
-                <Grid item><Input label="Mouse #1" defaultValue={d.mouse1id} inputRef={mouse1Ref} /></Grid>
-                <Grid item><Input label="Mouse #2" defaultValue={d.mouse2id} inputRef={mouse2Ref} /></Grid>
-                <Grid item><Input label="Mouse #3" defaultValue={d.mouse3id} inputRef={mouse3Ref} /></Grid>
-                <Grid item><Input label="Mouse #4" defaultValue={d.mouse4id} inputRef={mouse4Ref} /></Grid>
-                <Grid item><Input label="Mouse #5" defaultValue={d.mouse5id} inputRef={mouse5Ref} /></Grid>
-                <Grid item><Input label="Amount" defaultValue={d.count} inputRef={amountRef} /></Grid>
-                <Grid item><Input label="Geno Type" defaultValue={d.geno_type} inputRef={genotypeRef} /></Grid>
-                <Grid item><Input label="movein1" defaultValue={d.movein1} inputRef={movein1Ref} /></Grid>
-                <Grid item><Input label="movein1" defaultValue={d.movein2} inputRef={movein2Ref} /></Grid>
-                <Grid item><Input label="movein1" defaultValue={d.movein3} inputRef={movein3Ref} /></Grid>
-                <Grid item><Input label="movein1" defaultValue={d.movein4} inputRef={movein4Ref} /></Grid>
-                <Grid item><Input label="movein1" defaultValue={d.movein5} inputRef={movein5Ref} /></Grid>
+                <Grid item><Input label="Type" defaultValue={d.type} inputRef={typeRef}  disabled={true} /></Grid>
+                <Grid item><Input label="Mouse #1" defaultValue={d.mouse1id} inputRef={mouse1Ref}  disabled={true} /></Grid>
+                <Grid item><Input label="Mouse #2" defaultValue={d.mouse2id} inputRef={mouse2Ref}  disabled={true} /></Grid>
+                <Grid item><Input label="Mouse #3" defaultValue={d.mouse3id} inputRef={mouse3Ref}  disabled={true} /></Grid>
+                <Grid item><Input label="Mouse #4" defaultValue={d.mouse4id} inputRef={mouse4Ref}  disabled={true} /></Grid>
+                <Grid item><Input label="Mouse #5" defaultValue={d.mouse5id} inputRef={mouse5Ref}  disabled={true} /></Grid>
+                <Grid item><Input label="Amount" defaultValue={d.count} inputRef={amountRef}  disabled={true} /></Grid>
                 <Grid item><Input label="Notes" defaultValue={d.notes} inputRef={notesRef} /></Grid>
-                <Grid item><Input label="Birthdate" defaultValue={d.birthdate} inputRef={birthdateRef} /></Grid>
+                <Grid item><Input label="Birthdate" type='date' defaultValue={d.birthdate} inputRef={birthdateRef} /></Grid>
+                <Grid item><Input label="movein1" type='date' defaultValue={d.movein1} inputRef={movein1Ref} /></Grid>
+                <Grid item><Input label="movein1" type='date' defaultValue={d.movein2} inputRef={movein2Ref} /></Grid>
+                <Grid item><Input label="movein1" type='date' defaultValue={d.movein3} inputRef={movein3Ref} /></Grid>
+                <Grid item><Input label="movein1" type='date' defaultValue={d.movein4} inputRef={movein4Ref} /></Grid>
+                <Grid item><Input label="movein1" type='date' defaultValue={d.movein5} inputRef={movein5Ref} /></Grid>
+                <Grid item><Input label="Geno Type" defaultValue={d.geno_type} inputRef={genotypeRef} /></Grid>
                 <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
                 <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>
             </Grid></form>
