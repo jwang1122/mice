@@ -259,7 +259,7 @@ class MiceDB:
         self.create(mouse)
 
     def update_wean_cage(self, action):
-        print("micedb-203:", action)
+        # print("micedb-203:", action)
         cage = self.getCageById(action['to_cage'])
         today = datetime.today().strftime('%Y-%m-%d')
         flag = False
@@ -292,6 +292,7 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
+        self.update_from_cage()
         today = datetime.today().strftime('%Y-%m-%d')
         if(action['gender']=='M'):
             sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2, movein1='{today}' where cageid='{action['to_cage']}'"
