@@ -33,7 +33,7 @@ const MiceList = (props) => {
         setIds(rows)      
     }
 
-    const groupHandler = ()=>{
+    const submitHandler = ()=>{
         const group={
             name:groupNameRef.current.value,
             ids:ids.map(index=>props.items[index].id),
@@ -52,7 +52,7 @@ const MiceList = (props) => {
 
     return (
         <>
-        <Card><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" onClick={groupHandler}/></Card>
+        <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>
         <MUIDataTable
             title={"Mice List"}
             data={props.items}
