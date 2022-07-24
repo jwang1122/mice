@@ -485,7 +485,6 @@ class MiceDB:
         action = {"id": row[0]}
         for i, field in enumerate(actionFields, 1):
             action[field] = row[i]
-
         return action
 
     def getValueFromMouse(self, mouse):

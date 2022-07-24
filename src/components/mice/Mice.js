@@ -19,7 +19,10 @@ function Home(props) {
         }
     }, [data, loadError])
 
-    const selectChangeHandler = mouse => {
+    const selectChangeHandler = id => {
+        if (id === undefined)
+            return
+        const mouse = mice.find(mouse => mouse.id === id)
         setIsDetails(true)
         setMouse(mouse)
     }
@@ -38,7 +41,7 @@ function Home(props) {
         <div className="App">
             <header className="App-header">
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <MiceList items={mice} url={props.url} needGroup={true} title="Mice List" onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );
