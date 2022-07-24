@@ -62,10 +62,10 @@ const MouseDetails = props => {
                 <Grid item><Input label="Notes" defaultValue={d.notes} inputRef={notesRef} /></Grid>
                 <Grid item><Input label="Birthdate" type='date' defaultValue={d.birthdate} inputRef={birthdateRef} /></Grid>
                 <Grid item><Input label="movein1" type='date' defaultValue={d.movein1} inputRef={movein1Ref} /></Grid>
-                <Grid item><Input label="movein1" type='date' defaultValue={d.movein2} inputRef={movein2Ref} /></Grid>
-                <Grid item><Input label="movein1" type='date' defaultValue={d.movein3} inputRef={movein3Ref} /></Grid>
-                <Grid item><Input label="movein1" type='date' defaultValue={d.movein4} inputRef={movein4Ref} /></Grid>
-                <Grid item><Input label="movein1" type='date' defaultValue={d.movein5} inputRef={movein5Ref} /></Grid>
+                <Grid item><Input label="movein2" type='date' defaultValue={d.movein2} inputRef={movein2Ref} /></Grid>
+                <Grid item><Input label="movein3" type='date' defaultValue={d.movein3} inputRef={movein3Ref} /></Grid>
+                <Grid item><Input label="movein4" type='date' defaultValue={d.movein4} inputRef={movein4Ref} /></Grid>
+                <Grid item><Input label="movein5" type='date' defaultValue={d.movein5} inputRef={movein5Ref} /></Grid>
                 <Grid item><Input label="Geno Type" defaultValue={d.geno_type} inputRef={genotypeRef} /></Grid>
                 <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
                 <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>

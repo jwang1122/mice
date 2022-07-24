@@ -324,6 +324,16 @@ FEMALE-->TO_CAGE
 TO_CAGE-->UPDATE_FROM-->UPDATE_TO-->ACTION
 ```
 
+```mermaid
+graph TB
+PAIR_LIST["PairList.submitHandler()"]
+PAIR_COMP["Pair.pairHandler()"]
+PAIR(miceApp-/pairs)
+CREATE("micedb-create_pair(pair)")
+
+PAIR_LIST --> PAIR_COMP --> PAIR --> CREATE
+```
+
 ## Wean Operation
 
 ```mermaid

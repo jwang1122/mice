@@ -197,19 +197,20 @@ def update_user(mouse_id):
     response_object['message'] = 'mouse updated!'
     return jsonify(response_object)
 
-@app.route('/actions', methods=['POST'])
-def create_action():
+@app.route('/pairs', methods=['POST'])
+def create_pairs():
     response_object = {'status': 'success'}
     post_data: dict = request.get_json()
-    action = {
-        'id':post_data.get('id'),
-        'msid': post_data.get('msid'),
-        'from_cage': post_data.get('from_cage'),
-        'to_cage': post_data.get('to_cage'),
-        'gender': post_data.get('gender'),
-        'reason': post_data.get('reason'),
-    }
-    db.create_action(action)
+    # action = {
+    #     'id':post_data.get('id'),
+    #     'msid': post_data.get('msid'),
+    #     'from_cage': post_data.get('from_cage'),
+    #     'to_cage': post_data.get('to_cage'),
+    #     'gender': post_data.get('gender'),
+    #     'reason': post_data.get('reason'),
+    # }
+    # db.create_action(action)
+    db.create_pair(post_data)
     response_object['message'] = 'mouse updated!'
     return jsonify(response_object)
 

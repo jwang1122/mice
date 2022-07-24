@@ -191,9 +191,9 @@ class MiceDB:
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         cageid = cage['cageid']
-        sql = f"INSERT INTO cages (id, cageid, count) VALUES (?, ?, 0)", (id, cageid)
+        sql = f"INSERT INTO cages (id, cageid, count) VALUES (?, ?, 0)"
         logger.info(sql)
-        db.execute(sql)
+        db.execute(sql, (id, cageid))
         self.conn.commit()
         return cage.get('id')
 
@@ -202,7 +202,7 @@ class MiceDB:
         """
         Create a action in database
         """
-        print(action)
+        print("micedb-205:",action)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         date = datetime.today().strftime('%Y-%m-%d')
@@ -215,11 +215,22 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql,(id, date, msid, from_cage,to_cage, gender, reason))
         self.conn.commit()
-        self.update_mice_cage(action)
         return id
 
+    def create_pair(self, pair):
+        print("micedb-221:", pair)
+        action = pair[0]
+        self.update_mice_cage(action) # update both mice and to_cage
+        self.update_from_cage(action)
+        self.create_action(action)
+        action = pair[1]
+        self.update_mice_cage(action)
+        self.update_from_cage(action)
+        self.create_action(action)
+        
+
     def create_wean(self, wean):
-        print("micedb-222:", wean)
+        print("micedb-235:", wean)
         count = int(wean['count'])
         for i in range(count):
             msid = self.get_max_msid()
@@ -308,7 +319,6 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-        self.update_from_cage(action)
     
     # Update mice
     def update (self, id, mouse):
@@ -541,6 +551,9 @@ if __name__ == '__main__':
     
     # action = {'id': '5340acf3983a4520bb8fc16bc464cd41', 'date': '2022-07-23', 'msid': '1193', 'from_cage': 'J16', 'to_cage': 'A01', 'gender': '', 'tail': '', 'reason': 'wean', 'notes': '', 'executed_by': ''}
     # db.update_wean_cage(action)
-    transfer = {'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'A01', 'to_cage': 'EA11', 'notes': 'fight', 'reason': 'fight'}
-    db.update_transfer(transfer)
+    # transfer = {'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'A01', 'to_cage': 'EA11', 'notes': 'fight', 'reason': 'fight'}
+    # db.update_transfer(transfer)
+
+    pair = [{'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'EA11', 'to_cage': 'A011', 'gender': 'M', 'reason': 'breeding'}, {'id': 'a187ad84a4294d0aa0c21e6bbf9e8627', 'msid': 'A0186', 'from_cage': 'EA06', 'to_cage': 'A011', 'gender': 'F', 'reason': 'breeding'}]
+    db.create_pair(pair)
     print("Done.")

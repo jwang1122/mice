@@ -35,11 +35,13 @@ def insertCage(cageid, msids):
     if len(gender)==2:
         param.append("pair")
     gender.clear()
+    print(param)
     conn.execute(sql, param)
     conn.commit()
 
 
 for cageid in cageids:
+    print(cageid)
     sql1 = f"Select msid, gender from mice where cage='{cageid}'"
     msids = list(conn.execute(sql1))
     if len(msids)>0:
