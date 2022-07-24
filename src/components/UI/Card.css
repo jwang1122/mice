@@ -1,9 +1,13 @@
 .card {
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 1px 8px black;
     padding: 15px;
     background-color: #e8f0fe;
-    margin: auto;
+    margin: 5px;
     /* max-width: 50rem; */
     /* margin-bottom: 0.5rem; */
+}
+
+input{
+    border-radius: 10px;
 }
