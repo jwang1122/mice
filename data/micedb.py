@@ -292,7 +292,7 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-        self.update_from_cage()
+        self.update_from_cage(action)
         today = datetime.today().strftime('%Y-%m-%d')
         if(action['gender']=='M'):
             sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2, movein1='{today}' where cageid='{action['to_cage']}'"
