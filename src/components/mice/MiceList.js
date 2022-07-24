@@ -51,7 +51,7 @@ const MiceList = (props) => {
 
     return (
         <>
-        {!props.isPair && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>}
+        {props.needGroup && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>}
         <MUIDataTable
             title={props.title}
             data={props.items}

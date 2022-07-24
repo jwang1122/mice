@@ -31,7 +31,7 @@ function Transfer(props) {
         <div className="App">
             <header className="App-header">
                 <TransferForm mouse={mouse} url={props.url} onTransfer={transferHandler}/>
-                <MiceList items={mice} onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} title="Mice List" onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

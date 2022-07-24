@@ -24,7 +24,7 @@ function Home(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <MiceList items={mice} isPair={true} title="Male Mice List" onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} title="Male Mice List" onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );
