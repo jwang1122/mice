@@ -71,9 +71,8 @@ def all_greedings():
 @app.route('/getreport', methods=['GET', 'POST'])
 def get_pdf():
     post_data: dict = request.get_json()
-    print(post_data)
+    print("miceApp-74:",post_data)
     return send_file('geno.pdf', as_attachment=True)
-
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():

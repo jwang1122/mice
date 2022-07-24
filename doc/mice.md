@@ -3,6 +3,19 @@
 [Markdown Utilities](../../doc/utilities.md)
 
 [Build a react firebase application](https://www.youtube.com/watch?v=VqgTr-nd7Cg)
+- [Getting Started](#getting-started)
+  - [create a react project mice](#create-a-react-project-mice)
+  - [File Structure](#file-structure)
+  - [create mice database](#create-mice-database)
+- [GUI Design](#gui-design)
+- [Mice](#mice)
+- [Actions](#actions)
+- [Cage](#cage)
+- [pair operation](#pair-operation)
+  - [Update cages on action](#update-cages-on-action)
+  - [Pairing Processing](#pairing-processing)
+- [Wean Operation](#wean-operation)
+- [Transfer Operation](#transfer-operation)
 
 ## Getting Started
 
@@ -251,7 +264,7 @@ class Male,Female,Born,Cage db
 
 ![](images/cageManage.jpg)
 
-## Update cages on action
+### Update cages on action
 
 It is possible that there already some mice in the same cage.
 
@@ -292,3 +305,54 @@ EXIST--False-->END
 ```
 
 [selected rows on material table](https://www.youtube.com/watch?v=FXaSQOU1PlM)
+
+
+### Pairing Processing
+
+```mermaid
+graph LR
+
+MALE(Get Male mouse info)
+FEMALE(Get Female mouse info)
+TO_CAGE[Change cage for the couple]
+UPDATE_FROM[Update from cage]
+UPDATE_TO[Update to cage]
+ACTION[Insert Action]
+
+MALE-->TO_CAGE
+FEMALE-->TO_CAGE
+TO_CAGE-->UPDATE_FROM-->UPDATE_TO-->ACTION
+```
+
+## Wean Operation
+
+```mermaid
+graph LR
+
+GREEDING(Get Greeding cage)
+MSID[Generate MSIDs]
+INSERT[Create Mice records]
+UPDATE_TO[Update to Cage]
+ACTION[Create action record]
+
+GREEDING-->MSID-->INSERT-->UPDATE_TO-->ACTION
+
+```
+
+## Transfer Operation
+
+```mermaid
+graph LR
+
+MOUSE(Get Mouse Info)
+TO(Get to Cage ID)
+
+UPDATE[Update Mouse's Cage]
+UPDATE_FROM[Update from Cage]
+UPDATE_TO[Update to Cage]
+ACTION[Create action record]
+
+MOUSE-->UPDATE
+TO-->UPDATE
+UPDATE-->UPDATE_FROM-->UPDATE_TO-->ACTION
+```
