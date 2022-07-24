@@ -126,8 +126,15 @@ def update_cage(id):
 def update_transfer(id):
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    print(post_data)
-    # db.update_cages(id, cage)
+    db.update_transfer(id, post_data)
+    response_object['message'] = 'new transfer is updated!'
+    return jsonify(response_object)
+
+@app.route('/group', methods=['PUT'])
+def update_groups():
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    db.update_groups(post_data)
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 

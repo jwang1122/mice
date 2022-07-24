@@ -12,13 +12,13 @@ logger = logging.getLogger('MICEDB')
 miceFields = (
     'msid', 'gender', 'geno', 'dob',
     'ear', 'mom', 'dad', 'cage',
-    'usage', 'date', 'type'
+    'usage', 'date', 'type','groupid',
     )
 
 usedFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
-    'notes', 'termination', 'type'
+    'notes', 'termination', 'type',
     )
 
 cageFields = (
@@ -342,6 +342,14 @@ class MiceDB:
         self.conn.commit()
         return id
     
+    def update_groups(self, groups):
+        groupName = groups['name']
+        sql = f"""UPDATE mice SET groupid='{groupName}' where id=?"""
+        db = self.getMiceDB()
+        for id in groups['ids']:
+            db.execute(sql, (id,))
+        self.conn.commit()
+
     def update_transfer(self, transfer):
         db = self.getMiceDB()
         sql = f"""UPDATE mice SET cage='{transfer["to_cage"]}' where id='{transfer["id"]}'"""

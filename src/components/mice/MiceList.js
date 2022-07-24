@@ -2,6 +2,8 @@ import MUIDataTable from 'mui-datatables';
 import Input from '../UI/Input'
 import Button from '../UI/Button'
 import Card from '../UI/Card'
+import {useState, useRef} from 'react'
+import updateItem from '../lib/update'
 
 const columns = [
     { name: 'id', options: { display: false, filter: false } },
@@ -16,18 +18,27 @@ const columns = [
     { name: 'usage', label: 'Usage', options: { filter: false, sort: false } },
     { name: 'date', label: 'Date', options: { filter: false, sort: false } },
     { name: 'type', label: 'Type', options: { filter: true, sort: true } },
-    { name: 'group', label: 'Group', options: { filter: true, sort: false } }];
+    { name: 'groupid', label: 'Group', options: { filter: true, sort: false } }];
 
 
 const MiceList = (props) => {
+    const [ids, setIds] = useState([])
+    const groupNameRef = useRef()
+
     const selectChangeHandler = mouse => {
         props.onSelectChange(mouse)
     }
 
     const rowSelectHandler = (current,allRows,rows)=>{
-        console.log(current)
-        console.log(allRows)
-        console.log(rows) // could be used for mouse group
+        setIds(rows)      
+    }
+
+    const groupHandler = ()=>{
+        const group={
+            name:groupNameRef.current.value,
+            ids:ids.map(index=>props.items[index].id),
+        }
+        updateItem(props.url + "/group", group)
     }
 
     const options = {
@@ -41,7 +52,7 @@ const MiceList = (props) => {
 
     return (
         <>
-        <Card><Input label="Group Name"/><Button name="Group"/></Card>
+        <Card><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" onClick={groupHandler}/></Card>
         <MUIDataTable
             title={"Mice List"}
             data={props.items}
