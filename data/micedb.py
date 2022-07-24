@@ -202,6 +202,7 @@ class MiceDB:
         """
         Create a action in database
         """
+        print(action)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         date = datetime.today().strftime('%Y-%m-%d')
@@ -216,6 +217,14 @@ class MiceDB:
         self.conn.commit()
         self.update_mice_cage(action)
         return id
+
+    def create_wean(self, wean):
+        print("micedb-222:", wean)
+        count = int(wean['count'])
+        for i in range(count):
+            msid = self.get_max_msid()
+            mouse = {'msid':msid,}
+            self.create_wean_action(wean, mouse)
 
     def create_wean_action(self, wean, mouse):
         action = {
@@ -291,15 +300,15 @@ class MiceDB:
         sql = f"UPDATE mice set cage='{action['to_cage']}' where id='{action['id']}'"
         logger.info(sql)
         db.execute(sql)
-        self.conn.commit()
-        self.update_from_cage(action)
         today = datetime.today().strftime('%Y-%m-%d')
         if(action['gender']=='M'):
             sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2, movein1='{today}' where cageid='{action['to_cage']}'"
         if(action['gender']=='F'):
             sql = f"UPDATE cages set type='pair', mouse2id='{action['msid']}', count=2, movein2='{today}' where cageid='{action['to_cage']}'"
+        logger.info(sql)
         db.execute(sql)
         self.conn.commit()
+        self.update_from_cage(action)
     
     # Update mice
     def update (self, id, mouse):
@@ -351,13 +360,15 @@ class MiceDB:
             db.execute(sql, (id,))
         self.conn.commit()
 
-    def update_transfer(self, transfer):
+    def update_transfer(self, id, transfer):
         db = self.getMiceDB()
-        sql = f"""UPDATE mice SET cage='{transfer["to_cage"]}' where id='{transfer["id"]}'"""
+        sql = f"""UPDATE mice SET cage='{transfer["to_cage"]}' where id='{id}'"""
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
         self.update_from_cage(transfer)
+        self.update_to_cage(transfer)
+        self.create_transfer_action(transfer)
 
     def update_from_cage(self, transfer):
         # print("micedb-354:",transfer)
@@ -384,9 +395,9 @@ class MiceDB:
         sql = sql.replace("None",'',-1)
         # print(sql)
         db = self.getMiceDB()
+        logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-        self.update_to_cage(transfer)
 
     def update_to_cage(self, transfer):
         msid = transfer['msid']
@@ -412,9 +423,9 @@ class MiceDB:
         sql = sql.replace("None",'',-1)
         # print(sql)
         db = self.getMiceDB()
+        logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-        self.create_transfer_action(transfer)
 
 
     def create_transfer_action(self, transfer):

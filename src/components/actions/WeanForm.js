@@ -22,7 +22,6 @@ const WeanForm = (props) => {
     useEffect(() => {
         if (!loadError && data && data.cages.length > 0) {
             setCageids(data.cages) // set available cages
-            console.log(data.cages)
         }
     }, [data, loadError])
 

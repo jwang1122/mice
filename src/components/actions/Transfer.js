@@ -24,7 +24,7 @@ function Transfer(props) {
 
     const transferHandler = transfer => {
         console.log(transfer)
-        updateItem(url + '/transfer/' + mouse.id, transfer)
+        updateItem(url + '/transfer/' + transfer.id, transfer)
     }
 
     return (

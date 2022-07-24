@@ -17,17 +17,14 @@ function Home(props) {
         }
     }, [data, loadError])
 
-    const selectChangeHandler = id => {
-        if (id === undefined)
-            return
-        const mouse = mice.find(mouse => mouse.id === id)
+    const selectChangeHandler = mouse => {
         props.onSelect(mouse)
     }
 
     return (
         <div className="App">
             <header className="App-header">
-                <MiceList items={mice} onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} isPair={true} title="Male Mice List" onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

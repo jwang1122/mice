@@ -24,7 +24,6 @@ const columns = [
 const MiceList = (props) => {
     const [ids, setIds] = useState([])
     const groupNameRef = useRef()
-
     const selectChangeHandler = mouse => {
         props.onSelectChange(mouse)
     }
@@ -52,9 +51,9 @@ const MiceList = (props) => {
 
     return (
         <>
-        <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>
+        {!props.isPair && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>}
         <MUIDataTable
-            title={"Mice List"}
+            title={props.title}
             data={props.items}
             columns={columns}
             options={options}
