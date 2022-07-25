@@ -12,6 +12,7 @@ const WeanForm = (props) => {
     if(selectedCage){
         fromCage = selectedCage[1]
     }
+    const [gender, setGender] = useState('M')
     const [cageid, setCageid] = useState()
     const countRef = useRef()
     const reasonRef = useRef()
@@ -29,6 +30,7 @@ const WeanForm = (props) => {
         event.preventDefault()
         const data = 
             {
+                gender:gender,
                 dad:selectedCage[3],
                 mom:selectedCage[4],
                 birthdate:selectedCage[9],
@@ -47,6 +49,9 @@ const WeanForm = (props) => {
         setCageid(event.target.value)
     }
 
+    const genderChangeHandler = (event) =>{
+        setGender(event.target.value)
+    }
     
     return (
         <Card>
@@ -55,6 +60,7 @@ const WeanForm = (props) => {
                 <Input name="from_cage" label="From Cage" className={classes.input} value={fromCage} />&nbsp;
                 <Dropdown className={classes.dropdown} name="cageID" label="To Cage" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
                 <Input name="count" label="Mice Count" className={classes.input} inputRef={countRef}/>&nbsp;
+                <Dropdown className={classes.dropdown} name="gender" label="Gender" value={gender} options={['M','F']} onChange={genderChangeHandler}/>&nbsp;
                 <Input name="reason" label="Reason" className={classes.input} inputRef={reasonRef}/>
                 <Button type="submit" className={classes.input} name='Transfer' />
             </form>

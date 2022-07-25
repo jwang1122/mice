@@ -182,7 +182,20 @@ class MiceDB:
         self.conn.commit()
         return mouse.get('id')
 
-    # Create One
+    # Create One mouse
+    def create_mouse(self, mouse):
+        """
+        Create a mouse in database
+        """
+        # print(mouse)
+        db = self.getMiceDB()
+        sql = f"INSERT INTO mice VALUES (?{',?'*len(miceFields)})"
+        logger.info(sql)
+        db.execute(sql, mouse)
+        self.conn.commit()
+        return mouse[0]
+
+    # Create One 
     def create_cage(self, cage):
         """
         Create a mouse in database
@@ -230,13 +243,14 @@ class MiceDB:
         
 
     def create_wean(self, wean):
-        print("micedb-235:", wean)
+        # print("micedb-235:", wean)
         count = int(wean['count'])
         for i in range(count):
             msid = self.get_max_msid()
-            mouse = [msid,'','',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
+            id = uuid.uuid4().hex
+            mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
             print("micedb-238:",mouse)
-            # self.create(mouse)
+            self.create_mouse(mouse)
 
     def create_wean_mouse(self, wean, mouse):
         action = {
