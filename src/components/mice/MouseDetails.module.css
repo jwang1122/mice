@@ -8,6 +8,12 @@
   background: rgba(135, 131, 131, 0.55);
 }
 
+.addMouse {
+  /* max-width: auto; */
+  width: 95%;
+  margin:auto;
+}
+
 .modal {
   position: fixed;
   top: 30vh;

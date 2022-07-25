@@ -19,16 +19,13 @@ function Home(props) {
         }
     }, [data, loadError])
 
-    const selectChangeHandler = id => {
-        if (id === undefined)
-            return
-        const mouse = mice.find(mouse => mouse.id === id)
+    const selectChangeHandler = mouse => {
+        console.log(mouse)
         setIsDetails(true)
         setMouse(mouse)
     }
 
     const updateHandler = mouse => {
-        console.log(mouse)
         updateItem(url + '/mice/' + mouse.id, mouse, load)
         setIsDetails(false)
     }
