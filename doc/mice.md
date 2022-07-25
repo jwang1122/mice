@@ -329,9 +329,13 @@ graph TB
 PAIR_LIST["PairList.submitHandler()"]
 PAIR_COMP["Pair.pairHandler()"]
 PAIR(miceApp-/pairs)
-CREATE("micedb-create_pair(pair)")
+CREATE("micedb.create_pair(pair)")
+MICE["micedb.update_mice_cage()"]
+FROM["micedb.update_from_cate()"]
+ACTION["micedb.create_action()"]
 
 PAIR_LIST --> PAIR_COMP --> PAIR --> CREATE
+CREATE-->MICE-->FROM-->ACTION
 ```
 
 ## Wean Operation
@@ -346,8 +350,22 @@ UPDATE_TO[Update to Cage]
 ACTION[Create action record]
 
 GREEDING-->MSID-->INSERT-->UPDATE_TO-->ACTION
-
 ```
+
+```mermaid
+graph TB
+WEAN["Wean.weanHandler(/wean)"]
+FORM["WeanForm.submitHandler()"]
+APP(miceApp-/wean)
+CREATE("micedb.create_wean(wean)")
+MICE["micedb.update_mice_cage()"]
+FROM["micedb.update_from_cate()"]
+ACTION["micedb.create_action()"]
+
+FORM --> WEAN --> APP --> CREATE
+CREATE-->MICE-->FROM-->ACTION
+```
+
 
 ## Transfer Operation
 

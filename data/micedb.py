@@ -234,10 +234,11 @@ class MiceDB:
         count = int(wean['count'])
         for i in range(count):
             msid = self.get_max_msid()
-            mouse = {'msid':msid,}
-            self.create_wean_action(wean, mouse)
+            mouse = [msid,'','',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
+            print("micedb-238:",mouse)
+            # self.create(mouse)
 
-    def create_wean_action(self, wean, mouse):
+    def create_wean_mouse(self, wean, mouse):
         action = {
             'id':uuid.uuid4().hex,
             'date':datetime.today().strftime('%Y-%m-%d'),
