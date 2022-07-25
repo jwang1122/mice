@@ -6,9 +6,9 @@ import Input from '../UI/Input'
 import Select from '../UI/Select'
 
 const MouseDetails = props => {
-    const d = props.mouse
-    const msidRef = useRef(d.msid)
-    const [gender, setGender] = useState(d.gender)
+    const mouse = props.mouse
+    const msidRef = useRef(mouse.msid)
+    const [gender, setGender] = useState(mouse.gender)
     const genoRef = useRef()
     const dobRef = useRef()
     const earRef = useRef()
@@ -20,8 +20,8 @@ const MouseDetails = props => {
     const typeRef = useRef()
     const handleSubmit = (event) => {
         event.preventDefault()
-        const mouse = {
-            id: d.id,
+        const updatedMouse = {
+            id: mouse.id,
             msid: msidRef.current.value,
             gender: gender,
             geno: genoRef.current.value,
@@ -34,7 +34,7 @@ const MouseDetails = props => {
             date: dateRef.current.value,
             type: typeRef.current.value,
         }
-        props.onUpdate(mouse)
+        props.onUpdate(updatedMouse)
     }
     const handleGender = event => {
         setGender(event.target.value)
@@ -42,17 +42,17 @@ const MouseDetails = props => {
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>
-                <Grid item><Input label="Mouse ID" defaultValue={d.msid} inputRef={msidRef} disabled={true} /></Grid>
-                <Grid item><Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F', 'N/A']} /></Grid>
-                <Grid item><Input label="Geno" defaultValue={d.geno} inputRef={genoRef} /></Grid>
-                <Grid item><Input label="Date of Birth" defaultValue={d.dob} inputRef={dobRef} disabled={true} /></Grid>
-                <Grid item><Input label="Ear" defaultValue={d.ear} inputRef={earRef} /></Grid>
-                <Grid item><Input label="Mom" defaultValue={d.mom} inputRef={momRef} disabled={true} /></Grid>
-                <Grid item><Input label="Dad" defaultValue={d.dad} inputRef={dadRef} disabled={true} /></Grid>
-                <Grid item><Input label="Cage" defaultValue={d.cage} inputRef={cageRef} /></Grid>
-                <Grid item><Input label="Usage" defaultValue={d.usage} inputRef={usageRef} /></Grid>
-                <Grid item><Input label="Date" defaultValue={d.date} inputRef={dateRef} /></Grid>
-                <Grid item><Input label="Type" defaultValue={d.type} inputRef={typeRef} /></Grid>
+                <Grid item><Input label="Mouse ID" defaultValue={mouse.msid} inputRef={msidRef} disabled={true} /></Grid>
+                <Grid item><Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F']} /></Grid>
+                <Grid item><Input label="Geno" defaultValue={mouse.geno} inputRef={genoRef} /></Grid>
+                <Grid item><Input label="Date of Birth" defaultValue={mouse.dob} inputRef={dobRef} disabled={true} /></Grid>
+                <Grid item><Input label="Ear" defaultValue={mouse.ear} inputRef={earRef} /></Grid>
+                <Grid item><Input label="Mom" defaultValue={mouse.mom} inputRef={momRef} disabled={true} /></Grid>
+                <Grid item><Input label="Dad" defaultValue={mouse.dad} inputRef={dadRef} disabled={true} /></Grid>
+                <Grid item><Input label="Cage" defaultValue={mouse.cage} inputRef={cageRef} /></Grid>
+                <Grid item><Input label="Usage" defaultValue={mouse.usage} inputRef={usageRef} /></Grid>
+                <Grid item><Input label="Date" defaultValue={mouse.date} inputRef={dateRef} /></Grid>
+                <Grid item><Input label="Type" defaultValue={mouse.type} inputRef={typeRef} /></Grid>
                 <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
                 <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>
             </Grid></form>

@@ -2,7 +2,7 @@ import MUIDataTable from 'mui-datatables';
 import Input from '../UI/Input'
 import Button from '../UI/Button'
 import Card from '../UI/Card'
-import {useState, useRef} from 'react'
+import { useState, useRef } from 'react'
 import updateItem from '../lib/update'
 
 const columns = [
@@ -24,18 +24,22 @@ const columns = [
 const MiceList = (props) => {
     const [ids, setIds] = useState([])
     const groupNameRef = useRef()
-    const selectChangeHandler = mouse => {
+    const selectChangeHandler = mouse => {        
+        // console.log(mouse)
+        // PROBLEM: mouse must be JSON
+        // but mouse is Array
         props.onSelectChange(mouse)
     }
 
-    const rowSelectHandler = (current,allRows,rows)=>{
-        setIds(rows)      
+    const rowSelectHandler = (current, allRows, rows) => {
+        setIds(rows)
     }
 
-    const submitHandler = ()=>{
-        const group={
-            name:groupNameRef.current.value,
-            ids:ids.map(index=>props.items[index].id),
+    const submitHandler = event => {
+        event.preventDefault()
+        const group = {
+            name: groupNameRef.current.value,
+            ids: ids.map(index => props.items[index].id),
         }
         updateItem(props.url + "/group", group)
     }
@@ -43,21 +47,21 @@ const MiceList = (props) => {
     const options = {
         // filterType: "checkbox",
         onRowClick: rowData => selectChangeHandler(rowData),
-        rowsPerPageOptions:[5,10,20],
-        rowsPerPage:5,
-        onRowSelectionChange:(current,allRows,rows) => rowSelectHandler(current, allRows, rows),
-        customToolbarSelect:rows => {}, // get rid of trash can 
+        rowsPerPageOptions: [5, 10, 20],
+        rowsPerPage: 5,
+        onRowSelectionChange: (current, allRows, rows) => rowSelectHandler(current, allRows, rows),
+        customToolbarSelect: rows => { }, // get rid of trash can 
     };
 
     return (
         <>
-        {props.needGroup && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>}
-        <MUIDataTable
-            title={props.title}
-            data={props.items}
-            columns={columns}
-            options={options}
-        />
+            {props.needGroup && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef} /><Button name="Group" type="submit" /></form></Card>}
+            <MUIDataTable
+                title={props.title}
+                data={props.items}
+                columns={columns}
+                options={options}
+            />
         </>
     )
 }

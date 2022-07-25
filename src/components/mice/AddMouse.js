@@ -12,7 +12,7 @@ function AddMouse(props) {
     const [gender, setGender] = useState('M')
     const genoRef = useRef()
     const dobRef = useRef()
-    const earRef = useRef()
+    const [ear, setEar] = useState('NH')
     const momRef = useRef()
     const dadRef = useRef()
     const cageRef = useRef()
@@ -26,7 +26,7 @@ function AddMouse(props) {
             gender: gender,
             geno: genoRef.current.value,
             dob: dobRef.current.value,
-            ear: earRef.current.value,
+            ear: ear,
             mom: momRef.current.value,
             dad: dadRef.current.value,
             cage: cageRef.current.value,
@@ -37,6 +37,7 @@ function AddMouse(props) {
         addItem(url+'/mice', mouse)
     }
     const genderHandler = event => setGender(event.target.value)
+    const earHandler = event => setEar(event.target.value)
 
     return (
         <Card className='addMouse'><form onSubmit={handleSubmit}>
@@ -45,7 +46,7 @@ function AddMouse(props) {
                 <Grid item><Select label="Gender" value={gender} onChange={genderHandler} options={['M', 'F']} /></Grid>
                 <Grid item><Input label="Geno" inputRef={genoRef} /></Grid>
                 <Grid item><Input label="Date of Birth" inputRef={dobRef} /></Grid>
-                <Grid item><Input label="Ear" inputRef={earRef} /></Grid>
+                <Grid item><Select label="Ear" value={ear} onChange={earHandler} options={['NH', 'L', 'R', 'LR', 'LL', 'RR']} /></Grid>
                 <Grid item><Input label="Mom" inputRef={momRef} /></Grid>
                 <Grid item><Input label="Dad" inputRef={dadRef} /></Grid>
                 <Grid item><Input label="Cage" inputRef={cageRef} /></Grid>

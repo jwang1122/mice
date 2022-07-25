@@ -52,7 +52,7 @@ const WeanForm = (props) => {
         <Card>
 
             <form onSubmit={submitHandler}>
-                <Input name="from_cage" label="From Cage" className={classes.input} value={fromCage} />&nbsp;
+                <Input name="from_cage" label="From Cage (Click in Cage List)" className={classes.input} value={fromCage} disabled={true}/>&nbsp;
                 <Dropdown className={classes.dropdown} name="cageID" label="To Cage" value={cageid?cageid:''} options={cageids} onChange={selectChangeHandler}/>&nbsp;
                 <Input name="count" label="Mice Count" className={classes.input} inputRef={countRef}/>&nbsp;
                 <Input name="reason" label="Reason" className={classes.input} inputRef={reasonRef}/>
