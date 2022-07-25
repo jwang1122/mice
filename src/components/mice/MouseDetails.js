@@ -43,7 +43,7 @@ const MouseDetails = props => {
         <Card className={classes.addMouse}><form onSubmit={handleSubmit}>
             <Grid container direction={"row"} spacing={2}>
                 <Grid item><Input label="Mouse ID" defaultValue={mouse[1]} inputRef={msidRef} disabled={true} /></Grid>
-                <Grid item><Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F', 'N/A']} /></Grid>
+                <Grid item><Select label="Gender" value={gender} onChange={handleGender} options={['M', 'F']} /></Grid>
                 <Grid item><Input label="Geno" defaultValue={mouse[3]} inputRef={genoRef} /></Grid>
                 <Grid item><Input label="Date of Birth" defaultValue={mouse[4]} inputRef={dobRef} disabled={true} /></Grid>
                 <Grid item><Input label="Ear" defaultValue={mouse[5]} inputRef={earRef} /></Grid>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import MiceMale from './MiceMale'
 import MiceFemale from './MiceFemale'
-import PairList from './PairList'
+import PairForm from './PairForm'
 import addItem from '../lib/create'
 
 
@@ -31,7 +31,7 @@ const Pair = (props) => {
 
     return (
         <>
-            <PairList male={male} female={female} url={props.url} onPair={pairHandler}/>
+            <PairForm male={male} female={female} url={props.url} onPair={pairHandler}/>
             <MiceMale url={props.url} onSelect={selectMaleHandler} />
             <MiceFemale url={props.url} onSelect={selectFemaleHandler} />
         </>

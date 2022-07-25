@@ -32,11 +32,13 @@ const MiceList = (props) => {
         setIds(rows)      
     }
 
-    const submitHandler = ()=>{
+    const submitHandler = (event)=>{
+        event.preventDefault()
         const group={
             name:groupNameRef.current.value,
             ids:ids.map(index=>props.items[index].id),
         }
+        console.log(group)
         updateItem(props.url + "/group", group)
     }
 

@@ -38,7 +38,7 @@ function Home(props) {
         <div className="App">
             <header className="App-header">
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <MiceList items={mice} title="Mice List" needGroup={true} onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} title="Mice List" url={props.url} needGroup={true} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

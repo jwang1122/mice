@@ -6,7 +6,7 @@ import Dropdown from '../UI/Select'
 import classes from './PairList.module.css'
 import useFetch from '../hooks/UseFetch'
 
-const PairList = (props) => {
+const PairForm = (props) => {
     const male = props.male
     let maleid = ''
     if(male){
@@ -72,4 +72,4 @@ const PairList = (props) => {
     )
 }
 
-export default PairList
+export default PairForm

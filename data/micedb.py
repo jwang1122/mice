@@ -249,7 +249,7 @@ class MiceDB:
             msid = self.get_max_msid()
             id = uuid.uuid4().hex
             mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
-            print("micedb-238:",mouse)
+            print("micedb-252:",mouse)
             self.create_mouse(mouse)
 
     def create_wean_mouse(self, wean, mouse):
