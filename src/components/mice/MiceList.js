@@ -34,6 +34,7 @@ const MiceList = (props) => {
 
     const submitHandler = (event)=>{
         event.preventDefault()
+        console.log(event.target.value)
         const group={
             name:groupNameRef.current.value,
             ids:ids.map(index=>props.items[index].id),
@@ -51,9 +52,18 @@ const MiceList = (props) => {
         customToolbarSelect:rows => {}, // get rid of trash can 
     };
 
+    const usedHandler = ()=>{
+        console.log("Used button clicked...")
+    }
     return (
         <>
-        {props.needGroup && <Card><form onSubmit={submitHandler}><Input name='groupname' label="Group Name" required inputRef={groupNameRef}/><Button name="Group" type="submit"/></form></Card>}
+        {props.needGroup && <Card>
+            <form onSubmit={submitHandler}>
+                <Input name='groupname' label="Group Name" inputRef={groupNameRef}/>
+                <Button name="Group" type="submit"/>
+                <Button name="Used" type="button" onClick={usedHandler}/>
+            </form>
+        </Card>}
         <MUIDataTable
             title={props.title}
             data={props.items}
