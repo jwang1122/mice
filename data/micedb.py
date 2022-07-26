@@ -165,7 +165,6 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql)
         cage = self.getCageFromList(db.fetchone())
-        # print("micedb-168:", cage)
         return cage
 
     # Create One
@@ -215,7 +214,6 @@ class MiceDB:
         """
         Create a action in database
         """
-        print("micedb-205:",action)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         date = datetime.today().strftime('%Y-%m-%d')
@@ -231,7 +229,6 @@ class MiceDB:
         return id
 
     def create_pair(self, pair):
-        print("micedb-221:", pair)
         action = pair[0]
         self.update_mice_cage(action) # update both mice and to_cage
         self.update_from_cage(action)
@@ -243,13 +240,11 @@ class MiceDB:
         
 
     def create_wean(self, wean):
-        # print("micedb-235:", wean)
         count = int(wean['count'])
         for i in range(count):
             msid = self.get_max_msid()
             id = uuid.uuid4().hex
             mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
-            print("micedb-252:",mouse)
             self.create_mouse(mouse)
             transfer = {'msid':msid, 'to_cage':wean['to_cage']}
             self.update_to_cage(transfer)
@@ -298,7 +293,6 @@ class MiceDB:
         self.create(mouse)
 
     def update_wean_cage(self, action):
-        # print("micedb-203:", action)
         cage = self.getCageById(action['to_cage'])
         today = datetime.today().strftime('%Y-%m-%d')
         flag = False
@@ -325,7 +319,6 @@ class MiceDB:
             self.conn.commit()
 
     def update_mice_cage(self, action):
-        # print("micedb:line-120",action)
         db = self.getMiceDB()
         sql = f"UPDATE mice set cage='{action['to_cage']}' where id='{action['id']}'"
         logger.info(sql)
@@ -400,11 +393,9 @@ class MiceDB:
         self.create_transfer_action(transfer)
 
     def update_from_cage(self, transfer):
-        # print("micedb-354:",transfer)
         msid = transfer['msid']
         cage = self.getCageById(transfer['from_cage'])
         count = int(cage['count'])
-        # print("micedb-358:", cage)
         if cage['mouse1id']==msid:
             count -= 1
             cage['mouse1id']=''
@@ -431,7 +422,6 @@ class MiceDB:
     def update_to_cage(self, transfer):
         msid = transfer['msid']
         cage = self.getCageById(transfer['to_cage'])
-        # print("micedb-385:", cage)
         today = datetime.today().strftime('%Y-%m-%d')
         count = int(cage['count'])
         # this code will search for the first available spot in cage
