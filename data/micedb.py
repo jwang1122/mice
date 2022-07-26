@@ -251,6 +251,10 @@ class MiceDB:
             mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
             print("micedb-252:",mouse)
             self.create_mouse(mouse)
+            transfer = {'msid':msid, 'to_cage':wean['to_cage']}
+            self.update_to_cage(transfer)
+            action = {'msid':msid,'gender':wean['gender'],'from_cage':wean['from_cage'],'to_cage':wean['to_cage'],'reason':wean['reason']}
+            self.create_action(action)
 
     def create_wean_mouse(self, wean, mouse):
         action = {
@@ -428,23 +432,46 @@ class MiceDB:
         msid = transfer['msid']
         cage = self.getCageById(transfer['to_cage'])
         # print("micedb-385:", cage)
+        today = datetime.today().strftime('%Y-%m-%d')
         count = int(cage['count'])
+        # this code will search for the first available spot in cage
+        # to put the info in
         if not cage['mouse1id'] or len(cage['mouse1id'].strip())==0:
             count += 1
             cage['mouse1id']=msid
+            cage['movein1'] = today
         elif not cage['mouse2id'] or len(cage['mouse2id'].strip())==0:
             count += 1
             cage['mouse2id']=msid
+            cage['movein2'] = today
         elif not cage['mouse3id'] or len(cage['mouse3id'].strip())==0:
             count += 1
             cage['mouse3id']=msid
+            cage['movein3'] = today
         elif not cage['mouse4id'] or len(cage['mouse4id'].strip())==0:
             count += 1
             cage['mouse4id']=msid
+            cage['movein4'] = today
         elif not cage['mouse5id'] or len(cage['mouse5id'].strip())==0:
             count += 1
             cage['mouse5id']=msid
-        sql = f"""UPDATE cages SET mouse1id='{cage['mouse1id']}',mouse2id='{cage['mouse2id']}',mouse3id='{cage['mouse3id']}',mouse4id='{cage['mouse4id']}',mouse5id='{cage['mouse5id']}',count={count} where id='{cage["id"]}'"""
+            cage['movein5'] = today
+        sql = f"""
+            UPDATE cages SET 
+            mouse1id='{cage['mouse1id']}',
+            mouse2id='{cage['mouse2id']}',
+            mouse3id='{cage['mouse3id']}',
+            mouse4id='{cage['mouse4id']}',
+            mouse5id='{cage['mouse5id']}',
+            count={count},
+            movein1='{cage['movein1']}',
+            movein2='{cage['movein2']}',
+            movein3='{cage['movein3']}',
+            movein4='{cage['movein4']}',
+            movein5='{cage['movein5']}'
+
+            where id='{cage["id"]}'
+        """
         sql = sql.replace("None",'',-1)
         # print(sql)
         db = self.getMiceDB()
