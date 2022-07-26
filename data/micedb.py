@@ -11,7 +11,7 @@ logging.basicConfig(filename='mylogs.log', filemode='w',
 logger = logging.getLogger('MICEDB')
 
 miceFields = (
-    'msid', 'gender', 'geno', 'dob',
+    'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
     'usage', 'date', 'type', 'groupid',
 )
@@ -26,11 +26,6 @@ cageFields = (
     'cageid', 'type', 'mouse1id', 'mouse2id',
     'mouse3id', 'mouse4id', 'mouse5id', 'count', 'geno_type',
     'movein1', 'movein2', 'movein3', 'movein4', 'movein5', 'notes', 'birthdate'
-)
-
-breedingFields = (
-    'type', 'dob', 'cage', 'born',
-    'mom', 'dad'
 )
 
 actionFields = (
@@ -246,7 +241,8 @@ class MiceDB:
         for i in range(count):
             msid = self.get_max_msid()
             id = uuid.uuid4().hex
-            mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
+            mouse = [id, msid, wean['gender'], '', wean['birthdate'], '',
+                     wean['mom'], wean['dad'], wean['to_cage'], '', '', '', '']
             self.create_mouse(mouse)
             transfer = {'msid': msid, 'to_cage': wean['to_cage']}
             self.update_to_cage(transfer)
@@ -270,17 +266,20 @@ class MiceDB:
         self.create_action(action)
         self.update_wean_cage(action)
 
-    # Create Breeding
-    def create_breeding(self, mouse):
+    # Create One
+    def create_used(self, mouse):
         """
-        Create a breeding in database
+        Create a mouse in database
         """
+        # print(mouse)
         db = self.getMiceDB()
-        value = self.getValueFromBreeding(mouse)
-        db.execute(
-            f"INSERT INTO breeding {('id',)+breedingFields} VALUES (?{',?'*len(breedingFields)})", value)
+        mouse['termination'] = mouse['date']
+        mouse['notes'] = mouse['usage']
+        value = self.getValueFromUsed(mouse)
+        sql = f"INSERT INTO used VALUES (?{',?'*len(usedFields)})"
+        logger.info(sql)
+        db.execute(sql, value)
         self.conn.commit()
-        self.insertToMiceTable(mouse)
         return mouse.get('id')
 
     def insertToMiceTable(self, mouse):
@@ -522,16 +521,16 @@ class MiceDB:
             value.append(mouse[field])
         return value
 
+    def getValueFromUsed(self, mouse, /):
+        value = [uuid.uuid4().hex]
+        for field in usedFields:
+            value.append(mouse[field])
+        return value
+
     def getValueFromCage(self, cage):
         value = [uuid.uuid4().hex]
         for field in cageFields:
             value.append(cage[field])
-        return value
-
-    def getValueFromBreeding(self, mouse):
-        value = [uuid.uuid4().hex]
-        for field in breedingFields:
-            value.append(mouse[field])
         return value
 
     @classmethod
