@@ -6,36 +6,33 @@ from datetime import date, datetime
 import logging
 
 log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
-logging.basicConfig(filename='mylogs.log', filemode='w', level=logging.INFO, format=log_format)
+logging.basicConfig(filename='mylogs.log', filemode='w',
+                    level=logging.INFO, format=log_format)
 logger = logging.getLogger('MICEDB')
 
 miceFields = (
-    'msid', 'gender', 'geno', 'dob',
+    'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
-    'usage', 'date', 'type','groupid',
-    )
+    'usage', 'date', 'type', 'groupid',
+)
 
 usedFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
     'notes', 'termination', 'type',
-    )
+)
 
 cageFields = (
     'cageid', 'type', 'mouse1id', 'mouse2id',
-    'mouse3id', 'mouse4id', 'mouse5id', 'count','geno_type',
-    'movein1', 'movein2', 'movein3','movein4','movein5','notes','birthdate'
-    )
-
-breedingFields = (
-    'type', 'dob', 'cage', 'born',
-    'mom', 'dad'
-    )
+    'mouse3id', 'mouse4id', 'mouse5id', 'count', 'geno_type',
+    'movein1', 'movein2', 'movein3', 'movein4', 'movein5', 'notes', 'birthdate'
+)
 
 actionFields = (
-    'date','msid','from_cage','to_cage','gender',
-    'tail','reason','notes','executed_by'
-    )
+    'date', 'msid', 'from_cage', 'to_cage', 'gender',
+    'tail', 'reason', 'notes', 'executed_by'
+)
+
 
 class MiceDB:
     def __init__(self, dbname, url=None):
@@ -78,7 +75,7 @@ class MiceDB:
         db = self.getMiceDB()
         cageList = []
         try:
-            sql= 'SELECT * FROM cages'
+            sql = 'SELECT * FROM cages'
             logger.info(sql)
             for row in db.execute(sql):
                 cage = self.getCageFromList(row)
@@ -194,7 +191,7 @@ class MiceDB:
         self.conn.commit()
         return mouse[0]
 
-    # Create One 
+    # Create One
     def create_cage(self, cage):
         """
         Create a mouse in database
@@ -214,6 +211,7 @@ class MiceDB:
         """
         Create a action in database
         """
+        print("micedb-205:", action)
         db = self.getMiceDB()
         id = uuid.uuid4().hex
         date = datetime.today().strftime('%Y-%m-%d')
@@ -224,60 +222,64 @@ class MiceDB:
         reason = action['reason']
         sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)"
         logger.info(sql)
-        db.execute(sql,(id, date, msid, from_cage,to_cage, gender, reason))
+        db.execute(sql, (id, date, msid, from_cage, to_cage, gender, reason))
         self.conn.commit()
         return id
 
     def create_pair(self, pair):
         action = pair[0]
-        self.update_mice_cage(action) # update both mice and to_cage
+        self.update_mice_cage(action)  # update both mice and to_cage
         self.update_from_cage(action)
         self.create_action(action)
         action = pair[1]
         self.update_mice_cage(action)
         self.update_from_cage(action)
         self.create_action(action)
-        
 
     def create_wean(self, wean):
         count = int(wean['count'])
         for i in range(count):
             msid = self.get_max_msid()
             id = uuid.uuid4().hex
-            mouse = [id, msid,wean['gender'],'',wean['birthdate'],'',wean['mom'],wean['dad'],wean['to_cage'],'','','','']
+            mouse = [id, msid, wean['gender'], '', wean['birthdate'], '',
+                     wean['mom'], wean['dad'], wean['to_cage'], '', '', '', '']
             self.create_mouse(mouse)
-            transfer = {'msid':msid, 'to_cage':wean['to_cage']}
+            transfer = {'msid': msid, 'to_cage': wean['to_cage']}
             self.update_to_cage(transfer)
-            action = {'msid':msid,'gender':wean['gender'],'from_cage':wean['from_cage'],'to_cage':wean['to_cage'],'reason':wean['reason']}
+            action = {'msid': msid, 'gender': wean['gender'], 'from_cage': wean['from_cage'],
+                      'to_cage': wean['to_cage'], 'reason': wean['reason']}
             self.create_action(action)
 
     def create_wean_mouse(self, wean, mouse):
         action = {
-            'id':uuid.uuid4().hex,
-            'date':datetime.today().strftime('%Y-%m-%d'),
-            'msid':mouse['msid'],
-            'from_cage':wean['from_cage'],
-            'to_cage':wean['to_cage'],
-            'gender':'',
-            'tail':'',
-            'reason':wean['reason'],
-            'notes':'',
-            'executed_by':'',
+            'id': uuid.uuid4().hex,
+            'date': datetime.today().strftime('%Y-%m-%d'),
+            'msid': mouse['msid'],
+            'from_cage': wean['from_cage'],
+            'to_cage': wean['to_cage'],
+            'gender': '',
+            'tail': '',
+            'reason': wean['reason'],
+            'notes': '',
+            'executed_by': '',
         }
         self.create_action(action)
         self.update_wean_cage(action)
 
-    # Create Breeding
-    def create_breeding(self, mouse):
+    # Create One
+    def create_used(self, mouse):
         """
-        Create a breeding in database
+        Create a mouse in database
         """
+        # print(mouse)
         db = self.getMiceDB()
-        value = self.getValueFromBreeding(mouse)
-        db.execute(
-            f"INSERT INTO breeding {('id',)+breedingFields} VALUES (?{',?'*len(breedingFields)})", value)
+        mouse['termination'] = mouse['date']
+        mouse['notes'] = mouse['usage']
+        value = self.getValueFromUsed(mouse)
+        sql = f"INSERT INTO used VALUES (?{',?'*len(usedFields)})"
+        logger.info(sql)
+        db.execute(sql, value)
         self.conn.commit()
-        self.insertToMiceTable(mouse)
         return mouse.get('id')
 
     def insertToMiceTable(self, mouse):
@@ -296,19 +298,19 @@ class MiceDB:
         cage = self.getCageById(action['to_cage'])
         today = datetime.today().strftime('%Y-%m-%d')
         flag = False
-        if cage['mouse1id']==None:
+        if cage['mouse1id'] == None:
             flag = True
             sql = f"""UPDATE cages set mouse1id=?, movein1=?, count=? where id=?"""
-        elif cage['mouse2id']==None:
+        elif cage['mouse2id'] == None:
             flag = True
             sql = f"""UPDATE cages set mouse2id=?,  movein2=?, count=? where id=?"""
-        elif cage['mouse3id']==None:
+        elif cage['mouse3id'] == None:
             flag = True
             sql = f"""UPDATE cages set mouse3id=?,  movein3=?, count=? where id=?"""
-        elif cage['mouse4id']==None:
+        elif cage['mouse4id'] == None:
             flag = True
             sql = f"""UPDATE cages set mouse4id=?,  movein4=?, count=? where id=?"""
-        elif cage['mouse5id']==None:
+        elif cage['mouse5id'] == None:
             flag = True
             sql = f"""UPDATE cages set mouse5id=?,  movein5=?, count=? where id=?"""
         count = int(cage['count'])
@@ -324,16 +326,16 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql)
         today = datetime.today().strftime('%Y-%m-%d')
-        if(action['gender']=='M'):
+        if(action['gender'] == 'M'):
             sql = f"UPDATE cages set type='pair', mouse1id='{action['msid']}', count=2, movein1='{today}' where cageid='{action['to_cage']}'"
-        if(action['gender']=='F'):
+        if(action['gender'] == 'F'):
             sql = f"UPDATE cages set type='pair', mouse2id='{action['msid']}', count=2, movein2='{today}' where cageid='{action['to_cage']}'"
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-    
+
     # Update mice
-    def update (self, id, mouse):
+    def update(self, id, mouse):
         """
         Update one record in database
         """
@@ -354,7 +356,7 @@ class MiceDB:
         return id
 
     # Update cages
-    def update_cages (self, id, cage):
+    def update_cages(self, id, cage):
         """
         Update one record in database
         """
@@ -373,7 +375,7 @@ class MiceDB:
         db.execute(sql)
         self.conn.commit()
         return id
-    
+
     def update_groups(self, groups):
         groupName = groups['name']
         sql = f"""UPDATE mice SET groupid='{groupName}' where id=?"""
@@ -396,56 +398,51 @@ class MiceDB:
         msid = transfer['msid']
         cage = self.getCageById(transfer['from_cage'])
         count = int(cage['count'])
-        if cage['mouse1id']==msid:
+        # print("micedb-358:", cage)
+
+        for idx in range(1, 5):
+            name = f'mouse{idx}id'
+            if cage[name] != msid:
+                continue
             count -= 1
-            cage['mouse1id']=''
-        elif cage['mouse2id']==msid:
-            count -= 1
-            cage['mouse2id']=''
-        elif cage['mouse3id']==msid:
-            count -= 1
-            cage['mouse3id']=''
-        elif cage['mouse4id']==msid:
-            count -= 1
-            cage['mouse4id']=''
-        elif cage['mouse5id']==msid:
-            count -= 1
-            cage['mouse5id']=''
-        sql = f"""UPDATE cages SET mouse1id='{cage['mouse1id']}',mouse2id='{cage['mouse2id']}',mouse3id='{cage['mouse3id']}',mouse4id='{cage['mouse4id']}',mouse5id='{cage['mouse5id']}',count={count} where id='{cage["id"]}'"""
-        sql = sql.replace("None",'',-1)
+            cage[name] = ''
+            break
+        sql = f"""UPDATE cages SET
+        mouse1id='{cage['mouse1id']}',
+        mouse2id='{cage['mouse2id']}',
+        mouse3id='{cage['mouse3id']}',
+        mouse4id='{cage['mouse4id']}',
+        mouse5id='{cage['mouse5id']}',
+        count={count} 
+        WHERE
+        id='{cage["id"]}'"""
+        sql = sql.replace("None", '', -1)
         # print(sql)
         db = self.getMiceDB()
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
 
-    def update_to_cage(self, transfer):
+    """
+    Transfer a mouse into a cage.
+    msid to_cage count 
+    """
+
+    def update_to_cage(self, transfer, /):
         msid = transfer['msid']
         cage = self.getCageById(transfer['to_cage'])
         today = datetime.today().strftime('%Y-%m-%d')
         count = int(cage['count'])
         # this code will search for the first available spot in cage
         # to put the info in
-        if not cage['mouse1id'] or len(cage['mouse1id'].strip())==0:
+        for idx in range(1, 5):
+            name = f'mouse{idx}id'
+            if cage[name] and len(cage[name].strip()):
+                continue
             count += 1
-            cage['mouse1id']=msid
-            cage['movein1'] = today
-        elif not cage['mouse2id'] or len(cage['mouse2id'].strip())==0:
-            count += 1
-            cage['mouse2id']=msid
-            cage['movein2'] = today
-        elif not cage['mouse3id'] or len(cage['mouse3id'].strip())==0:
-            count += 1
-            cage['mouse3id']=msid
-            cage['movein3'] = today
-        elif not cage['mouse4id'] or len(cage['mouse4id'].strip())==0:
-            count += 1
-            cage['mouse4id']=msid
-            cage['movein4'] = today
-        elif not cage['mouse5id'] or len(cage['mouse5id'].strip())==0:
-            count += 1
-            cage['mouse5id']=msid
-            cage['movein5'] = today
+            cage[name] = msid
+            cage[f'movein{idx}'] = today
+            break
         sql = f"""
             UPDATE cages SET 
             mouse1id='{cage['mouse1id']}',
@@ -462,13 +459,12 @@ class MiceDB:
 
             where id='{cage["id"]}'
         """
-        sql = sql.replace("None",'',-1)
+        sql = sql.replace("None", '', -1)
         # print(sql)
         db = self.getMiceDB()
         logger.info(sql)
         db.execute(sql)
         self.conn.commit()
-
 
     def create_transfer_action(self, transfer):
         db = self.getMiceDB()
@@ -481,7 +477,7 @@ class MiceDB:
         reason = transfer['reason']
         sql = f"INSERT INTO actions (id, date, msid, from_cage, to_cage, gender, reason) VALUES (?, ?, ?, ?, ?, ?, ?)"
         logger.info(sql)
-        db.execute(sql,(id, date, msid, from_cage,to_cage, gender, reason))
+        db.execute(sql, (id, date, msid, from_cage, to_cage, gender, reason))
         self.conn.commit()
 
     # Delete
@@ -525,16 +521,16 @@ class MiceDB:
             value.append(mouse[field])
         return value
 
+    def getValueFromUsed(self, mouse, /):
+        value = [uuid.uuid4().hex]
+        for field in usedFields:
+            value.append(mouse[field])
+        return value
+
     def getValueFromCage(self, cage):
         value = [uuid.uuid4().hex]
         for field in cageFields:
             value.append(cage[field])
-        return value
-
-    def getValueFromBreeding(self, mouse):
-        value = [uuid.uuid4().hex]
-        for field in breedingFields:
-            value.append(mouse[field])
         return value
 
     @classmethod
@@ -577,14 +573,15 @@ if __name__ == '__main__':
     # pprint(mice)
     # cageids = db.getAvailableCages(0)
     # print(cageids)
-    # wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}    
+    # wean = {'dad': '2827', 'mom': '2833', 'birthdate': '2022-07-12', 'from_cage': 'J16', 'to_cage': 'EA15+++', 'count': '3', 'reason': 'wean'}
     # db.create_wean(wean)
-    
+
     # action = {'id': '5340acf3983a4520bb8fc16bc464cd41', 'date': '2022-07-23', 'msid': '1193', 'from_cage': 'J16', 'to_cage': 'A01', 'gender': '', 'tail': '', 'reason': 'wean', 'notes': '', 'executed_by': ''}
     # db.update_wean_cage(action)
     # transfer = {'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'A01', 'to_cage': 'EA11', 'notes': 'fight', 'reason': 'fight'}
     # db.update_transfer(transfer)
 
-    pair = [{'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'EA11', 'to_cage': 'A011', 'gender': 'M', 'reason': 'breeding'}, {'id': 'a187ad84a4294d0aa0c21e6bbf9e8627', 'msid': 'A0186', 'from_cage': 'EA06', 'to_cage': 'A011', 'gender': 'F', 'reason': 'breeding'}]
+    pair = [{'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'EA11', 'to_cage': 'A011', 'gender': 'M', 'reason': 'breeding'}, {
+        'id': 'a187ad84a4294d0aa0c21e6bbf9e8627', 'msid': 'A0186', 'from_cage': 'EA06', 'to_cage': 'A011', 'gender': 'F', 'reason': 'breeding'}]
     db.create_pair(pair)
     print("Done.")
