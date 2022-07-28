@@ -137,28 +137,19 @@ def update_groups():
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 
-
-@app.route('/breeding', methods=['POST'])
-def create_breeding():
+@app.route('/remove', methods=['POST'])
+def remove_mice():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    mouse = {
-        'id': uuid.uuid4().hex,
-        'type': post_data.get('type'),
-        'dob': post_data.get('dob'),
-        'cage': post_data.get('cage'),
-        'mom': post_data.get('mom'),
-        'dad': post_data.get('dad'),
-        'born': post_data.get('born'),
-        'males': post_data.get('males'),
-        'females': post_data.get('females'),
-        'deaths': post_data.get('deaths'),
-        'notes': post_data.get('notes'),
-    }
-    id = db.create_breeding(mouse)
-    response_object['message'] = 'mouse added!'
+    # db.update_groups(post_data)
+    print(post_data)
+    data_len = len(post_data)
+    if data_len > 0:
+        for mouse in post_data:
+            db.delete(mouse['id'])
+            db.create_used(mouse)
+    response_object['message'] = 'new cage added!'
     return jsonify(response_object)
-
 
 @app.route('/mice/<mouse_id>', methods=['GET'])
 def retrieve_mouse(mouse_id):
@@ -184,7 +175,6 @@ def update_user(mouse_id):
         'msid': post_data.get('msid'),
         'gender': post_data.get('gender'),
         'geno': post_data.get('geno'),
-        'dob': post_data.get('dob'),
         'ear': post_data.get('ear'),
         'mom': post_data.get('mom'),
         'dad': post_data.get('dad'),

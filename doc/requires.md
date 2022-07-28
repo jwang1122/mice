@@ -324,4 +324,16 @@ Where the possible values of Cage.type are
 2. male
 3. female 
 
-the Cage.birthdate only for breeding cage.
+the Cage.bir
+
+
+这种已经处死了的老鼠，我怎么才可以让它隐藏起来
+
+pair这里，我怎么才能选择，比如说ASM的老鼠我要选genotype是+/-的老鼠，这里好像不能选
+以及如果我希望remove所有的group的老鼠，我应该怎么隐藏,我不是说删除，而是暂时踢出pair的候选项
+
+wean这里，我没有办法选择单独某一笼老鼠，或者某一只母鼠，查看她的生育记录，我甚至没办法选择某一种gene型的老鼠来查看
+而且这里的选择好像没什么用，我以为选择某个生育记录，就表示我要给这一笼分笼？
+
+我有尝试使用这个分笼，from cage这个空不让我写字，但是也不让我分笼，点击了没有反应
+
