@@ -1,9 +1,8 @@
-import sqlite3
-from sqlite3 import Error
-from pprint import pprint
-import uuid
-from datetime import date, datetime
 import logging
+import sqlite3
+import uuid
+from datetime import datetime
+from sqlite3 import Error
 
 log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
 logging.basicConfig(filename='mylogs.log', filemode='w',
