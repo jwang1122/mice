@@ -78,7 +78,16 @@ const ResponsiveAppBar = props => {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                    {pages.map((page) => (
+                    {props.isLoggedIn && pages.map((page) => (
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                            <Typography textAlign="center"
+                                component={Link}
+                                to={`/${page}`}>
+                                {page}
+                            </Typography>
+                        </MenuItem>
+                    ))}
+                    {!props.isLoggedIn && logins.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center"
                                 component={Link}

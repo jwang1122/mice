@@ -15,8 +15,7 @@ import Home from './components/login/Home'
 import Login from './components/login/Login'
 import Signup from './components/login/Signup'
 
-
-const App = props => {
+const Router = props => {
   const url = props.url
   document.title = "Mice manager"
   let isLoggedIn = false
@@ -48,4 +47,4 @@ const App = props => {
   );
 }
 
-export default App;
+export default Router;
