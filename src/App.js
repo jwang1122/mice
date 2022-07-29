@@ -11,16 +11,25 @@ import UsedMice from './components/used/UsedMice'
 import PairingReminder from './components/actions/PairingReminder'
 import BreedingReminder from './components/actions/BreedingReminder'
 import Logout from './components/actions/Logout'
+import Home from './components/login/Home'
+import Login from './components/login/Login'
+import Signup from './components/login/Signup'
 
 
 const App = props => {
   const url = props.url
   document.title = "Mice manager"
+  let isLoggedIn = false
+  if(localStorage.getItem("isLoggedIn")==="1"){
+    isLoggedIn = true
+  }
+  console.log(isLoggedIn)
   return (
     <BrowserRouter>
-      <ResponsiveAppBar />
+      <ResponsiveAppBar isLoggedIn={isLoggedIn}/>
       <Routes>
-        <Route path="/" element={<Mice url={url} />} />
+        <Route path="/" element={<Home url={url} />} />
+        <Route path="/home" element={<Home url={url} />} />
         <Route path="/cages" element={<Cages url={url} />} />
         <Route path="/mice" element={<Mice url={url} />} />
         <Route path="/pair" element={<Pair url={url} />} />
@@ -32,6 +41,8 @@ const App = props => {
         <Route path="/Pairing" element={<PairingReminder url={url} />} />
         <Route path="/Breeding" element={<BreedingReminder url={url} />} />
         <Route path="/Logout" element={<Logout url={url} />} />
+        <Route path="/login" element={<Login url={url} />} />
+        <Route path="/signup" element={<Signup url={url} />} />
       </Routes>
     </BrowserRouter>
   );
