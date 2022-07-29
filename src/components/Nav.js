@@ -101,7 +101,7 @@ const ResponsiveAppBar = props => {
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Logo variant="h5" display={{ xs: 'flex', md: 'none' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {props.isLoggedIn && pages.map((page) => (
+            {!props.isLoggedIn && logins.map((page) => (
                     <Button
                         key={page}
                         onClick={handleCloseNavMenu}
@@ -112,7 +112,7 @@ const ResponsiveAppBar = props => {
                         {page}
                     </Button>
                 ))}
-                {!props.isLoggedIn && logins.map((page) => (
+                {props.isLoggedIn && pages.map((page) => (
                     <Button
                         key={page}
                         onClick={handleCloseNavMenu}

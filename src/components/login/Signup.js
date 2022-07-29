@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 
-import Card from '../UI/Card';
 import classes from './Login.module.css';
-import Button from '../UI/Button';
-import Input from '../UI/Input';
+import Card from '../UI/Card/Card';
+import Button from '../UI/Button/Button';
+import Input from '../UI/Button/Input';
 import bcrypt from 'bcryptjs'
-import MainHeader from './MainHeader';
 import { useNavigate } from 'react-router-dom'
 
 const Signup = (props) => {
-    const title = "Mice Management"
-    const isLoggedIn = props.isLoggedIn
     const navigate = useNavigate();
 
     const validEmailRegex = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
@@ -47,7 +44,6 @@ const Signup = (props) => {
 
     return (
         <Card className={classes.login}>
-            <MainHeader title={title} isLoggedIn={isLoggedIn} />
             <form onSubmit={submitHandler} >
                 <Input label='E-Mail' type='email' onChange={emailChangeHandler} />
                 {emailError.length > 0 && <span className={classes.error}>{emailError}</span>}

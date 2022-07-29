@@ -11,23 +11,24 @@ import UsedMice from './components/used/UsedMice'
 import PairingReminder from './components/actions/PairingReminder'
 import BreedingReminder from './components/actions/BreedingReminder'
 import Logout from './components/actions/Logout'
-import Home from './components/login/Home.js'
-import Login from './components/login/Login.js'
-import Signup from './components/login/Signup.js'
+import Home from './components/login/Home'
+import Login from './components/login/Login'
+import Signup from './components/login/Signup'
 
 const Router = props => {
   const url = props.url
   document.title = "Mice manager"
   let isLoggedIn = false
-  if (localStorage.getItem("isLoggedIn")==="1") {
+  if(localStorage.getItem("isLoggedIn")==="1"){
     isLoggedIn = true
-  } 
+  }
   console.log(isLoggedIn)
   return (
     <BrowserRouter>
       <ResponsiveAppBar isLoggedIn={isLoggedIn}/>
       <Routes>
         <Route path="/" element={<Home url={url} />} />
+        <Route path="/home" element={<Home url={url} />} />
         <Route path="/cages" element={<Cages url={url} />} />
         <Route path="/mice" element={<Mice url={url} />} />
         <Route path="/pair" element={<Pair url={url} />} />
