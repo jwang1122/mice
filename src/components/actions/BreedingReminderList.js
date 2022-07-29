@@ -3,7 +3,7 @@ import MUIDataTable from 'mui-datatables';
 const columns = [
     // { name: 'id', options: { display: false, filter: false } },
     { name: 'cageid', label: 'Cage ID', options: { filter: false, sort: true } },
-    { name: 'birthdate', label: 'Birthdate', options: { filter: false, sort: true } },
+    { name: 'birthdate', label: 'Birthdate', options: { filter: true, sort: true } },
     { name: 'daysleft', label: 'Date Left', options: { filter: false, sort: true } },
 ];
 const CageList = (props) => {
