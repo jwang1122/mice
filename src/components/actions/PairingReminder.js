@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import PairingReminderList from './PairingReminderList'
-import classes from './BreedingReminder.module.css'
+// import classes from './BreedingReminder.module.css'
 
 const PairingReminder = (props) => {
     const [mice, setMice] = useState([])
