@@ -390,3 +390,22 @@ UPDATE-->UPDATE_FROM-->UPDATE_TO-->ACTION
 
 ## Use AuthCtx
 
+```mermaid
+graph TB
+
+INDEX(Index.js)
+APP[App.js]
+AUTH["AuthContextProvider<br>url, isLoggedIn, onLogin(), onLogout()"]
+LOGIN["Login<br>import AuthContext<br>useContext(AuthContext)<br>authCtx.onLogin()"]
+LOGOUT["Logout<br>import AuthContext<br>useContext(AuthContext)<br>authCtx.onLogout()"]
+NAVBAR["Nav.js<br>import AuthContext<br>useContext(AuthContext)<br>authCtx.isLoggedIn"]
+HOME[Home]
+MICE[Mice]
+CAGE[Cages]
+PAIR[Pair]
+WEAN(Wean)
+
+INDEX --> APP --> AUTH
+AUTH --> NAVBAR & LOGIN & LOGOUT & HOME & MICE & CAGE & PAIR & WEAN
+
+```
