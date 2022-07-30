@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
 
+const logins = ['home', 'login', 'signup']
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used'];
 const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder'], ['Logout', 'Logout']];
 
@@ -77,7 +78,16 @@ const ResponsiveAppBar = props => {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                    {pages.map((page) => (
+                    {props.isLoggedIn && pages.map((page) => (
+                        <MenuItem key={page} onClick={handleCloseNavMenu}>
+                            <Typography textAlign="center"
+                                component={Link}
+                                to={`/${page}`}>
+                                {page}
+                            </Typography>
+                        </MenuItem>
+                    ))}
+                    {!props.isLoggedIn && logins.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center"
                                 component={Link}
@@ -91,7 +101,18 @@ const ResponsiveAppBar = props => {
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Logo variant="h5" display={{ xs: 'flex', md: 'none' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
+            {!props.isLoggedIn && logins.map((page) => (
+                    <Button
+                        key={page}
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        component={Link}
+                        to={`/${page}`}
+                    >
+                        {page}
+                    </Button>
+                ))}
+                {props.isLoggedIn && pages.map((page) => (
                     <Button
                         key={page}
                         onClick={handleCloseNavMenu}
