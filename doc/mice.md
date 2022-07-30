@@ -16,6 +16,8 @@
   - [Pairing Processing](#pairing-processing)
 - [Wean Operation](#wean-operation)
 - [Transfer Operation](#transfer-operation)
+- [Add Login](#add-login)
+- [Use AuthCtx](#use-authctx)
 
 ## Getting Started
 
@@ -384,3 +386,7 @@ MOUSE-->UPDATE
 TO-->UPDATE
 UPDATE-->UPDATE_FROM-->UPDATE_TO-->ACTION
 ```
+## Add Login
+
+## Use AuthCtx
+

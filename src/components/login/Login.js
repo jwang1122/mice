@@ -6,8 +6,12 @@ import Button from '../UI/Button/Button';
 import Input from '../UI/Button/Input';
 import bcrypt from 'bcryptjs'
 import { useNavigate } from 'react-router-dom'
+import {useContext} from 'react'
+import AuthContext from './auth-context';
+
 
 const Login = (props) => {
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const emailInputRef = React.useRef()
@@ -18,13 +22,7 @@ const Login = (props) => {
     const email = emailInputRef.current.value
     const password = passwordInputRef.current.value
     const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash password created previously upon sign up
-    const storedEmail = localStorage.getItem("email")
-    const storedPassword = localStorage.getItem("password")
-    if(email===storedEmail && hashedPassword===storedPassword){
-      localStorage.setItem("isLoggedIn", 1)
-    }else{
-      localStorage.setItem("isLoggedIn", 0)
-    }
+    authCtx.onLogin(email, hashedPassword)
     navigate("/home")
   }
  

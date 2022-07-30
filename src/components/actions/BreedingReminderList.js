@@ -15,7 +15,6 @@ const CageList = (props) => {
         'birthdate': item.birthdate,
         'daysleft': Math.ceil(22 - ((today - new Date(item?.birthdate)) / (1000 * 60 * 60 * 24))) + " days left."
     }][0])
-    console.log(cages)
     const selectChangeHandler = rowData => {
         props.onSelectChange(rowData)
     }

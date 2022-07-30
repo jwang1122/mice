@@ -3,13 +3,14 @@ import AppBar from '@mui/material/AppBar';
 import { Box, Container } from '@mui/system';
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
+import AuthContext from './login/auth-context';
 
 const logins = ['home', 'login', 'signup']
-const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used'];
-const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder'], ['Logout', 'Logout']];
+const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used', 'Logout'];
+const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder']];
 
 const Logo = props => <Typography
     {...props}
@@ -30,6 +31,7 @@ const Logo = props => <Typography
 />
 
 const ResponsiveAppBar = props => {
+    const authCtx = useContext(AuthContext);
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const handleOpenNavMenu = (event) => {
@@ -47,7 +49,7 @@ const ResponsiveAppBar = props => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position='static'> <Container maxWidth="xl"><Toolbar disableGutters>
+        <AppBar position='static' sx={{ bgcolor: "brown" }}> <Container maxWidth="xl"><Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Logo variant="h6" href="/" display={{ xs: 'none', md: 'flex' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -78,7 +80,7 @@ const ResponsiveAppBar = props => {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                    {props.isLoggedIn && pages.map((page) => (
+                    {authCtx.isLoggedIn && pages.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center"
                                 component={Link}
@@ -87,7 +89,7 @@ const ResponsiveAppBar = props => {
                             </Typography>
                         </MenuItem>
                     ))}
-                    {!props.isLoggedIn && logins.map((page) => (
+                    {!authCtx.isLoggedIn && logins.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center"
                                 component={Link}
@@ -101,7 +103,7 @@ const ResponsiveAppBar = props => {
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Logo variant="h5" display={{ xs: 'flex', md: 'none' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {!props.isLoggedIn && logins.map((page) => (
+            {!authCtx.isLoggedIn && logins.map((page) => (
                     <Button
                         key={page}
                         onClick={handleCloseNavMenu}
@@ -112,7 +114,7 @@ const ResponsiveAppBar = props => {
                         {page}
                     </Button>
                 ))}
-                {props.isLoggedIn && pages.map((page) => (
+                {authCtx.isLoggedIn && pages.map((page) => (
                     <Button
                         key={page}
                         onClick={handleCloseNavMenu}
