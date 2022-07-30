@@ -15,6 +15,7 @@ import Home from './components/login/Home'
 import Login from './components/login/Login'
 import Signup from './components/login/Signup'
 import { AuthContextProvider } from './components/login/auth-context'
+import './App.css'
 
 const Router = props => {
   const url = props.url
