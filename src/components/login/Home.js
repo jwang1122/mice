@@ -16,10 +16,6 @@ const Home = (props) => {
         console.log("loginHandler...")
         setDisplayLogin(false)
     }
-    let center = classes.center1
-    if(displayLogin){
-        center = classes.center2
-    }
     return (
         <>
             {displayLogin && !authCtx.isLoggedIn && <LoginModal  onLogin={loginHandler}/>}
