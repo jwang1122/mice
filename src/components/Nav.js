@@ -49,7 +49,7 @@ const ResponsiveAppBar = props => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position='static' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
+        <AppBar position='absolute' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Logo variant="h6" href="/" display={{ xs: 'none', md: 'flex' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

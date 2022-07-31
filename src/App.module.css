@@ -1,0 +1,10 @@
+.App {
+  position: absolute;
+  /* display:flex;
+  justify-content: center; */
+  top:0px;
+}
+
+body{
+  background-color:burlywood;
+}

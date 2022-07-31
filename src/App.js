@@ -12,10 +12,9 @@ import PairingReminder from './components/actions/PairingReminder'
 import BreedingReminder from './components/actions/BreedingReminder'
 import Logout from './components/login/Logout'
 import Home from './components/login/Home'
-import Login from './components/login/Login'
 import Signup from './components/login/Signup'
 import { AuthContextProvider } from './components/login/auth-context'
-import './App.css'
+import classes from './App.module.css'
 
 const Router = props => {
   const url = props.url
@@ -24,7 +23,7 @@ const Router = props => {
   return (
     <AuthContextProvider>
       <BrowserRouter>
-        <ResponsiveAppBar/>
+        <ResponsiveAppBar className={classes.App}/>
         <Routes>
           <Route path="/" element={<Home url={url} />} />
           <Route path="/home" element={<Home url={url} />} />
@@ -39,7 +38,7 @@ const Router = props => {
           <Route path="/Pairing" element={<PairingReminder url={url} />} />
           <Route path="/Breeding" element={<BreedingReminder url={url} />} />
           <Route path="/Logout" element={<Logout url={url} />} />
-          <Route path="/login" element={<Login url={url} />} />
+          <Route path="/login" element={<Home display={true} />} />
           <Route path="/signup" element={<Signup url={url} />} />
         </Routes>
       </BrowserRouter>
