@@ -388,6 +388,12 @@ UPDATE-->UPDATE_FROM-->UPDATE_TO-->ACTION
 ```
 ## Add Login
 
+* [Home page](../src/components/login/Home.js)
+* [Login page](../src/components/login/Login.js)
+* [Logout component](../src/components/login/Logout.js)
+* [Signup page](../src/components/login/Signup.js)
+* [AuthContextProvider](../src/components/login/auth-context.js)
+
 ## Use AuthCtx
 
 ```mermaid
@@ -405,7 +411,8 @@ CAGE[Cages]
 PAIR[Pair]
 WEAN(Wean)
 
-INDEX --> APP --> AUTH
-AUTH --> NAVBAR & LOGIN & LOGOUT & HOME & MICE & CAGE & PAIR & WEAN
+INDEX --> APP --> AUTH --> NavBar 
+AUTH-->ROUTER
+ROUTER --> NAVBAR & LOGIN & LOGOUT & HOME & MICE & CAGE & PAIR & WEAN
 
 ```
