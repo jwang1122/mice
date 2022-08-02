@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
-import AuthContext from './login/auth-context';
+import AuthContext from './login/auth-context'; // isLoggedIn, onLogin, onLogout
 
 const logins = ['home', 'login', 'signup', 'admin']
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used', 'Logout'];

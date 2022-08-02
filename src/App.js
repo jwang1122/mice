@@ -16,7 +16,6 @@ import Signup from './components/login/Signup'
 import Admin from './components/login/Admin'
 import { AuthContextProvider } from './components/login/auth-context'
 import classes from './App.module.css'
-
 const Router = props => {
   const url = props.url
   document.title = "Mice manager"
@@ -24,7 +23,7 @@ const Router = props => {
   return (
     <AuthContextProvider>
       <BrowserRouter>
-        <ResponsiveAppBar/>
+        <ResponsiveAppBar classes={classes.App}/>
         <Routes>
           <Route path="/" element={<Home url={url} />} />
           <Route path="/home" element={<Home url={url} />} />

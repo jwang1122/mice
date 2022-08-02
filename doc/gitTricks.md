@@ -21,3 +21,10 @@ git log --oneline
 git reset
 git pull
 ```
+
+## config user
+
+```dos
+git config user.name "jwang1122"
+git config user.email "jwang1122.gmail.com"
+```
