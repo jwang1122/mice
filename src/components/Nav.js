@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
-import AuthContext from './login/auth-context';
+import AuthContext from './login/auth-context'; // isLoggedIn, onLogin, onLogout
 
 const logins = ['home', 'login', 'signup']
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used', 'Logout'];
@@ -49,7 +49,7 @@ const ResponsiveAppBar = props => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position='absolute' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
+        <AppBar position='relative' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Logo variant="h6" href="/" display={{ xs: 'none', md: 'flex' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

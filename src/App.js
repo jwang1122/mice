@@ -14,7 +14,6 @@ import Logout from './components/login/Logout'
 import Home from './components/login/Home'
 import Signup from './components/login/Signup'
 import { AuthContextProvider } from './components/login/auth-context'
-import classes from './App.module.css'
 
 const Router = props => {
   const url = props.url
@@ -23,7 +22,7 @@ const Router = props => {
   return (
     <AuthContextProvider>
       <BrowserRouter>
-        <ResponsiveAppBar className={classes.App}/>
+        <ResponsiveAppBar/>
         <Routes>
           <Route path="/" element={<Home url={url} />} />
           <Route path="/home" element={<Home url={url} />} />
