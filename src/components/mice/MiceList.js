@@ -51,6 +51,10 @@ const MiceList = (props) => {
         addItem(props.url + "/remove", mice)
     }
 
+    const cellClickHandler = (cell) => {
+        console.log(cell)
+      }
+  
     const options = {
         // filterType: "checkbox",
         onRowClick: rowData => selectChangeHandler(rowData),
@@ -58,6 +62,7 @@ const MiceList = (props) => {
         rowsPerPage: 5,
         onRowSelectionChange: (current, allRows, rows) => rowSelectHandler(current, allRows, rows),
         customToolbarSelect: rows => { }, // get rid of trash can 
+        onCellClick:(data, cell)=>cellClickHandler(data),
     };
 
     return (
