@@ -4,6 +4,7 @@ import classes from './Login.module.css';
 import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Button/Input';
+import addItem from '../lib/create'
 import bcrypt from 'bcryptjs'
 import { useNavigate } from 'react-router-dom'
 
@@ -32,10 +33,15 @@ const Signup = (props) => {
         event.preventDefault()
 
         if (emailError.length === 0 && passwordError.length === 0) {
-            localStorage.setItem('email', email)
             const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') 
-            localStorage.setItem('password', hashedPassword)
-            // props.onSignup(email, hashedPassword)
+            const user = {
+                email: email,
+                password: hashedPassword,
+                status: 'inactive',
+                date: new Date(),
+                type: 'view'
+            }
+            addItem(props.url + '/user', user)
             navigate("/home")
         }
         setEmail("")
