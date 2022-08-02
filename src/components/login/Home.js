@@ -25,7 +25,7 @@ const Home = (props) => {
             <div className={classes.ad}>
 
                 <p>If you are interested in small web application like this one, 
-                    please contact us on (832）123-4567. we will do the job as your wish.</p>
+                    please contact us on (832) 123-4567. we will do the job as your wish.</p>
 
             </div></>
     )}

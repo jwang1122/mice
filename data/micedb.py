@@ -9,6 +9,10 @@ logging.basicConfig(filename='mylogs.log', filemode='w',
                     level=logging.INFO, format=log_format)
 logger = logging.getLogger('MICEDB')
 
+userFields = (
+    'email', 'password', 'status', 'date', 'type'
+)
+
 miceFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
@@ -44,6 +48,18 @@ class MiceDB:
         return c
 
     # Retrieve All mice
+    def getUsers(self):
+        db = self.getMiceDB()
+        userList = []
+        try:
+            for row in db.execute('SELECT * FROM users'):
+                user = self.getUserFromList(row)
+                userList.append(user)
+        except Exception as e:
+            logger.critical(e)
+        return userList
+
+    # Retrieve All mice
     def getMice(self):
         db = self.getMiceDB()
         miceList = []
@@ -53,7 +69,6 @@ class MiceDB:
                 miceList.append(mouse)
         except Exception as e:
             logger.critical(e)
-
         return miceList
 
     # Retrieve All used mice
@@ -66,7 +81,6 @@ class MiceDB:
                 miceList.append(mouse)
         except Exception as e:
             logger.critical(e)
-
         return miceList
 
     # Retrieve All cages
@@ -98,6 +112,23 @@ class MiceDB:
             logger.critical(e)
 
         return actionList
+
+        
+
+    # Retrieve one
+    def getUser(self, email):
+        """
+        Retrieve a user from database by email
+        """
+        db = self.getMiceDB()
+        user = None
+        try:
+            value = (email,)
+            db.execute('SELECT * FROM users WHERE email=?', value)
+            user = self.getUserFromList(db.fetchone())
+        except Exception as e:
+            print(e)
+        return user
 
     # Retrieve one
     def getMouse(self, id):
@@ -176,6 +207,19 @@ class MiceDB:
         db.execute(sql, value)
         self.conn.commit()
         return mouse.get('id')
+
+    # Create One
+    def create_user(self, user):
+        """
+        Create a user in database
+        """
+        db = self.getMiceDB()
+        value = self.getValueFromUser(user)
+        sql = f"INSERT INTO users VALUES (?{',?'*len(userFields)})"
+        logger.info(sql)
+        db.execute(sql, value)
+        self.conn.commit()
+        return user.get('id')
 
     # Create One mouse
     def create_mouse(self, mouse):
@@ -355,6 +399,22 @@ class MiceDB:
         return id
 
     # Update cages
+    def update_user(self, id, cage):
+        """
+        Update one record in database
+        """
+        sql = f"""
+        UPDATE users SET
+        status='{cage['status']}',
+        type='{cage['type']}'
+        where id='{id}'
+        """
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
+        return id
+
+    # Update cages
     def update_cages(self, id, cage):
         """
         Update one record in database
@@ -490,6 +550,12 @@ class MiceDB:
         self.conn.commit()
         return mouse
 
+    def getUserFromList(self, row):
+        user = {"id": row[0]}
+        for i, field in enumerate(userFields, 1):
+            user[field] = row[i]
+        return user
+
     def getMouseFromList(self, row):
         mouse = {"id": row[0]}
         for i, field in enumerate(miceFields, 1):
@@ -513,6 +579,12 @@ class MiceDB:
         for i, field in enumerate(actionFields, 1):
             action[field] = row[i]
         return action
+
+    def getValueFromUser(self, user):
+        value = [uuid.uuid4().hex]
+        for field in userFields:
+            value.append(user[field])
+        return value
 
     def getValueFromMouse(self, mouse):
         value = [uuid.uuid4().hex]

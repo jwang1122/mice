@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
 import AuthContext from './login/auth-context';
 
-const logins = ['home', 'login', 'signup']
+const logins = ['home', 'login', 'signup', 'admin']
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used', 'Logout'];
 const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder']];
 
@@ -49,7 +49,7 @@ const ResponsiveAppBar = props => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position='absolute' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
+        <AppBar position='relative' sx={{ bgcolor: "#6b430b" }}> <Container maxWidth="xl"><Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Logo variant="h6" href="/" display={{ xs: 'none', md: 'flex' }} />
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

@@ -47,6 +47,13 @@ def all_used():
     response_object['mice'] = used
     return jsonify(response_object)
 
+@app.route('/users', methods=['GET'])
+def all_users():
+    response_object = {'status': 'success'}
+    users = db.getUsers()
+    response_object['users'] = users
+    return jsonify(response_object)
+
 @app.route('/availableCageIds/<count>', methods=['GET'])
 def available_cageids(count):
     response_object = {'status': 'success'}
@@ -73,6 +80,18 @@ def get_pdf():
     post_data: dict = request.get_json()
     print("miceApp-74:",post_data)
     return send_file('geno.pdf', as_attachment=True)
+
+@app.route('/user', methods=['POST'])
+def create_user():
+    response_object = {'status': 'success'}
+    post_data: dict = request.get_json()
+    user = {'id': uuid.uuid4().hex}
+    for field in userFields:
+        user[field] = post_data.get(field)
+    id = db.create_user(user)
+    response_object['message'] = 'mouse added!'
+    return jsonify(response_object)
+
 
 @app.route('/mice', methods=['POST'])
 def create_mouse():
@@ -102,6 +121,18 @@ def create_cage():
     cage = {'id': uuid.uuid4().hex, 'cageid':post_data.get('cageid')}
     id = db.create_cage(cage)
     response_object['message'] = 'new cage added!'
+    return jsonify(response_object)
+
+@app.route('/users/<id>', methods=['PUT'])
+def update_user(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    cage = {
+        'status':post_data.get('status'),
+        'type':post_data.get('type')
+    }
+    db.update_user(id, cage)
+    response_object['message'] = 'user updated!'
     return jsonify(response_object)
 
 @app.route('/cages/<id>', methods=['PUT'])
@@ -151,6 +182,13 @@ def remove_mice():
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 
+@app.route('/get_user/<email>', methods=['GET'])
+def get_user(email):
+    response_object = {'status': 'success'}
+    mouse = db.getUser(email)
+    response_object['mouse'] = mouse
+    return jsonify(response_object)
+
 @app.route('/mice/<mouse_id>', methods=['GET'])
 def retrieve_mouse(mouse_id):
     response_object = {'status': 'success'}
@@ -168,7 +206,7 @@ def delete_user(mouse_id):
 
 
 @app.route('/mice/<mouse_id>', methods=['PUT'])
-def update_user(mouse_id):
+def update_used(mouse_id):
     response_object = {'status': 'success'}
     post_data: dict = request.get_json()
     mouse = {
