@@ -6,8 +6,8 @@ import Card from '../UI/Card/Card';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Button/Input';
 import bcrypt from 'bcryptjs'
-import {useContext} from 'react'
-import AuthContext from './auth-context';
+// import {useContext} from 'react'
+// import AuthContext from './auth-context';
 
 function Backdrop(props) {
   return <div className={classes.backdrop} />
@@ -15,7 +15,7 @@ function Backdrop(props) {
 
 
 const Login = (props) => {
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
 
   const emailInputRef = React.useRef()
   const passwordInputRef = React.useRef()
@@ -25,8 +25,8 @@ const Login = (props) => {
     const email = emailInputRef.current.value
     const password = passwordInputRef.current.value
     const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash password created previously upon sign up
-    authCtx.onLogin(email, hashedPassword)
-    props.onLogin()
+    // authCtx.onLogin(email, hashedPassword)
+    props.onLogin(email, hashedPassword)
   }
  
   return (
@@ -50,7 +50,7 @@ function LoginModal(props) {
   return (
       <React.Fragment>
           {ReactDOM.createPortal(<Backdrop />, document.getElementById('backdrop-root'))}
-          {ReactDOM.createPortal(<Login  />, document.getElementById('overlay-root'))}
+          {ReactDOM.createPortal(<Login  onLogin={props.onLogin}/>, document.getElementById('overlay-root'))}
       </React.Fragment>
   );
 }
