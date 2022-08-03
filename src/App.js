@@ -8,6 +8,7 @@ import Mice from './components/mice/Mice'
 import Cages from './components/cages/Cages.js'
 import PdfReport from './components/reports/PdfReport'
 import UsedMice from './components/used/UsedMice'
+import History from './components/actions/History.js'
 import PairingReminder from './components/actions/PairingReminder'
 import BreedingReminder from './components/actions/BreedingReminder'
 import Logout from './components/login/Logout'
@@ -35,6 +36,7 @@ const Router = props => {
           <Route path="/action" element={<Actions url={url} />} />
           <Route path="/report" element={<PdfReport url={url} />} />
           <Route path="/used" element={<UsedMice url={url} />} />
+          <Route path="/history" element={<History url={url} />} />
           <Route path="/Pairing" element={<PairingReminder url={url} />} />
           <Route path="/Breeding" element={<BreedingReminder url={url} />} />
           <Route path="/Logout" element={<Logout url={url} />} />

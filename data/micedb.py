@@ -35,6 +35,12 @@ actionFields = (
     'date', 'msid', 'from_cage', 'to_cage', 'gender',
     'tail', 'reason', 'notes', 'executed_by'
 )
+bornFields = (
+    'birthdate', 'cage', 'mom', 'dad',
+    'males', 'females', 'notes',
+    'plusplus',  'plusminus', 'minusminus',
+    'born',  'deaths', 'type',
+)
 
 
 class MiceDB:
@@ -113,9 +119,20 @@ class MiceDB:
 
         return actionList
 
-        
+    # Retrieve All mice
+    def getBorns(self):
+        db = self.getMiceDB()
+        bornList = []
+        try:
+            for row in db.execute('SELECT * FROM borns'):
+                born = self.getBornFromList(row)
+                bornList.append(born)
+        except Exception as e:
+            logger.critical(e)
+        return bornList
 
     # Retrieve one
+
     def getUser(self, email):
         """
         Retrieve a user from database by email
@@ -435,6 +452,29 @@ class MiceDB:
         self.conn.commit()
         return id
 
+    def update_born(self, id, cage):
+        """
+        Update one record in database
+        """
+        sql = f"""
+        UPDATE borns SET
+        birthdate='{cage['birthdate']}',
+        males='{cage['males']}',
+        females='{cage['females']}',
+        notes='{cage['notes']}',
+        plusplus='{cage['plusplus']}',
+        plusminus='{cage['plusminus']}',
+        minusminus='{cage['minusminus']}',
+        born='{cage['born']}',
+        deaths='{cage['deaths']}',
+        type='{cage['type']}'
+        where id='{id}'
+        """
+        db = self.getMiceDB()
+        db.execute(sql)
+        self.conn.commit()
+        return id
+
     def update_groups(self, groups):
         groupName = groups['name']
         sql = f"""UPDATE mice SET groupid='{groupName}' where id=?"""
@@ -579,6 +619,12 @@ class MiceDB:
         for i, field in enumerate(actionFields, 1):
             action[field] = row[i]
         return action
+
+    def getBornFromList(self, row):
+        born = {"id": row[0]}
+        for i, field in enumerate(bornFields, 1):
+            born[field] = row[i]
+        return born
 
     def getValueFromUser(self, user):
         value = [uuid.uuid4().hex]

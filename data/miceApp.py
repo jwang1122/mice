@@ -46,6 +46,12 @@ def all_used():
     used = db.getUsedMice()
     response_object['mice'] = used
     return jsonify(response_object)
+@app.route('/borns', methods=['GET'])
+def all_borns():
+    response_object = {'status': 'success'}
+    borns = db.getBorns()
+    response_object['borns'] = borns
+    return jsonify(response_object)
 
 @app.route('/users', methods=['GET'])
 def all_users():
@@ -149,6 +155,25 @@ def update_cage(id):
         'notes':post_data.get('notes'),
     }
     db.update_cages(id, cage)
+    response_object['message'] = 'new cage added!'
+    return jsonify(response_object)
+@app.route('/borns/<id>', methods=['PUT'])
+def update_born(id):
+    response_object = {'status': 'success'}
+    post_data = request.get_json()
+    born = {
+        'birthdate':post_data.get('birthdate'),
+        'males':post_data.get('males'),
+        'females':post_data.get('females'),
+        'notes':post_data.get('notes'),
+        'plusplus':post_data.get('plusplus'),
+        'plusminus':post_data.get('plusminus'),
+        'minusminus':post_data.get('minusminus'),
+        'born':post_data.get('born'),
+        'deaths':post_data.get('deaths'),
+        'type':post_data.get('type'),
+    }
+    db.update_born(id, born)
     response_object['message'] = 'new cage added!'
     return jsonify(response_object)
 

@@ -337,7 +337,7 @@ wean这里，我没有办法选择单独某一笼老鼠，或者某一只母鼠�
 
 我有尝试使用这个分笼，from cage这个空不让我写字，但是也不让我分笼，点击了没有反应
 
-the app could just be an addon of sort for Excel
+✔️the app could just be an addon of sort for Excel
 
 the app would read and filter the data
 
@@ -349,3 +349,8 @@ reports
 
 and most importantly
 she can add data through her phones
+
+## BORN HISTORY
+
+1. user look at table based on mom's ID
+2. user be able to modify some other fields except mom's id, dad's id, cage
