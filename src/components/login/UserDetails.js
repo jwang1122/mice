@@ -26,7 +26,7 @@ const UserDetails = props => {
                 <Grid item><Input label="Email" defaultValue={user[1]} disabled={true} /></Grid>
                 <Grid item><Input label="Password" defaultValue={user[2]} disabled={true} /></Grid>
                 <Grid item><Input label="Status" defaultValue={user[3]} inputRef={statusRef} /></Grid>
-                <Grid item><Input label="Date" defaultValue={user[4]} disabled={true} /></Grid>
+                <Grid item><Input label="Date" type="date" defaultValue={user[4]} disabled={true} /></Grid>
                 <Grid item><Input label="Type" defaultValue={user[5]} inputRef={typeRef} /></Grid>
                 <Grid item><Button color="primary" variant="contained" onClick={handleSubmit}>Update</Button></Grid>
                 <Grid item><Button color="secondary" variant="contained" onClick={props.onCancel}>Cancel</Button></Grid>
