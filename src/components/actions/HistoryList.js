@@ -1,10 +1,4 @@
 import MUIDataTable from 'mui-datatables';
-import Input from '../UI/Input'
-import Button from '../UI/Button'
-import Card from '../UI/Card'
-import { useState, useRef } from 'react'
-import updateItem from '../lib/update'
-import addItem from '../lib/create'
 
 const columns = [
     { name: 'id', options: { display: false, filter: false } },
@@ -23,47 +17,18 @@ const columns = [
     { name: 'type', label: 'Type', options: { filter: true, sort: false } }];
 
 
-const MiceList = (props) => {
-    const [ids, setIds] = useState([])
-    const groupNameRef = useRef()
-    const selectChangeHandler = mouse => {
-        props.onSelectChange(mouse)
-    }
+function HistoryList(props) {
+    const selectChangeHandler = row => {
+        props.onSelectChange(row);
+    };
 
-    const rowSelectHandler = (current, allRows, rows) => {
-        setIds(rows)
-    }
-
-    const submitHandler = (event) => {
-        event.preventDefault()
-        console.log(event.target.value)
-        const group = {
-            name: groupNameRef.current.value,
-            ids: ids.map(index => props.items[index].id),
-        }
-        console.log(group)
-        updateItem(props.url + "/group", group)
-    }
-
-    const usedHandler = () => {
-        console.log("Used button clicked...")
-
-        const mice = ids.map(index => props.items[index])
-        addItem(props.url + "/remove", mice)
-    }
-
-    const cellClickHandler = (cell) => {
-        console.log(cell)
-      }
-  
     const options = {
         // filterType: "checkbox",
         onRowClick: rowData => selectChangeHandler(rowData),
         rowsPerPageOptions: [10, 30, 100],
         rowsPerPage: 30,
-        onRowSelectionChange: (current, allRows, rows) => rowSelectHandler(current, allRows, rows),
+        // onRowSelectionChange: (current, allRows, rows) => rowSelectHandler(current, allRows, rows),
         customToolbarSelect: rows => { }, // get rid of trash can 
-        onCellClick:(data, cell)=>cellClickHandler(data),
     };
 
     return (
@@ -72,10 +37,10 @@ const MiceList = (props) => {
                 title={props.title}
                 data={props.items}
                 columns={columns}
-                options={options}
-            />
+                options={options} />
         </>
-    )
+    );
 }
 
-export default MiceList
+
+export default HistoryList
