@@ -1,7 +1,7 @@
 import logging
 import sqlite3
 import uuid
-from datetime import datetime
+from datetime import  datetime
 from sqlite3 import Error
 
 log_format = '%(asctime)s %(levelname)s [%(name)s] - %(message)s::%(filename)s::%(lineno)d'
@@ -12,25 +12,21 @@ logger = logging.getLogger('MICEDB')
 userFields = (
     'email', 'password', 'status', 'date', 'type'
 )
-
 miceFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
     'usage', 'date', 'type', 'groupid',
 )
-
 usedFields = (
     'msid', 'gender', 'geno', 'birthdate',
     'ear', 'mom', 'dad', 'cage',
     'notes', 'termination', 'type',
 )
-
 cageFields = (
     'cageid', 'type', 'mouse1id', 'mouse2id',
     'mouse3id', 'mouse4id', 'mouse5id', 'count', 'geno_type',
     'movein1', 'movein2', 'movein3', 'movein4', 'movein5', 'notes', 'birthdate'
 )
-
 actionFields = (
     'date', 'msid', 'from_cage', 'to_cage', 'gender',
     'tail', 'reason', 'notes', 'executed_by'
@@ -210,6 +206,11 @@ class MiceDB:
         db.execute(sql)
         cage = self.getCageFromList(db.fetchone())
         return cage
+
+    def group_by_birthdate(self):
+        mice = self.getMice()
+        print(datetime(mice[0]['birthdate']))
+        
 
     # Create One
     def create(self, mouse):
@@ -677,6 +678,7 @@ class MiceDB:
 
 if __name__ == '__main__':
     db = MiceDB("mice.db")
+    db.group_by_birthdate()
     # test create one
     # user = {
     #     "id":uuid.uuid4().hex,
@@ -698,7 +700,7 @@ if __name__ == '__main__':
     # transfer = {'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'A01', 'to_cage': 'EA11', 'notes': 'fight', 'reason': 'fight'}
     # db.update_transfer(transfer)
 
-    pair = [{'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'EA11', 'to_cage': 'A011', 'gender': 'M', 'reason': 'breeding'}, {
-        'id': 'a187ad84a4294d0aa0c21e6bbf9e8627', 'msid': 'A0186', 'from_cage': 'EA06', 'to_cage': 'A011', 'gender': 'F', 'reason': 'breeding'}]
-    db.create_pair(pair)
-    print("Done.")
+    # pair = [{'id': 'b5e9884a6e5544718f6bd5d55f58a0fe', 'msid': 'A0190', 'from_cage': 'EA11', 'to_cage': 'A011', 'gender': 'M', 'reason': 'breeding'}, {
+    #     'id': 'a187ad84a4294d0aa0c21e6bbf9e8627', 'msid': 'A0186', 'from_cage': 'EA06', 'to_cage': 'A011', 'gender': 'F', 'reason': 'breeding'}]
+    # db.create_pair(pair)
+    # print("Done.")

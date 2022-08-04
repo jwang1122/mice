@@ -339,16 +339,21 @@ wean这里，我没有办法选择单独某一笼老鼠，或者某一只母鼠�
 
 ✔️the app could just be an addon of sort for Excel
 
-the app would read and filter the data
+✔️the app would read and filter the data
 
 it could count the mice and sort the mice
+> Sort the mice into groups 
+> week 0 - 4 is past 4 weeks (from today)
+> Count mice within each group
+> I don't think we actually need to sort the mice, only count them
 
-reminders of course
+reminders
 
 reports
 
-and most importantly
-she can add data through her phones
+✔️add data through her phones
+
+highlighting
 
 ## BORN HISTORY
 
