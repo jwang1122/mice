@@ -11,7 +11,7 @@ const columns = [
     { name: 'msid', label: 'MS ID', options: { filter: false, sort: true } },
     { name: 'gender', label: 'Gender', options: { filter: true, sort: false } },
     { name: 'geno', label: 'Geno', options: { filter: false, sort: false } },
-    { name: 'birthdate', label: 'Birthdate', options: { filter: false, sort: false } },
+    { name: 'birthdate', label: 'Birthdate', options: { filter: false, sort: true } },
     { name: 'ear', label: 'Ear', options: { filter: false, sort: false } },
     { name: 'mom', label: 'Mom', options: { filter: false, sort: false } },
     { name: 'dad', label: 'Dad', options: { filter: false, sort: false } },

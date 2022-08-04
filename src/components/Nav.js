@@ -32,6 +32,7 @@ const Logo = props => <Typography
 
 const ResponsiveAppBar = props => {
     const authCtx = useContext(AuthContext);
+    console.log(authCtx.isLoggedIn)
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const handleOpenNavMenu = (event) => {

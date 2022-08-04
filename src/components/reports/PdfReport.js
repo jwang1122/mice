@@ -1,17 +1,19 @@
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import classes from './PdfReport.module.css'
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import { Document, Page} from "react-pdf/dist/esm/entry.webpack";
+import AuthContext from "../login/auth-context";
 
 const PdfReport = (props) => {
     const [blobContent, setBlobContent] = useState(null)
     const [isLoading, setLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
+    const authCtx = useContext(AuthContext);
 
   const downloadReport = (idx) => {
     console.log(idx);
-    fetch(props.url + "/getreport", {
+    fetch(authCtx.url + "/getreport", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import classes from './Login.module.css';
 import Card from '../UI/Card/Card';
@@ -7,9 +7,11 @@ import Input from '../UI/Button/Input';
 import addItem from '../lib/create'
 import bcrypt from 'bcryptjs'
 import { useNavigate } from 'react-router-dom'
+import AuthContext from './auth-context';
 
 const Signup = (props) => {
     const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
 
     const validEmailRegex = RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
     var validPasswordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
@@ -41,7 +43,7 @@ const Signup = (props) => {
                 date: new Date(),
                 type: 'view'
             }
-            addItem(props.url + '/user', user)
+            addItem(authCtx.url + '/user', user)
             navigate("/home")
         }
         setEmail("")

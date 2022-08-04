@@ -1,16 +1,18 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import MiceList from './MiceList.js'
 import MouseDetails from './MouseDetails.js'
 import updateItem from '../lib/update.js'
+import AuthContext from '../login/auth-context.js'
 
 function Home(props) {
     const [mice, setMice] = useState([])
     const [isDetails, setIsDetails] = useState(false)
     const [mouse, setMouse] = useState(null)
+    const authCtx = useContext(AuthContext);
 
-    const url = props.url
+    const url = authCtx.url
     const [data, loadError, load] = useFetch(url)
 
     useEffect(() => {
@@ -38,7 +40,7 @@ function Home(props) {
         <div className="App">
             <header className="App-header">
                 {isDetails && <MouseDetails mouse={mouse} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <MiceList items={mice} title="Mice List" url={props.url} needGroup={true} onSelectChange={selectChangeHandler} />
+                <MiceList items={mice} title="Mice List" url={authCtx.url} needGroup={true} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

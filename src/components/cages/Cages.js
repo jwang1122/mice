@@ -1,10 +1,11 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import CageList from './CageList.js'
 import CageDetails from './CageDetails.js'
 import updateItem from '../lib/update.js'
 import AddCage from './AddCage.js'
+import AuthContext from '../login/auth-context.js'
 
 function Cages(props) {
     // const dummy_cages = [
@@ -14,8 +15,9 @@ function Cages(props) {
     const [cages, setCages] = useState([])
     const [isDetails, setIsDetails] = useState(false)
     const [cage, setCage] = useState(null)
+    const authCtx = useContext(AuthContext);
 
-    const [data, loadError] = useFetch(props.url + '/cages')
+    const [data, loadError] = useFetch(authCtx.url + '/cages')
 
     useEffect(() => {
         if (!loadError && data && data.cages.length > 0) {
@@ -34,7 +36,7 @@ function Cages(props) {
 
     const updateHandler = cage => {
         console.log(cage)
-        updateItem(props.url + '/cages/' + cage.id, cage, null)
+        updateItem(authCtx.url + '/cages/' + cage.id, cage, null)
         setIsDetails(false)
     }
 
@@ -47,7 +49,7 @@ function Cages(props) {
             <header className="App-header">
                 {isDetails && <CageDetails cage={cage} onUpdate={updateHandler} onCancel={cancelHandler} />}
                 <CageList items={cages} onSelectChange={selectChangeHandler} />
-                <AddCage url={props.url}/>
+                <AddCage url={authCtx.url} />
             </header>
         </div>
     );

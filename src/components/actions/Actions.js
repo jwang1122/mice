@@ -1,12 +1,14 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
+import AuthContext from '../login/auth-context.js';
 import ActionList from './ActionList.js'
 
 function Home(props) {
     const [actions, setActions] = useState([])
+    const authCtx = useContext(AuthContext);
 
-    const [data, loadError] = useFetch(props.url + '/actions')
+    const [data, loadError] = useFetch(authCtx.url + '/actions')
 
     useEffect(() => {
         if (!loadError && data && data.actions.length > 0) {
