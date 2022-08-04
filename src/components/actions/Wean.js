@@ -1,16 +1,18 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import CageList from '../cages/CageList.js'
 import AddCage from '../cages/AddCage.js'
 import WeanForm from './WeanForm'
 import addItem from '../lib/create'
+import AuthContext from '../login/auth-context.js'
 
 
 function Wean(props) {
     const [cages, setCages] = useState([])
     const [selectedCage, setSelectedCage] = useState()
-    const [data, loadError] = useFetch(props.url + '/greeding')
+    const authCtx = useContext(AuthContext);
+    const [data, loadError] = useFetch(authCtx.url + '/greeding')
 
     useEffect(() => {
         if (!loadError && data && data.cages.length > 0) {
@@ -24,15 +26,15 @@ function Wean(props) {
     }
 
     const weanHandler = wean => {
-        addItem(props.url + "/wean", wean)
+        addItem(authCtx.url + "/wean", wean)
     }
 
     return (
         <div className="App">
             <header className="App-header">
-                <WeanForm url={props.url} selectedCage={selectedCage} onWean={weanHandler}/>
+                <WeanForm url={authCtx.url} selectedCage={selectedCage} onWean={weanHandler}/>
                 <CageList items={cages} onSelectChange={selectChangeHandler} />
-                <AddCage url={props.url}/>
+                <AddCage url={authCtx.url}/>
             </header>
         </div>
     );

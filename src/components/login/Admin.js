@@ -1,16 +1,18 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import UserList from './UserList.js'
 import UserDetails from './UserDetails.js'
 import updateItem from '../lib/update.js'
+import AuthContext from './auth-context.js'
 
 function Home(props) {
     const [users, setUsers] = useState([])
     const [isDetails, setIsDetails] = useState(false)
     const [user, setUser] = useState(null)
+    const authCtx = useContext(AuthContext);
 
-    const url = props.url
+    const url = authCtx.url
     const [data, loadError, load] = useFetch(url + '/users')
 
     useEffect(() => {
@@ -38,7 +40,7 @@ function Home(props) {
         <div className="App">
             <header className="App-header">
                 {isDetails && <UserDetails user={user} onUpdate={updateHandler} onCancel={cancelHandler} />}
-                <UserList items={users} title="User List" url={props.url} onSelectChange={selectChangeHandler} />
+                <UserList items={users} title="User List" url={authCtx.url} onSelectChange={selectChangeHandler} />
             </header>
         </div>
     );

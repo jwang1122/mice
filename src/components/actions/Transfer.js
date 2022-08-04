@@ -1,15 +1,17 @@
 // import './App.css';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/UseFetch.js'
 import MiceList from '../mice/MiceList.js'
 import TransferForm from './TransferForm'
 import updateItem from '../lib/update'
+import AuthContext from '../login/auth-context.js'
 
 function Transfer(props) {
     const [mice, setMice] = useState([])
     const [mouse, setMouse] = useState(null)
+    const authCtx = useContext(AuthContext);
 
-    const url = props.url
+    const url = authCtx.url
     const [data, loadError] = useFetch(url)
 
     useEffect(() => {
@@ -30,7 +32,7 @@ function Transfer(props) {
     return (
         <div className="App">
             <header className="App-header">
-                <TransferForm mouse={mouse} url={props.url} onTransfer={transferHandler}/>
+                <TransferForm mouse={mouse} url={authCtx.url} onTransfer={transferHandler}/>
                 <MiceList items={mice} title="Mice List" onSelectChange={selectChangeHandler} />
             </header>
         </div>

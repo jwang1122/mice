@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import MiceMale from './MiceMale'
 import MiceFemale from './MiceFemale'
 import PairForm from './PairForm'
 import addItem from '../lib/create'
+import AuthContext from '../login/auth-context'
 
 
 const Pair = (props) => {
     const [male, setMale] = useState()
     const [female, setFemale] = useState()
+    const authCtx = useContext(AuthContext);
 
     const selectMaleHandler = (mouse) => {
         setMale(mouse)
@@ -26,14 +28,14 @@ const Pair = (props) => {
     }, [female])
 
     const pairHandler = (data) => {
-        addItem(props.url+'/pairs', data)
+        addItem(authCtx.url+'/pairs', data)
     }
 
     return (
         <>
-            <PairForm male={male} female={female} url={props.url} onPair={pairHandler}/>
-            <MiceMale url={props.url} onSelect={selectMaleHandler} />
-            <MiceFemale url={props.url} onSelect={selectFemaleHandler} />
+            <PairForm male={male} female={female} url={authCtx.url} onPair={pairHandler}/>
+            <MiceMale url={authCtx.url} onSelect={selectMaleHandler} />
+            <MiceFemale url={authCtx.url} onSelect={selectFemaleHandler} />
         </>
     )
 }
