@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import classes from './Nav.module.css'
 import AuthContext from './login/auth-context'; // isLoggedIn, onLogin, onLogout
 
-const logins = ['home', 'login', 'signup', 'admin']
+const logins = ['home', 'login', 'signup']
 const pages = ['cages', 'mice', 'pair', 'wean', 'transfer', 'action','report', 'used', 'history', 'Logout'];
 const settings = [['Pairing', 'Pairing 21-days Reminder'], ['Breeding', 'Breeding 21-days Reminder']];
 

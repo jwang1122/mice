@@ -1,19 +1,33 @@
 import classes from './Home.module.css'
 import LoginModal from './Login'
-import {useState, useEffect} from 'react'
-import {useContext} from 'react'
+import {useState, useEffect,useContext} from 'react'
 import AuthContext from './auth-context';
+import useFetch from '../hooks/UseFetch'
+import { useNavigate } from 'react-router-dom'
 
 const Home = (props) => {
+    const navigate = useNavigate();
     const [displayLogin, setDisplayLogin] = useState(false)
     const authCtx = useContext(AuthContext);
+
+    const [data] = useFetch(authCtx.url+"/users")
+    if(data && data.users){
+        authCtx.users = data.users
+    }
 
     useEffect(()=>{
         setDisplayLogin(props.display)
     }, [props.display])
 
-    const loginHandler = () =>{
-        console.log("loginHandler...")
+    const loginHandler = (email, password) =>{
+        console.log(email)
+        console.log(password)
+        console.log(authCtx.users)
+        authCtx.users.forEach(user => {
+            console.log(user.email)
+            authCtx.isAdmin = true
+            navigate("/admin")
+        });
         setDisplayLogin(false)
     }
     return (
