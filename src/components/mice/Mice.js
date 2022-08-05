@@ -12,8 +12,7 @@ function Home(props) {
     const [mouse, setMouse] = useState(null)
     const authCtx = useContext(AuthContext);
 
-    const url = authCtx.url
-    const [data, loadError, load] = useFetch(url)
+    const [data, loadError, load] = useFetch(authCtx.url)
 
     useEffect(() => {
         if (!loadError && data && data.mice.length > 0) {
@@ -28,7 +27,7 @@ function Home(props) {
     }
 
     const updateHandler = mouse => {
-        updateItem(url + '/mice/' + mouse.id, mouse, load)
+        updateItem(authCtx.url + '/mice/' + mouse.id, mouse, load)
         setIsDetails(false)
     }
 

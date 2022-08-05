@@ -15,8 +15,11 @@ import Logout from './components/login/Logout'
 import Signup from './components/login/Signup'
 import Mice from './components/mice/Mice'
 import ResponsiveAppBar from './components/Nav'
-import PdfReport from './components/reports/PdfReport'
+import PdfReport from './components/reports/Reports'
+import MouseCount from './components/reports/MouseCount'
+import Report1 from './components/reports/Report1.js'
 import UsedMice from './components/used/UsedMice'
+import PrivateRoutes from './PrivateRoutes'
 const Router = props => {
   document.title = "Mice manager"
 
@@ -27,25 +30,32 @@ const Router = props => {
         <Routes>
           <Route path="/" element={<Home display={false} />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/cages" element={<Cages />} />
-          <Route path="/mice" element={<Mice />} />
-          <Route path="/pair" element={<Pair />} />
-          <Route path="/wean" element={<Wean />} />
-          <Route path="/transfer" element={<Transfer />} />
-          <Route path="/action" element={<Actions />} />
-          <Route path="/report" element={<PdfReport />} />
-          <Route path="/used" element={<UsedMice />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/Pairing" element={<PairingReminder />} />
-          <Route path="/Breeding" element={<BreedingReminder />} />
-          <Route path="/Logout" element={<Logout />} />
           <Route path="/login" element={<Home display={true} />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/Logout" element={<Logout />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/cages" element={<Cages />} />
+            <Route path="/mice" element={<Mice />} />
+            <Route path="/pair" element={<Pair />} />
+            <Route path="/wean" element={<Wean />} />
+            <Route path="/transfer" element={<Transfer />} />
+            <Route path="/action" element={<Actions />} />
+            <Route path="/used" element={<UsedMice />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/Pairing" element={<PairingReminder />} />
+            <Route path="/Breeding" element={<BreedingReminder />} />
+            <Route path="/report" element={<PdfReport />} />
+          </Route>
+            <Route path="/mousecount" element={<MouseCount />} />
+            <Route path="/report1" element={<Report1 />} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
   )
 }
+
+
+
 
 export default Router;

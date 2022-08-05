@@ -13,13 +13,6 @@ export const AuthContextProvider = (props) => {
     const url = 'http://localhost:5000'
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-    React.useEffect(() => {
-        const hasUserloggedIn = localStorage.getItem("isLoggedIn")
-        // if (hasUserloggedIn === '1') {
-        //     setIsLoggedIn(true);
-        // }
-
-    }, []);
 
     const logoutHandler = () => {
         setIsLoggedIn(false)

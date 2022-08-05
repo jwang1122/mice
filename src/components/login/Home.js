@@ -26,17 +26,15 @@ const Home = (props) => {
         authCtx.users.forEach(user => {
             if (email === user.email &&
                 password === user.password &&
-                user.status === 'active' &&
-                user.type === 'admin') {
-                authCtx.isAdmin = true
-                navigate("/admin")
-            }
-            if (email === user.email &&
-                password === user.password &&
-                user.status === 'active' ){
+                user.status === 'active') {
                 authCtx.onLogin(true)
-                navigate("/")
+                if (user.type === 'admin') {
+                    authCtx.isAdmin = true
+                    navigate("/admin")
+                } else
+                    navigate("/")
             }
+
         });
 
         // setDisplayLogin(false)
