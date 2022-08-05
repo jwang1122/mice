@@ -3,8 +3,8 @@ import useFetch from "../hooks/UseFetch"
 import AuthContext from "../login/auth-context"
 import MUIDataTable from 'mui-datatables';
 const columns = [
-    { name: 'week', label: 'Week Range', options: { filter:false, sort: true } },
-    { name: 'count', label: 'Count', options: { filter:false, sort: true } },
+    { name: 'week', label: 'Week Range', options: { filter: false, sort: true } },
+    { name: 'count', label: 'Count', options: { filter: false, sort: true } },
 ];
 
 const MouseCount = () => {
@@ -47,6 +47,7 @@ const MouseCount = () => {
             setMice(data.mice)
         }
     }, [data])
+    var outofrange = 0
     var count1 = 0
     var count5 = 0
     var count9 = 0
@@ -64,7 +65,7 @@ const MouseCount = () => {
     mice.forEach(mouse => {
         const date = new Date(mouse.birthdate)
         if (date < wk53 || date >= wk1) {
-            // nothing its not in range :)
+            outofrange++
         } else if (wk5 <= date) {
             count1++
         } else if (wk9 <= date) {
@@ -83,6 +84,8 @@ const MouseCount = () => {
             count29++
         } else if (wk37 <= date) {
             count33++
+        } else {
+            outofrange++
         }
 
     })
@@ -97,12 +100,17 @@ const MouseCount = () => {
     }
 
     const data2 = [
+        { week: 'Total', count: mice.length },
+        { week: 'Out of Range', count: outofrange },
         format(wk1, wk5, count1),
         format(wk5, wk9, count5),
         format(wk9, wk13, count9),
         format(wk13, wk17, count13),
         format(wk17, wk21, count17),
         format(wk21, wk25, count21),
+        format(wk25, wk29, count25),
+        format(wk29, wk33, count29),
+        format(wk33, wk37, count33),
     ]
     return (
         <MUIDataTable
