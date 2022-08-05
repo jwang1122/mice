@@ -1,9 +1,15 @@
 import { useContext, useEffect, useState } from "react"
 import useFetch from "../hooks/UseFetch"
 import AuthContext from "../login/auth-context"
-
+import MUIDataTable from 'mui-datatables';
+const columns = [
+    { name: 'week', label: 'Week Range', options: { filter:false, sort: true } },
+    { name: 'count', label: 'Count', options: { filter:false, sort: true } },
+];
 
 const MouseCount = () => {
+
+
 
     const wk1 = new Date()
     const wk5 = new Date(wk1)
@@ -57,40 +63,57 @@ const MouseCount = () => {
     var count53 = 0
     mice.forEach(mouse => {
         const date = new Date(mouse.birthdate)
-        if (date >= wk53) {
-            if (wk5 <= date && date < wk1) {
-                count1++
-            }
-            if (wk9 <= date && date < wk5) {
-                count1++
-            }
-            if (wk13 <= date && date < wk9) {
-                count1++
-            }
-            if (wk17 <= date && date < wk13) {
-                count1++
-            }
-            if (wk21 <= date && date < wk17) {
-                count1++
-            }
-            if (wk25 <= date && date < wk21) {
-                count1++
-            }
-            if (wk29 <= date && date < wk25) {
-                count1++
-            }
-            if (wk33 <= date && date < wk29) {
-                count1++
-            }
-            if (wk37 <= date && date < wk33) {
-                count1++
-            }
+        if (date < wk53 || date >= wk1) {
+            // nothing its not in range :)
+        } else if (wk5 <= date) {
+            count1++
+        } else if (wk9 <= date) {
+            count5++
+        } else if (wk13 <= date) {
+            count9++
+        } else if (wk17 <= date) {
+            count13++
+        } else if (wk21 <= date) {
+            count17++
+        } else if (wk25 <= date) {
+            count21++
+        } else if (wk29 <= date) {
+            count25++
+        } else if (wk33 <= date) {
+            count29++
+        } else if (wk37 <= date) {
+            count33++
         }
+
     })
-    return (<div>
-        {wk1.toLocaleDateString()} -
-        {wk5.toLocaleDateString()}
-    </div>)
+
+    const format = (upper, lower, count) => {
+        const lower2 = new Date(lower)
+        lower2.setDate(lower2.getDate() + 1)
+        const lowerStr = lower2.toLocaleDateString()
+        const upperStr = upper.toLocaleDateString()
+        const week = `${lowerStr} - ${upperStr}`
+        return { week: week, count: count }
+    }
+
+    const data2 = [
+        format(wk1, wk5, count1),
+        format(wk5, wk9, count5),
+        format(wk9, wk13, count9),
+        format(wk13, wk17, count13),
+        format(wk17, wk21, count17),
+        format(wk21, wk25, count21),
+    ]
+    return (
+        <MUIDataTable
+            title={"Mouse Count"}
+            data={data2}
+            columns={columns}
+            options={{
+                customToolbarSelect: rows => { }, // get rid of trash can 
+            }}
+        />
+    )
 }
 
 export default MouseCount

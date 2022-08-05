@@ -20,9 +20,8 @@ import MouseCount from './components/reports/MouseCount'
 import Report1 from './components/reports/Report1.js'
 import UsedMice from './components/used/UsedMice'
 import PrivateRoutes from './PrivateRoutes'
-const Router = props => {
+const Router = () => {
   document.title = "Mice manager"
-
   return (
     <AuthContextProvider>
       <BrowserRouter>
@@ -46,9 +45,9 @@ const Router = props => {
             <Route path="/Pairing" element={<PairingReminder />} />
             <Route path="/Breeding" element={<BreedingReminder />} />
             <Route path="/report" element={<PdfReport />} />
-          </Route>
             <Route path="/mousecount" element={<MouseCount />} />
             <Route path="/report1" element={<Report1 />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
