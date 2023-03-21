@@ -4,6 +4,7 @@
 
 [Build a react firebase application](https://www.youtube.com/watch?v=VqgTr-nd7Cg)
 - [Getting Started](#getting-started)
+  - [Run database server](#run-database-server)
   - [create a react project mice](#create-a-react-project-mice)
   - [File Structure](#file-structure)
   - [create mice database](#create-mice-database)
@@ -20,6 +21,17 @@
 - [Use AuthCtx](#use-authctx)
 
 ## Getting Started
+
+### Run database server
+```
+python -m vev env
+C:\Users\wangq\workspace\react-app\mice>c:/Users/wangq/workspace/react-app/mice/env/Scripts/activate.bat
+(env) C:\Users\wangq\workspace\react-app\mice>pip install --upgrade pip
+cd data
+python miceApp.py
+(env) C:\Users\wangq\workspace\react-app\mice>pip install flask flask_cors
+```
+* [Mice Service](http://localhost:5000/)
 
 ### create a react project mice
 
