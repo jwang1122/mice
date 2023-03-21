@@ -8,88 +8,29 @@ const columns = [
 ];
 
 const MouseCount = () => {
-
-
-
-    const wk1 = new Date()
-    const wk5 = new Date(wk1)
-    wk5.setDate(wk5.getDate() - 28)
-    const wk9 = new Date(wk5)
-    wk9.setDate(wk9.getDate() - 28)
-    const wk13 = new Date(wk9)
-    wk13.setDate(wk13.getDate() - 28)
-    const wk17 = new Date(wk13)
-    wk17.setDate(wk17.getDate() - 28)
-    const wk21 = new Date(wk17)
-    wk21.setDate(wk21.getDate() - 28)
-    const wk25 = new Date(wk21)
-    wk25.setDate(wk25.getDate() - 28)
-    const wk29 = new Date(wk25)
-    wk29.setDate(wk29.getDate() - 28)
-    const wk33 = new Date(wk29)
-    wk33.setDate(wk33.getDate() - 28)
-    const wk37 = new Date(wk33)
-    wk37.setDate(wk37.getDate() - 28)
-    const wk41 = new Date(wk37)
-    wk41.setDate(wk41.getDate() - 28)
-    const wk45 = new Date(wk41)
-    wk45.setDate(wk45.getDate() - 28)
-    const wk49 = new Date(wk45)
-    wk49.setDate(wk49.getDate() - 28)
-    const wk53 = new Date(wk49)
-    wk53.setDate(wk53.getDate() - 28)
     const authCtx = useContext(AuthContext);
-
     const [mice, setMice] = useState([])
-    const [data, loadError, load] = useFetch(authCtx.url)
+    const [data, ,] = useFetch(authCtx.url)
+
+    const weeks = [new Date()], counts = [0]
+    for (let i = 0; i < 8; i++) {
+        const week = new Date(weeks[weeks.length - 1])
+        week.setDate(week.getDate() - 28)
+        weeks.push(week)
+        counts.push(0)
+    }
     useEffect(() => {
-        if (data && data.mice.length > 0) {
+        if (data && data.mice.length > 0)
             setMice(data.mice)
-        }
     }, [data])
     var outofrange = 0
-    var count1 = 0
-    var count5 = 0
-    var count9 = 0
-    var count13 = 0
-    var count17 = 0
-    var count21 = 0
-    var count25 = 0
-    var count29 = 0
-    var count33 = 0
-    var count37 = 0
-    var count41 = 0
-    var count45 = 0
-    var count49 = 0
-    var count53 = 0
     mice.forEach(mouse => {
         const date = new Date(mouse.birthdate)
-        if (date < wk53 || date >= wk1) {
+        if (date < weeks[-1] || date >= weeks[0])
             outofrange++
-        } else if (wk5 <= date) {
-            count1++
-        } else if (wk9 <= date) {
-            count5++
-        } else if (wk13 <= date) {
-            count9++
-        } else if (wk17 <= date) {
-            count13++
-        } else if (wk21 <= date) {
-            count17++
-        } else if (wk25 <= date) {
-            count21++
-        } else if (wk29 <= date) {
-            count25++
-        } else if (wk33 <= date) {
-            count29++
-        } else if (wk37 <= date) {
-            count33++
-        } else {
-            outofrange++
-        }
-
+        else for (let i = 1; i < weeks.length; i++)
+            if (date >= weeks[i]) { counts[i - 1]++; break }
     })
-
     const format = (upper, lower, count) => {
         const lower2 = new Date(lower)
         lower2.setDate(lower2.getDate() + 1)
@@ -98,27 +39,18 @@ const MouseCount = () => {
         const week = `${lowerStr} - ${upperStr}`
         return { week: week, count: count }
     }
-
     const data2 = [
         { week: 'Total', count: mice.length },
-        { week: 'Out of Range', count: outofrange },
-        format(wk1, wk5, count1),
-        format(wk5, wk9, count5),
-        format(wk9, wk13, count9),
-        format(wk13, wk17, count13),
-        format(wk17, wk21, count17),
-        format(wk21, wk25, count21),
-        format(wk25, wk29, count25),
-        format(wk29, wk33, count29),
-        format(wk33, wk37, count33),
-    ]
+        { week: 'Out of Range', count: outofrange }]
+    for (let i = 1; i < weeks.length; i++){
+        data2.push(format(weeks[i - 1], weeks[i], counts[i]))}
     return (
         <MUIDataTable
             title={"Mouse Count"}
             data={data2}
             columns={columns}
             options={{
-                customToolbarSelect: rows => { }, // get rid of trash can 
+                customToolbarSelect: () => { }, // get rid of trash can 
             }}
         />
     )

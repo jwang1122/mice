@@ -45,9 +45,9 @@ const Router = () => {
             <Route path="/Pairing" element={<PairingReminder />} />
             <Route path="/Breeding" element={<BreedingReminder />} />
             <Route path="/report" element={<PdfReport />} />
-            <Route path="/mousecount" element={<MouseCount />} />
             <Route path="/report1" element={<Report1 />} />
           </Route>
+            <Route path="/mousecount" element={<MouseCount />} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
