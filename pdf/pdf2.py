@@ -22,4 +22,4 @@ pdf.cell(60, 10, 'How are you doing today', border=1, fill=True)
 pdf.cell(60, 10, 'How are you doing today', border=1)
 
 
-pdf.output('cell.pdf')
+pdf.output('pdf/cell.pdf')
