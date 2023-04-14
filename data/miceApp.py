@@ -57,6 +57,7 @@ def all_borns():
 def all_users():
     response_object = {'status': 'success'}
     users = db.getUsers()
+    # print(users)
     response_object['users'] = users
     return jsonify(response_object)
 

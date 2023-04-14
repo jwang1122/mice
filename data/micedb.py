@@ -57,8 +57,10 @@ class MiceDB:
             for row in db.execute('SELECT * FROM users'):
                 user = self.getUserFromList(row)
                 userList.append(user)
+            self.conn.close()
         except Exception as e:
             logger.critical(e)
+            self.conn.close()
         return userList
 
     # Retrieve All mice
@@ -237,6 +239,7 @@ class MiceDB:
         logger.info(sql)
         db.execute(sql, value)
         self.conn.commit()
+        self.conn.close()
         return user.get('id')
 
     # Create One mouse
@@ -656,7 +659,7 @@ class MiceDB:
         """ create a database connection to a SQLite database """
         conn = None
         try:
-            conn = sqlite3.connect(db_file)
+            conn = sqlite3.connect(db_file, timeout=10.0)
             # print(sqlite3.version)
         except Error as e:
             print(e)
@@ -678,7 +681,9 @@ class MiceDB:
 
 if __name__ == '__main__':
     db = MiceDB("mice.db")
-    db.group_by_birthdate()
+    users = db.getUsers()
+    print(users)
+    # db.group_by_birthdate()
     # test create one
     # user = {
     #     "id":uuid.uuid4().hex,

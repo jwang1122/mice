@@ -15,12 +15,13 @@ import Logout from './components/login/Logout'
 import Signup from './components/login/Signup'
 import Mice from './components/mice/Mice'
 import ResponsiveAppBar from './components/Nav'
-import PdfReport from './components/reports/Reports'
+import PdfReport from './components/reports/PdfReport'
 import MouseCount from './components/reports/MouseCount'
 import Report1 from './components/reports/Report1.js'
 import UsedMice from './components/used/UsedMice'
 import PrivateRoutes from './PrivateRoutes'
-const Router = () => {
+const Router = (props) => {
+  const url = props.url
   document.title = "Mice manager"
   return (
     <AuthContextProvider>
@@ -33,19 +34,19 @@ const Router = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Logout" element={<Logout />} />
           <Route element={<PrivateRoutes />}>
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/cages" element={<Cages />} />
-            <Route path="/mice" element={<Mice />} />
-            <Route path="/pair" element={<Pair />} />
-            <Route path="/wean" element={<Wean />} />
-            <Route path="/transfer" element={<Transfer />} />
-            <Route path="/action" element={<Actions />} />
-            <Route path="/used" element={<UsedMice />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/Pairing" element={<PairingReminder />} />
-            <Route path="/Breeding" element={<BreedingReminder />} />
-            <Route path="/report" element={<PdfReport />} />
-            <Route path="/report1" element={<Report1 />} />
+            <Route path="/admin" element={<Admin url={url}/>} />
+            <Route path="/cages" element={<Cages url={url}/>} />
+            <Route path="/mice" element={<Mice url={url}/>} />
+            <Route path="/pair" element={<Pair url={url}/>} />
+            <Route path="/wean" element={<Wean url={url}/>} />
+            <Route path="/transfer" element={<Transfer url={url}/>} />
+            <Route path="/action" element={<Actions url={url}/>} />
+            <Route path="/used" element={<UsedMice url={url}/>} />
+            <Route path="/history" element={<History url={url}/>} />
+            <Route path="/Pairing" element={<PairingReminder url={url}/>} />
+            <Route path="/Breeding" element={<BreedingReminder url={url}/>} />
+            <Route path="/report" element={<PdfReport url={url}/>} />
+            <Route path="/report1" element={<Report1 url={url}/>} />
           </Route>
             <Route path="/mousecount" element={<MouseCount />} />
         </Routes>
@@ -53,8 +54,5 @@ const Router = () => {
     </AuthContextProvider>
   )
 }
-
-
-
 
 export default Router;

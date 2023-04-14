@@ -3,15 +3,17 @@ import { useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
 
 
-const Logout = (props) => {
-    console.log("Logout()...")
+const Logout = () => {
     const authCtx = useContext(AuthContext)
-    authCtx.onLogout()
     const navigate = useNavigate()
-    useEffect(()=>{
-        navigate('/')
-    }, [navigate])
-    return <></>
-}
+  
+    useEffect(() => {
+      authCtx.onLogout()
+      navigate('/')
+    }, [authCtx, navigate])
+  
+    return null
+  }
+  
 
 export default Logout

@@ -24,6 +24,7 @@ const Login = (props) => {
     event.preventDefault()
     const email = emailInputRef.current.value
     const password = passwordInputRef.current.value
+    console.log(password)
     const hashedPassword = bcrypt.hashSync(password, '$2a$10$CwTycUXWue0Thq9StjUM0u') // hash password created previously upon sign up
     // authCtx.onLogin(email, hashedPassword)
     props.onLogin(email, hashedPassword)

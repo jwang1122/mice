@@ -11,7 +11,7 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
     const url = 'http://localhost:5000'
-    const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     const logoutHandler = () => {
         setIsLoggedIn(false)
